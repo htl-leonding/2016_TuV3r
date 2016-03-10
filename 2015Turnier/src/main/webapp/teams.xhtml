@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+<h:head>
+    <title>Teamliste</title>
+</h:head>
+<h:body>
+    <ui:include src="header.xhtml"></ui:include>
+    <h:outputStylesheet library="css" name="style.css"  />
+    <!-- <p:dataTable id="team_table" var="team" value="#{teamsController.teams}">
+        <p:column headerText="Id">
+            <h:outputText value="#{team.id}"/>
+        </p:column>
+        <p:column headerText="Name">
+            <h:outputText value="#{team.name}"/>
+        </p:column>
+        <p:column headerText="Gruppe">
+            <h:outputText value="#{team.group}"/>
+        </p:column>
+        <p:column headerText="Rang">
+            <h:outputText value="#{team.rank}"/>
+        </p:column>
+    </p:dataTable>
+    -->
+    <p:panelGrid style="margin-top:20px">
+        <f:facet name="header">
+            <p:row>
+                <p:column colspan="7">Letztes Turnier</p:column>
+            </p:row>
+            <p:row>
+                <p:column colspan="2">Viertelfinale</p:column>
+                <p:column colspan="2">Halbfinale</p:column>
+                <p:column colspan="2">Finale</p:column>
+                <p:column>Champion</p:column>
+            </p:row>
+
+        </f:facet>
+
+        <p:row >
+            <p:column style="font-weight: bold;">#{teamsController.teamsByRank.get(7).name}</p:column>
+            <p:column style="font-weight: bold;">4</p:column>
+
+            <p:column rowspan="2" style="font-weight: bold;">#{teamsController.teamsByRank.get(3).name}</p:column>
+            <p:column rowspan="2" style="font-weight: bold;">4</p:column>
+
+            <p:column rowspan="5">#{teamsController.teamsByRank.get(1).name}</p:column>
+            <p:column rowspan="5">2</p:column>
+
+            <p:column rowspan="11" style="font-weight: bold;">#{teamsController.teamsByRank.get(0).name}</p:column>
+        </p:row>
+
+        <p:row>
+            <p:column>Houston</p:column>
+            <p:column >0</p:column>
+        </p:row>
+
+        <p:row>
+            <p:column colspan="4" styleClass="ui-widget-header">
+                <p:spacer height="0"/>
+            </p:column>
+        </p:row>
+
+        <p:row>
+            <p:column style="font-weight: bold;">Utah</p:column>
+            <p:column style="font-weight: bold;">4</p:column>
+
+            <p:column rowspan="2">Utah</p:column>
+            <p:column rowspan="2">3</p:column>
+        </p:row>
+
+        <p:row>
+            <p:column>San Antonio</p:column>
+            <p:column >2</p:column>
+        </p:row>
+
+        <p:row>
+            <p:column colspan="6" styleClass="ui-widget-header">
+                <p:spacer height="0"/>
+            </p:column>
+        </p:row>
+
+        <p:row>
+            <p:column style="font-weight: bold;">Chicago</p:column>
+            <p:column style="font-weight: bold;">4</p:column>
+
+            <p:column rowspan="2" style="font-weight: bold;">Chicago</p:column>
+            <p:column rowspan="2" style="font-weight: bold;">4</p:column>
+
+            <p:column rowspan="5" style="font-weight: bold;">Chicago</p:column>
+            <p:column rowspan="5" style="font-weight: bold;">4</p:column>
+        </p:row>
+
+        <p:row>
+            <p:column>New York</p:column>
+            <p:column >1</p:column>
+        </p:row>
+
+        <p:row>
+            <p:column colspan="4" styleClass="ui-widget-header">
+                <p:spacer height="0"/>
+            </p:column>
+        </p:row>
+
+        <p:row>
+            <p:column>Atlanta</p:column>
+            <p:column >1</p:column>
+
+            <p:column rowspan="2">Orlando</p:column>
+            <p:column rowspan="2">0</p:column>
+        </p:row>
+
+        <p:row>
+            <p:column style="font-weight: bold;">Orlando</p:column>
+            <p:column style="font-weight: bold;">4</p:column>
+        </p:row>
+
+
+        <f:facet name="footer">
+            <p:row>
+                <p:column  colspan="4" style="text-align: right">
+                    Finals MVP
+                </p:column>
+                <p:column  colspan="3" rowspan="3">
+                    Michael Jordan (Chicago)
+                </p:column>
+            </p:row>
+
+            <p:row>
+                <p:column  colspan="4" style="text-align: right">
+                    Season MVP
+                </p:column>
+            </p:row>
+            <p:row>
+                <p:column  colspan="4" style="text-align: right">
+                    Top Scorer
+                </p:column>
+            </p:row>
+        </f:facet>
+    </p:panelGrid>
+</h:body>
+</html>
