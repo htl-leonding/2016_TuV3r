@@ -1,5 +1,6 @@
 package at.htl.web;
 
+import at.htl.entity.Team;
 import at.htl.entity.Tournament;
 import at.htl.logic.TournamentFacade;
 import org.primefaces.event.SelectEvent;
@@ -34,6 +35,7 @@ public class NewTournamentController implements Serializable{
     private int groupSize = 3;
     private int pointsWin=3;
     private int pointsDraw=1;
+    private List<Team> teams=new ArrayList<Team>();
 
 
     public Tournament getLatestTournament(){
@@ -75,6 +77,14 @@ public class NewTournamentController implements Serializable{
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
     }
+
+    public List<Team> updateTeamList(List<Team> teams){
+        for (int i = 0; i < teamCount; i++) {
+            teams.add(new Team("Team"+i,false));
+        }
+        return teams;
+    }
+    /*
     public void onSelect(SelectEvent event) {
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Selected", event.getObject().toString()));
@@ -89,7 +99,7 @@ public class NewTournamentController implements Serializable{
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "List Reordered", null));
     }
-
+*/
     /**
      * Fügt die verschiedenen Systeme in die Source-List ein
      */
@@ -151,5 +161,13 @@ public class NewTournamentController implements Serializable{
 
     public void setPointsWin(int pointsWin) {
         this.pointsWin = pointsWin;
+    }
+
+    public List<Team> getTeams() {
+        return updateTeamList(teams);
+    }
+
+    public void setTeams(List<Team> teams) {
+        this.teams = teams;
     }
 }

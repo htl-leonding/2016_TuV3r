@@ -71,7 +71,7 @@
                 <h3>Punkte pro Win:</h3>
                 <h:panelGrid columns="1">
                     <p:inputText id="pointsWonSliderText" value="#{newTournamentController.pointsWin}" />
-                    <p:slider for="pointsWonSliderText" minValue="1" maxValue="100"/>
+                    <p:slider for="pointsWonSliderText" minValue="#{newTournamentController.pointsDraw}" maxValue="100"/>
                 </h:panelGrid>
                 <h3>Punkte pro Unentschieden:</h3>
                 <h:panelGrid columns="1">
@@ -79,8 +79,16 @@
                     <p:slider for="pointsDrawSliderText" minValue="0" maxValue="10"/>
                 </h:panelGrid>
             </p:outputPanel>
-            <p:outputPanel styleClass="center">
+            <p:outputPanel styleClass="center" >
+                <p:dataTable var="team" value="#{newTournamentController.teams}">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{team.id}" />
+                    </p:column>
 
+                    <p:column headerText="Name">
+                        <h:outputText value="#{team.name}" />
+                    </p:column>
+                </p:dataTable>
             </p:outputPanel>
         </p:outputPanel>
         <p:outputPanel rendered="#{param.i==2}">
