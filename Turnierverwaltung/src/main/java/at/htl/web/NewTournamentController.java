@@ -4,6 +4,7 @@ import at.htl.entity.Team;
 import at.htl.entity.Tournament;
 import at.htl.logic.TournamentFacade;
 import org.primefaces.event.SelectEvent;
+import org.primefaces.event.SlideEndEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.DualListModel;
@@ -78,11 +79,14 @@ public class NewTournamentController implements Serializable{
 
     }
 
-    public List<Team> updateTeamList(List<Team> teams){
+    public List<Team> updateTeamList(){
         for (int i = 0; i < teamCount; i++) {
             teams.add(new Team("Team"+i,false));
         }
         return teams;
+    }
+    public void onSlideEnd(SlideEndEvent event) {
+        updateTeamList();
     }
     /*
     public void onSelect(SelectEvent event) {
@@ -164,7 +168,7 @@ public class NewTournamentController implements Serializable{
     }
 
     public List<Team> getTeams() {
-        return updateTeamList(teams);
+        return teams;
     }
 
     public void setTeams(List<Team> teams) {

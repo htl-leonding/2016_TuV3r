@@ -13,6 +13,7 @@
     <h:outputStylesheet library="css" name="style.css"  />
     <p:growl id="msg" showDetail="true" escape="false"/>
     <h:form id="selectionMenu">
+        <p:remoteCommand name="updateTable" update="dataTable" actionListener="#{newTournamentController.updateTeamList}"></p:remoteCommand>
         <p:steps activeIndex="#{param.i}" styleClass="custom" readonly="false" rendered="#{param.i>3==false}">
             <p:menuitem value="Turnierart auswählen">
                 <f:param name="i" value="0"></f:param>
@@ -57,11 +58,13 @@
             </h:form>
         </p:outputPanel>
         <p:outputPanel rendered="#{param.i==1}">
-            <p:outputPanel styleClass="west" style="margin-top: -7%">
+            <p:outputPanel style= "float: left" styleClass="west">
                 <h3>Anzahl der Teams eingeben:</h3>
                 <h:panelGrid columns="1">
-                    <p:inputText id="teamSliderText" value="#{newTournamentController.teamCount}" />
-                    <p:slider for="teamSliderText" />
+                    <p:inputText id="teamSliderText" value="#{newTournamentController.teamCount}"/>
+                    <p:slider for="teamSliderText">
+                        <p:ajax event="slideEnd" listener="#{newTournamentController.onSlideEnd}" update="dataTable" />
+                    </p:slider>
                 </h:panelGrid>
                 <h3>Gewünschte Größe einer Gruppe:</h3>
                 <h:panelGrid columns="1">
@@ -80,7 +83,7 @@
                 </h:panelGrid>
             </p:outputPanel>
             <p:outputPanel styleClass="center" >
-                <p:dataTable var="team" value="#{newTournamentController.teams}">
+                <p:dataTable var="team" value="#{newTournamentController.teams}" id="dataTable">
                     <p:column headerText="Id">
                         <h:outputText value="#{team.id}" />
                     </p:column>
@@ -92,7 +95,17 @@
             </p:outputPanel>
         </p:outputPanel>
         <p:outputPanel rendered="#{param.i==2}">
-            <p:outputLabel value="3#{param.i}"/>
+            <p:outputPanel styleClass="center">
+                <p:dataTable var="team" value="#{newTournamentController.teams}">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{team.id}" />
+                    </p:column>
+
+                    <p:column headerText="Name">
+                        <h:outputText value="#{team.name}" />
+                    </p:column>
+                </p:dataTable>
+            </p:outputPanel>
         </p:outputPanel>
         <p:outputPanel rendered="#{param.i==3}">
             <p:outputLabel value="4"/>
