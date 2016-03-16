@@ -99,7 +99,6 @@
                     <p:column headerText="Id">
                         <h:outputText value="#{team.id}" />
                     </p:column>
-
                     <p:column headerText="Name">
                         <h:outputText value="#{team.name}" />
                     </p:column>
@@ -109,19 +108,15 @@
         <p:outputPanel rendered="#{param.i==3}">
             <p:outputLabel value="4"/>
             <p:outputPanel styleClass="center" >
-                <p:dataTable var="ov" value="#{newTournamentController.selectedTypes}">
+                <p:dataTable var="ov" value="#{newTournamentController.getTournamentSystem}">
                     <p:column headerText="Turnierart">
                         <h:outputText value="#{ov}" />
                     </p:column>
                 </p:dataTable>
-                <p:commandButton value="click" id="isGroupphaseChosen" oncomplete="changeColor()" />
-                <script>
-                    function changeColor(){
-                        document.getElementById('isGroupphaseChosen').style.background='red';
-                    }
-                </script>
+                <p:button value="Gruppenphase" style="margin-left: 6.3cm" icon="#{newTournamentController.determineGroupPhaseIcon()}">
+                </p:button>
             </p:outputPanel>
-            <p:outputPanel styleClass="center" >
+            <p:outputPanel styleClass="center" style="margin-top: -71px">
                 <p:dataTable var="overview" value="#{newTournamentController.teams}">
                     <p:column headerText="Id">
                         <h:outputText value="#{team.id}" />
