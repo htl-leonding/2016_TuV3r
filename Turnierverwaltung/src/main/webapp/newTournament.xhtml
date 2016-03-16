@@ -101,6 +101,14 @@
                         <h:outputText value="#{ov}" />
                     </p:column>
                 </p:dataTable>
+                <p:commandButton value="click" id="isGroupphaseChosen" oncomplete="changeColor()" />
+                <script>
+                    function changeColor(){
+                        document.getElementById('isGroupphaseChosen').style.background='red';
+                    }
+                </script>
+            </p:outputPanel>
+            <p:outputPanel styleClass="center" >
                 <p:dataTable var="overview" value="#{newTournamentController.teams}">
                     <p:column headerText="Id">
                         <h:outputText value="#{team.id}" />
