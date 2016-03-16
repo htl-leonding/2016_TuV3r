@@ -32,11 +32,11 @@ import java.util.List;
 
     private DualListModel<String> types;
     private List<String> selectedTypes=new ArrayList<String>();
-    private int teamCount = 0;
+    private int teamCount = 10;
     private int groupSize = 3;
     private int pointsWin=3;
     private int pointsDraw=1;
-    private List<Team> teams=new ArrayList<Team>();
+    private List<Team> teams;
 
 
     public Tournament getLatestTournament(){
@@ -48,6 +48,22 @@ import java.util.List;
     }
     public List<Tournament> getClosedTournaments(){
         return tournamentFacade.findAllClosedTournaments();
+    }
+
+
+
+    @PostConstruct
+    public void setupPickList(){
+        List<String> typesSource = new ArrayList<String>();
+        List<String> typesTarget = new ArrayList<String>();
+
+        typesSource.add("Gruppenphase");
+        typesSource.add("2 Gruppenphasen");
+        typesSource.add("KO-System");
+
+        types = new DualListModel<String>(typesSource, typesTarget);
+
+        updateTeamList();
     }
 
     /**
@@ -79,15 +95,15 @@ import java.util.List;
 
     }
 
-    public List<Team> updateTeamList(){
-        for (int i = 0; i < teamCount; i++) {
-            teams.add(new Team("Team"+i,false));
+    public void updateTeamList(){
+        teams=new ArrayList<Team>();
+        for (int i = 1; i < getTeamCount()+1; i++) {
+            teams.add(new Team("Team "+i,false));
         }
-        return teams;
+        System.out.println(getTeamCount()+"-"+getGroupSize()+"-"+getPointsWin()+"-"+getPointsDraw()+"-"+teams.size());
     }
-    public void onSlideEnd(SlideEndEvent event) {
-        updateTeamList();
-    }
+
+
     /*
     public void onSelect(SelectEvent event) {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -104,20 +120,7 @@ import java.util.List;
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "List Reordered", null));
     }
 */
-    /**
-     * Fügt die verschiedenen Systeme in die Source-List ein
-     */
-    @PostConstruct
-    public void setupPickList(){
-        List<String> typesSource = new ArrayList<String>();
-        List<String> typesTarget = new ArrayList<String>();
 
-        typesSource.add("Gruppenphase");
-        typesSource.add("2 Gruppenphasen");
-        typesSource.add("KO-System");
-
-        types = new DualListModel<String>(typesSource, typesTarget);
-    }
 
     public String determineGroupPhaseIcon(){
         if(selectedTypes.contains("Gruppenphase"))
@@ -189,4 +192,5 @@ import java.util.List;
     public void setTeams(List<Team> teams) {
         this.teams = teams;
     }
+
 }
