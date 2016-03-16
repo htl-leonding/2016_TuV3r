@@ -84,7 +84,6 @@
                     <p:column headerText="Id">
                         <h:outputText value="#{team.id}" />
                     </p:column>
-
                     <p:column headerText="Name">
                         <h:outputText value="#{team.name}" />
                     </p:column>
@@ -96,6 +95,21 @@
         </p:outputPanel>
         <p:outputPanel rendered="#{param.i==3}">
             <p:outputLabel value="4"/>
+            <p:outputPanel styleClass="center" >
+                <p:dataTable var="ov" value="#{newTournamentController.selectedTypes}">
+                    <p:column headerText="Turnierart">
+                        <h:outputText value="#{ov}" />
+                    </p:column>
+                </p:dataTable>
+                <p:dataTable var="overview" value="#{newTournamentController.teams}">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{team.id}" />
+                    </p:column>
+                    <p:column headerText="Team Name">
+                        <h:outputText value="#{team.name}" />
+                    </p:column>
+                </p:dataTable>
+            </p:outputPanel>
         </p:outputPanel>
         <p:outputPanel rendered="#{param.i>3}">
         </p:outputPanel>
