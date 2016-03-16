@@ -25,7 +25,7 @@ import java.util.List;
  */
 @SessionScoped
 @Named
-public class NewTournamentController implements Serializable{
+    public class NewTournamentController implements Serializable{
     @Inject
     TournamentFacade tournamentFacade;
 
@@ -117,6 +117,21 @@ public class NewTournamentController implements Serializable{
         typesSource.add("KO-System");
 
         types = new DualListModel<String>(typesSource, typesTarget);
+    }
+
+    public String determineGroupPhaseIcon(){
+        if(selectedTypes.contains("Gruppenphase"))
+            return "icon-check";
+        return "icon-check-empty";
+    }
+
+    public String getTournamentSystem(){
+        for (String s : selectedTypes) {
+            if(s=="KO-System"){
+                return s;
+            }
+        }
+        return "none";
     }
 
     public List<String> getSelectedTypes() {
