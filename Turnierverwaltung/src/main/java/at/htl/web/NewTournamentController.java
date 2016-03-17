@@ -38,6 +38,7 @@ import java.util.List;
     private int pointsDraw=1;
     private List<Team> teams;
     private String tournamentSystem;
+    private String groupPhaseIcon;
 
 
     public Tournament getLatestTournament(){
@@ -137,15 +138,15 @@ import java.util.List;
 */
 
 
-    public String determineGroupPhaseIcon(){
+    public String getGroupPhaseIcon(){
         if(selectedTypes.contains("Gruppenphase"))
-            return "icon-check";
-        return "icon-check-empty";
+            return "ui-icon-check";
+        return "ui-icon-close";
     }
 
     public String getTournamentSystem() {
         for (String s : selectedTypes) {
-            if(s.equals("KO-System")){
+            if(s.equals("KO-System")||s.equals("Leitersystem")||s.equals("Schweizersystem")){
                 return s;
             }
         }
