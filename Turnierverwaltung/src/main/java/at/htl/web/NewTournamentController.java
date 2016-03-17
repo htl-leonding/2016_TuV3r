@@ -20,35 +20,35 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Lokal on 21.01.2016.
- */
+
 @SessionScoped
 @Named
-    public class NewTournamentController implements Serializable{
+public class NewTournamentController implements Serializable {
     @Inject
     TournamentFacade tournamentFacade;
 
 
     private DualListModel<String> types;
-    private List<String> selectedTypes=new ArrayList<String>();
+    private List<String> selectedTypes = new ArrayList<String>();
+    List<String> typesSource = new ArrayList<String>();
+    List<String> typesTarget = new ArrayList<String>();
     private int teamCount = 10;
     private int groupSize = 3;
-    private int pointsWin=3;
-    private int pointsDraw=1;
+    private int pointsWin = 3;
+    private int pointsDraw = 1;
     private List<Team> teams;
     private String tournamentSystem;
-    private String groupPhaseIcon;
 
 
-    public Tournament getLatestTournament(){
+    public Tournament getLatestTournament() {
         return tournamentFacade.findLatestTournament();
     }
 
-    public List<Tournament> getTournaments(){
+    public List<Tournament> getTournaments() {
         return tournamentFacade.findAllTournaments();
     }
-    public List<Tournament> getClosedTournaments(){
+
+    public List<Tournament> getClosedTournaments() {
         return tournamentFacade.findAllClosedTournaments();
     }
 
@@ -56,12 +56,12 @@ import java.util.List;
      * Fügt die verschiedenen Systeme in die Source-List ein
      */
     @PostConstruct
-    public void setupPickList(){
-        List<String> typesSource = new ArrayList<String>();
-        List<String> typesTarget = new ArrayList<String>();
+    public void setupPickList() {
 
         typesSource.add("Gruppenphase");
-        typesSource.add("2 Gruppenphasen");
+        typesSource.add("Leitersystem");
+        typesSource.add("Schweizersystem");
+        typesSource.add("Doppel-KO-System");
         typesSource.add("KO-System");
 
         types = new DualListModel<String>(typesSource, typesTarget);
@@ -71,19 +71,19 @@ import java.util.List;
     /**
      * Wird aufgerufen, wenn bei der Picklist ein Element auf die andere Seite geschoben
      * wird und fügt das Element zur Liste hinzu. Gibt dann eine Message zurück.
+     *
      * @param event
      */
     public void onTransfer(TransferEvent event) {
         FacesMessage msg = new FacesMessage();
-        StringBuilder detail=new StringBuilder();
+        StringBuilder detail = new StringBuilder();
 
-        for (String s : (List<String>)event.getItems()){
+        for (String s : (List<String>) event.getItems()) {
             detail.append(s).append("<br />");
-            if(!selectedTypes.contains(s)){
+            if (!selectedTypes.contains(s)) {
                 selectedTypes.add(s);
                 msg.setSummary("Items Transferred");
-            }
-            else {
+            } else {
                 selectedTypes.remove(s);
                 msg.setSummary("Items removed");
             }
@@ -105,6 +105,7 @@ import java.util.List;
         return teams;
     }*/
     public void onSlideEnd(SlideEndEvent event) {
+        System.out.println("**************************** slideEnd: " + teamCount + " / " + event.getValue());
         getTeams();
     }
     /*
@@ -138,16 +139,19 @@ import java.util.List;
 */
 
 
-    public String getGroupPhaseIcon(){
-        if(selectedTypes.contains("Gruppenphase"))
-            return "ui-icon-check";
-        return "ui-icon-close";
+    public String determineGroupPhaseIcon() {
+        if (selectedTypes.contains("Gruppenphase"))
+            return "icon-check";
+        return "icon-check-empty";
     }
 
     public String getTournamentSystem() {
         for (String s : selectedTypes) {
-            if(s.equals("KO-System")||s.equals("Leitersystem")||s.equals("Schweizersystem")){
-                return s;
+            if (!s.equals("Gruppenphase")) {
+                for (String types : typesSource) {
+                    if (types.equals(s))
+                        return s;
+                }
             }
         }
         return "none";
@@ -206,11 +210,11 @@ import java.util.List;
     }
 
     public List<Team> getTeams() {
+        System.out.println("******************************* getTeams " + teamCount);
         teams = new ArrayList<Team>();
-        for (int i = 1; i < teamCount+1; i++) {
-            teams.add(new Team("Team "+i,false));
+        for (int i = 1; i < teamCount + 1; i++) {
+            teams.add(new Team("Team " + i, false));
         }
-        System.out.println(getSelectedTypes().size()+"-"+getTeamCount()+"-"+getGroupSize()+"-"+getPointsDraw());
         return teams;
     }
 

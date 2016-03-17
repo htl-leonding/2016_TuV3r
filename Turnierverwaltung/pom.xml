@@ -22,6 +22,7 @@
                 <type>pom</type>
             </dependency>
         </dependencies>
+
     </dependencyManagement>
 
 
@@ -29,10 +30,10 @@
     <plugins>
         <plugin>
             <artifactId>maven-compiler-plugin</artifactId>
-            <version>2.3.2</version>
+            <version>3.5.1</version>
             <configuration>
-                <source>1.6</source>
-                <target>1.6</target>
+                <source>1.8</source>
+                <target>1.8</target>
             </configuration>
         </plugin>
         <plugin>
@@ -45,7 +46,7 @@
     <dependencies>
         <dependency>
             <groupId>javax</groupId>
-            <artifactId>javaee-api</artifactId>
+            <artifactId>javaee-web-api</artifactId>
             <version>7.0</version>
             <scope>provided</scope>
         </dependency>
@@ -79,7 +80,12 @@
             <version>1.0.8</version>
             <scope>compile</scope>
         </dependency>
-
+        <dependency>
+            <groupId>org.omnifaces</groupId>
+            <artifactId>omnifaces</artifactId>
+            <version>2.2</version>
+            <scope>compile</scope>
+        </dependency>
         <!--
             Arquillian
          -->

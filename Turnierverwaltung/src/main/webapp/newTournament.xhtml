@@ -13,23 +13,25 @@
     <h:outputStylesheet library="css" name="style.css"  />
     <p:growl id="msg" showDetail="true" escape="false"/>
     <h:form id="selectionMenu">
+        <ui:remove>
         <p:remoteCommand name="updateTable" update="dataTable" actionListener="#{newTournamentController.teams}"/>
+        </ui:remove>
         <p:steps activeIndex="#{param.i}" styleClass="custom" readonly="false" rendered="#{param.i>3==false}">
-            <p:menuitem value="Turnierart auswählen">
+            <p:menuitem value="Turnierart auswählen" style="color: #0081c2;">
                 <f:param name="i" value="0"></f:param>
             </p:menuitem>
             <p:menuitem value="Generelle Turnierdaten eingeben">
-                <f:param name="i" value="1"></f:param>
+                <f:param name="i" value="1" style="color: #0081c2;"></f:param>
             </p:menuitem>
-            <p:menuitem value="Payment">
-                <f:param name="i" value="2"></f:param>
+            <p:menuitem value="Eingaben überprüfen">
+                <f:param name="i" value="2" style="color: #0081c2;"></f:param>
             </p:menuitem>
-            <p:menuitem value="Confirmation">
-                <f:param name="i" value="3"></f:param>
+            <p:menuitem value="Turnier starten">
+                <f:param name="i" value="3" style="color: #0081c2;"></f:param>
             </p:menuitem>
         </p:steps>
         <p:outputPanel id="pickPanel" rendered="#{param.i==0||param.i==null}" styleClass="center">
-            <h:form>
+
                 <p:pickList id="pickList" value="#{newTournamentController.types}" effect="bounce" showTargetFilter="true"
                             var="types" itemLabel="#{types}" responsive="true" showSourceFilter="true"
                             itemValue="#{types}" filterMatchMode="contains">
@@ -40,7 +42,7 @@
                         <h:outputText value="#{types}"/>
                     </p:column>
                 </p:pickList>
-            </h:form>
+
         </p:outputPanel>
         <p:outputPanel rendered="#{param.i==1}">
             <p:outputPanel style= "float: left" styleClass="west">
@@ -82,18 +84,15 @@
                         <h:outputText value="#{ov}" />
                     </p:column>
                 </p:dataTable>
-                <p:outputLabel>
-                    <p:button id="groupPhaseButton" value="Gruppenphase" icon="#{newTournamentController.groupPhaseIcon}"/>
-                    <p:commandButton id="typesSubmit" value="Mehr Infos"
+                <p:outputPanel>
+                    <p:button value="Gruppenphase" style="margin-left: 36.5%" icon="#{newTournamentController.determineGroupPhaseIcon()}">
+                    </p:button>
+                    <p:commandButton id="typesSubmit" value="Mehr Informationen"
                                      update="displayTypes"
                                      oncomplete="PF('typesDialog').show()"
-                                     style="margin-left: 54.335%"/>
-                    <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="typesDialog" styleClass="center" style="margin-top: -11.5%">
+                                     style="margin-top:5px"/>
+                    <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="typesDialog" styleClass="center">
                         <h:panelGrid id="displayTypes" columns="2">
-                            <h:outputText value="Ausgewählte Turniersysteme: " style="font-weight:bold"/>
-                            <ui:repeat value="#{newTournamentController.selectedTypes}" var="item">
-                                <h:outputText value="#{item}" style="margin-right:5px"/>
-                            </ui:repeat>
                             <h:outputText value="Anzahl der Teams: " style="font-weight:bold"/>
                             <h:outputText value="#{newTournamentController.teamCount}" style="margin-right:5px"/>
                             <h:outputText value="Gruppengröße: " style="font-weight:bold"/>
@@ -104,16 +103,19 @@
                             <h:outputText value="#{newTournamentController.pointsDraw}" style="margin-right:5px"/>
                         </h:panelGrid>
                     </p:dialog>
-                </p:outputLabel>
+                </p:outputPanel>
             </p:outputPanel>
-            <p:outputPanel styleClass="center" style="margin-top: -5.5%">
+            <p:outputPanel styleClass="center" style="margin-top: -71px">
                 <p:dataTable var="team" value="#{newTournamentController.teams}">
-                    <p:column headerText="Teams:">
+                    <p:column headerText="Name">
                         <h:outputText value="#{team.name}" />
                     </p:column>
                 </p:dataTable>
             </p:outputPanel>
-
+        </p:outputPanel>
+        <p:outputPanel rendered="#{param.i==3}">
+            <p:outputPanel styleClass="center">
+            </p:outputPanel>
         </p:outputPanel>
         <p:outputPanel rendered="#{param.i>3}">
         </p:outputPanel>
