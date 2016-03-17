@@ -13,7 +13,7 @@
     <h:outputStylesheet library="css" name="style.css"  />
     <p:growl id="msg" showDetail="true" escape="false"/>
     <h:form id="selectionMenu">
-        <p:remoteCommand name="updateTable" update="dataTable" actionListener="#{newTournamentController.updateTeamList}"></p:remoteCommand>
+        <p:remoteCommand name="updateTable" update="dataTable" actionListener="#{newTournamentController.teams}"/>
         <p:steps activeIndex="#{param.i}" styleClass="custom" readonly="false" rendered="#{param.i>3==false}">
             <p:menuitem value="Turnierart auswählen">
                 <f:param name="i" value="0"></f:param>
@@ -76,7 +76,17 @@
             </p:outputPanel>
         </p:outputPanel>
         <p:outputPanel rendered="#{param.i==2}">
-            <p:outputPanel styleClass="center">
+            <p:outputLabel value="4"/>
+            <p:outputPanel styleClass="center" style="margin-top: 5%">
+                <p:dataTable var="ov" value="#{newTournamentController.tournamentSystem}">
+                    <p:column headerText="Turnierart">
+                        <h:outputText value="#{ov}" />
+                    </p:column>
+                </p:dataTable>
+                <p:button value="Gruppenphase" style="margin-left: 36.5%" icon="#{newTournamentController.determineGroupPhaseIcon()}">
+                </p:button>
+            </p:outputPanel>
+            <p:outputPanel styleClass="center" style="margin-top: -71px">
                 <p:dataTable var="team" value="#{newTournamentController.teams}">
                     <p:column headerText="Name">
                         <h:outputText value="#{team.name}" />
@@ -96,11 +106,8 @@
                 </p:button>
             </p:outputPanel>
             <p:outputPanel styleClass="center" style="margin-top: -71px">
-                <p:dataTable var="overview" value="#{newTournamentController.teams}">
-                    <p:column headerText="Id">
-                        <h:outputText value="#{team.id}" />
-                    </p:column>
-                    <p:column headerText="Team Name">
+                <p:dataTable var="team" value="#{newTournamentController.teams}">
+                    <p:column headerText="Name">
                         <h:outputText value="#{team.name}" />
                     </p:column>
                 </p:dataTable>

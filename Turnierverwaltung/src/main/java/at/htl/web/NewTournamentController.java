@@ -36,7 +36,7 @@ import java.util.List;
     private int groupSize = 3;
     private int pointsWin=3;
     private int pointsDraw=1;
-    private List<Team> teams=new ArrayList<Team>();
+    private List<Team> teams;
     private String tournamentSystem;
 
 
@@ -64,7 +64,6 @@ import java.util.List;
         typesSource.add("KO-System");
 
         types = new DualListModel<String>(typesSource, typesTarget);
-        updateTeamList();
     }
 
 
@@ -97,14 +96,15 @@ import java.util.List;
 
     }
 
-    public List<Team> updateTeamList(){
-        for (int i = 0; i < teamCount; i++) {
-            teams.add(new Team("Team"+i,false));
+    /*public List<Team> updateTeamList(){
+        for (int i = 1; i < teamCount+1; i++) {
+            teams.add(new Team("Team "+i,false));
         }
+        System.out.println(getSelectedTypes().size()+"-"+getTeamCount()+"-"+getGroupSize()+"-"+getPointsDraw());
         return teams;
-    }
+    }*/
     public void onSlideEnd(SlideEndEvent event) {
-        updateTeamList();
+        getTeams();
     }
     /*
     public void onSelect(SelectEvent event) {
@@ -205,6 +205,11 @@ import java.util.List;
     }
 
     public List<Team> getTeams() {
+        teams = new ArrayList<Team>();
+        for (int i = 1; i < teamCount+1; i++) {
+            teams.add(new Team("Team "+i,false));
+        }
+        System.out.println(getSelectedTypes().size()+"-"+getTeamCount()+"-"+getGroupSize()+"-"+getPointsDraw());
         return teams;
     }
 
