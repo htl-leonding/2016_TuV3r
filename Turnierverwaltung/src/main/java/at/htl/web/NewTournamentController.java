@@ -36,7 +36,8 @@ import java.util.List;
     private int groupSize = 3;
     private int pointsWin=3;
     private int pointsDraw=1;
-    private List<Team> teams;
+    private List<Team> teams=new ArrayList<Team>();
+    private String tournamentSystem;
 
 
     public Tournament getLatestTournament(){
@@ -50,8 +51,9 @@ import java.util.List;
         return tournamentFacade.findAllClosedTournaments();
     }
 
-
-
+    /**
+     * Fügt die verschiedenen Systeme in die Source-List ein
+     */
     @PostConstruct
     public void setupPickList(){
         List<String> typesSource = new ArrayList<String>();
@@ -62,9 +64,9 @@ import java.util.List;
         typesSource.add("KO-System");
 
         types = new DualListModel<String>(typesSource, typesTarget);
-
         updateTeamList();
     }
+
 
     /**
      * Wird aufgerufen, wenn bei der Picklist ein Element auf die andere Seite geschoben
@@ -95,15 +97,15 @@ import java.util.List;
 
     }
 
-    public void updateTeamList(){
-        teams=new ArrayList<Team>();
-        for (int i = 1; i < getTeamCount()+1; i++) {
-            teams.add(new Team("Team "+i,false));
+    public List<Team> updateTeamList(){
+        for (int i = 0; i < teamCount; i++) {
+            teams.add(new Team("Team"+i,false));
         }
-        System.out.println(getTeamCount()+"-"+getGroupSize()+"-"+getPointsWin()+"-"+getPointsDraw()+"-"+teams.size());
+        return teams;
     }
-
-
+    public void onSlideEnd(SlideEndEvent event) {
+        updateTeamList();
+    }
     /*
     public void onSelect(SelectEvent event) {
         FacesContext context = FacesContext.getCurrentInstance();
@@ -119,6 +121,19 @@ import java.util.List;
         FacesContext context = FacesContext.getCurrentInstance();
         context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "List Reordered", null));
     }
+
+    <p:commandButton id="typesSubmit" value="Submit"
+                                 update="displayTypes"
+                                 oncomplete="PF('typesDialog').show()"
+                                 style="margin-top:5px"/>
+                <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="typesDialog" styleClass="center">
+                    <h:panelGrid id="displayTypes" columns="2">
+                        <h:outputText value="Ausgewählte Turniersysteme: " style="font-weight:bold"/>
+                        <ui:repeat value="#{newTournamentController.selectedTypes}" var="item">
+                            <h:outputText value="#{item}" style="margin-right:5px"/>
+                        </ui:repeat>
+                    </h:panelGrid>
+                </p:dialog>
 */
 
 
@@ -128,13 +143,17 @@ import java.util.List;
         return "icon-check-empty";
     }
 
-    public String getTournamentSystem(){
+    public String getTournamentSystem() {
         for (String s : selectedTypes) {
-            if(s=="KO-System"){
+            if(s.equals("KO-System")){
                 return s;
             }
         }
         return "none";
+    }
+
+    public void setTournamentSystem(String tournamentSystem) {
+        this.tournamentSystem = tournamentSystem;
     }
 
     public List<String> getSelectedTypes() {
@@ -192,5 +211,4 @@ import java.util.List;
     public void setTeams(List<Team> teams) {
         this.teams = teams;
     }
-
 }
