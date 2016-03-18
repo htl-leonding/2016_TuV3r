@@ -141,8 +141,8 @@ public class NewTournamentController implements Serializable {
 
     public String determineGroupPhaseIcon() {
         if (selectedTypes.contains("Gruppenphase"))
-            return "icon-check";
-        return "icon-check-empty";
+            return "ui-icon-check";
+        return "ui-icon-close";
     }
 
     public String getTournamentSystem() {
