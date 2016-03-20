@@ -2,12 +2,12 @@
     width: 24%;
     margin-top: 50px;
 }
-/*
+
 .ui-steps .ui-steps-title {
     color: black;
 }
 
-
+/*
 .east {
     position: absolute;
     margin-top: 15%;
@@ -31,14 +31,14 @@
     left: 2%;
     margin-top: 12%;
 }
-
+*/
 .center {
     margin: 0 auto;
-    margin-top: 12%;
-    width: 650px;
+    margin-top: 0%;
+    width: 70%;
     height: 200px;
 }
-*/
+
 .ui-steps.custom .ui-steps-item .ui-menuitem-link {
     height: 10px;
     padding: 0 1em;
@@ -53,3 +53,30 @@
     margin-top: -12px;
     margin-bottom: 10px;
 }
+
+#header {
+    background-color:#eeeeee;
+    color:darkblue;
+    text-align:center;
+    padding:5px;
+    height: 150px;
+}
+#nav {
+    line-height:30px;
+    background-color:#eeeeee;
+    height:100%;
+    width:30%;
+    float:left;
+    padding:5px;
+}
+#section {
+    padding:10px;
+    height: 100%
+}
+#footer {
+    background-color:white;
+    color:black;
+    clear:both;
+    padding:5px;
+}
+

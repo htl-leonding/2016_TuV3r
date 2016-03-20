@@ -3,6 +3,8 @@ package at.htl.web;
 import at.htl.entity.Team;
 import at.htl.entity.Tournament;
 import at.htl.logic.TournamentFacade;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.SlideEndEvent;
 import org.primefaces.event.TransferEvent;
@@ -12,15 +14,18 @@ import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-@SessionScoped
 @Named
+@SessionScoped
 public class NewTournamentController implements Serializable {
+
+    private static final Logger logger = LogManager.getLogger(NewTournamentController.class);
 
     @Inject
     private TournamentFacade tournamentFacade;
@@ -102,12 +107,13 @@ public class NewTournamentController implements Serializable {
         return teams;
     }*/
     public void onSlideEnd(SlideEndEvent event) {
-        System.out.println("************************ " + event.getValue());
+        logger.info("************************ " + event.getValue());
 
         getTeams();
 
-        Messages.add(null, new FacesMessage("onSlideend"));
+        Messages.add(null, new FacesMessage("onSlideend: " + event.getValue()));
     }
+
     /*
     public void onSelect(SelectEvent event) {
         FacesContext context = FacesContext.getCurrentInstance();
