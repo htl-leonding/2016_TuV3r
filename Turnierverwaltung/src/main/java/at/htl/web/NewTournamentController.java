@@ -3,14 +3,12 @@ package at.htl.web;
 import at.htl.entity.Team;
 import at.htl.entity.Tournament;
 import at.htl.logic.TournamentFacade;
-import org.primefaces.event.SelectEvent;
+import org.omnifaces.util.Messages;
 import org.primefaces.event.SlideEndEvent;
 import org.primefaces.event.TransferEvent;
-import org.primefaces.event.UnselectEvent;
 import org.primefaces.model.DualListModel;
 
 import javax.annotation.PostConstruct;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -20,24 +18,23 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-
 @SessionScoped
 @Named
 public class NewTournamentController implements Serializable {
+
     @Inject
-    TournamentFacade tournamentFacade;
+    private TournamentFacade tournamentFacade;
 
 
     private DualListModel<String> types;
-    private List<String> selectedTypes = new ArrayList<String>();
-    List<String> typesSource = new ArrayList<String>();
-    List<String> typesTarget = new ArrayList<String>();
+    private List<String> selectedTypes = new ArrayList<>();
     private int teamCount = 10;
     private int groupSize = 3;
     private int pointsWin = 3;
     private int pointsDraw = 1;
     private List<Team> teams;
     private String tournamentSystem;
+    private String groupPhaseIcon;
 
 
     public Tournament getLatestTournament() {
@@ -57,14 +54,14 @@ public class NewTournamentController implements Serializable {
      */
     @PostConstruct
     public void setupPickList() {
+        List<String> typesSource = new ArrayList<>();
+        List<String> typesTarget = new ArrayList<>();
 
         typesSource.add("Gruppenphase");
-        typesSource.add("Leitersystem");
-        typesSource.add("Schweizersystem");
-        typesSource.add("Doppel-KO-System");
+        typesSource.add("2 Gruppenphasen");
         typesSource.add("KO-System");
 
-        types = new DualListModel<String>(typesSource, typesTarget);
+        types = new DualListModel<>(typesSource, typesTarget);
     }
 
 
@@ -105,8 +102,11 @@ public class NewTournamentController implements Serializable {
         return teams;
     }*/
     public void onSlideEnd(SlideEndEvent event) {
-        System.out.println("**************************** slideEnd: " + teamCount + " / " + event.getValue());
+        System.out.println("************************ " + event.getValue());
+
         getTeams();
+
+        Messages.add(null, new FacesMessage("onSlideend"));
     }
     /*
     public void onSelect(SelectEvent event) {
@@ -139,7 +139,7 @@ public class NewTournamentController implements Serializable {
 */
 
 
-    public String determineGroupPhaseIcon() {
+    public String getGroupPhaseIcon() {
         if (selectedTypes.contains("Gruppenphase"))
             return "ui-icon-check";
         return "ui-icon-close";
@@ -147,11 +147,8 @@ public class NewTournamentController implements Serializable {
 
     public String getTournamentSystem() {
         for (String s : selectedTypes) {
-            if (!s.equals("Gruppenphase")) {
-                for (String types : typesSource) {
-                    if (types.equals(s))
-                        return s;
-                }
+            if (s.equals("KO-System") || s.equals("Leitersystem") || s.equals("Schweizersystem")) {
+                return s;
             }
         }
         return "none";
@@ -210,11 +207,11 @@ public class NewTournamentController implements Serializable {
     }
 
     public List<Team> getTeams() {
-        System.out.println("******************************* getTeams " + teamCount);
         teams = new ArrayList<Team>();
         for (int i = 1; i < teamCount + 1; i++) {
             teams.add(new Team("Team " + i, false));
         }
+        System.out.println(getSelectedTypes().size() + "-" + getTeamCount() + "-" + getGroupSize() + "-" + getPointsDraw());
         return teams;
     }
 

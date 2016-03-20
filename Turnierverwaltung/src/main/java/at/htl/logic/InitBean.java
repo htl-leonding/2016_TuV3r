@@ -21,18 +21,18 @@ import java.util.List;
 @Singleton
 public class InitBean {
     @PersistenceContext
-    EntityManager em;
+    private EntityManager em;
 
     @Inject
     private TournamentSystems systems;
 
-    final int TEAM_COUNT = 17;
+    private final int TEAM_COUNT = 17;
 
     @PostConstruct
     public void init(){
-        /*List<Team> teams = new ArrayList<Team>();
+        List<Team> teams;
         for (long j = 1; j<3;j++) {
-            teams = new ArrayList<Team>();
+            teams = new ArrayList<>();
             for (long i = 1; i < TEAM_COUNT + 1; i++) {
                 Team team = new Team("Team" + i, false, 0);
                 em.persist(team);
@@ -51,7 +51,7 @@ public class InitBean {
                 t.setTournament(tournament);
                 em.merge(t);
             }
-        }*/
+        }
 
     }
 }
