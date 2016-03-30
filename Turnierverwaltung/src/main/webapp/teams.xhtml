@@ -38,20 +38,20 @@
         </f:facet>
 
         <p:row >
-            <p:column style="font-weight: bold;">#{teamsController.teamsByRank.get(7).name}</p:column>
+            <p:column style="font-weight: bold;">#{teamsController.winner.name}</p:column>
             <p:column style="font-weight: bold;">4</p:column>
 
-            <p:column rowspan="2" style="font-weight: bold;">#{teamsController.teamsByRank.get(3).name}</p:column>
+            <p:column rowspan="2" style="font-weight: bold;">#{teamsController.winner.name}</p:column>
             <p:column rowspan="2" style="font-weight: bold;">4</p:column>
 
-            <p:column rowspan="5">#{teamsController.teamsByRank.get(1).name}</p:column>
+            <p:column rowspan="5">#{teamsController.winner.name}</p:column>
             <p:column rowspan="5">2</p:column>
 
-            <p:column rowspan="11" style="font-weight: bold;">#{teamsController.teamsByRank.get(0).name}</p:column>
+            <p:column rowspan="11" style="font-weight: bold;">#{teamsController.winner.name}</p:column>
         </p:row>
 
         <p:row>
-            <p:column>Houston</p:column>
+            <p:column>#{teamsController.getOpponent(teamsController.winner,teamsController.quarterFinalMatches).name}</p:column>
             <p:column >0</p:column>
         </p:row>
 
@@ -62,15 +62,15 @@
         </p:row>
 
         <p:row>
-            <p:column style="font-weight: bold;">Utah</p:column>
+            <p:column style="font-weight: bold;">#{teamsController.getOpponent(teamsController.winner,teamsController.semiFinalMatches).name}</p:column>
             <p:column style="font-weight: bold;">4</p:column>
 
-            <p:column rowspan="2">Utah</p:column>
+            <p:column rowspan="2">#{teamsController.getOpponent(teamsController.winner,teamsController.semiFinalMatches).name}</p:column>
             <p:column rowspan="2">3</p:column>
         </p:row>
 
         <p:row>
-            <p:column>San Antonio</p:column>
+            <p:column>#{teamsController.getOpponent(teamsController.getOpponent(teamsController.winner,teamsController.semiFinalMatches),teamsController.quarterFinalMatches).name}</p:column>
             <p:column >2</p:column>
         </p:row>
 
@@ -81,18 +81,18 @@
         </p:row>
 
         <p:row>
-            <p:column style="font-weight: bold;">Chicago</p:column>
+            <p:column style="font-weight: bold;">#{teamsController.runnerUp.name}</p:column>
             <p:column style="font-weight: bold;">4</p:column>
 
-            <p:column rowspan="2" style="font-weight: bold;">Chicago</p:column>
+            <p:column rowspan="2" style="font-weight: bold;">#{teamsController.runnerUp.name}</p:column>
             <p:column rowspan="2" style="font-weight: bold;">4</p:column>
 
-            <p:column rowspan="5" style="font-weight: bold;">Chicago</p:column>
+            <p:column rowspan="5" style="font-weight: bold;">#{teamsController.runnerUp.name}</p:column>
             <p:column rowspan="5" style="font-weight: bold;">4</p:column>
         </p:row>
 
         <p:row>
-            <p:column>New York</p:column>
+            <p:column>#{teamsController.getOpponent(teamsController.runnerUp,teamsController.quarterFinalMatches).name}</p:column>
             <p:column >1</p:column>
         </p:row>
 
@@ -103,15 +103,15 @@
         </p:row>
 
         <p:row>
-            <p:column>Atlanta</p:column>
+            <p:column>#{teamsController.getOpponent(teamsController.runnerUp,teamsController.semiFinalMatches).name}</p:column>
             <p:column >1</p:column>
 
-            <p:column rowspan="2">Orlando</p:column>
+            <p:column rowspan="2">#{teamsController.getOpponent(teamsController.runnerUp,teamsController.semiFinalMatches).name}</p:column>
             <p:column rowspan="2">0</p:column>
         </p:row>
 
         <p:row>
-            <p:column style="font-weight: bold;">Orlando</p:column>
+            <p:column style="font-weight: bold;">#{teamsController.getOpponent(teamsController.getOpponent(teamsController.runnerUp,teamsController.semiFinalMatches),teamsController.quarterFinalMatches).name}</p:column>
             <p:column style="font-weight: bold;">4</p:column>
         </p:row>
 
@@ -122,7 +122,7 @@
                     Finals MVP
                 </p:column>
                 <p:column  colspan="3" rowspan="3">
-                    Michael Jordan (Chicago)
+                    Max Mustermann
                 </p:column>
             </p:row>
 
