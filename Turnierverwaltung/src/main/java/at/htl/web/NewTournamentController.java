@@ -5,6 +5,7 @@ import at.htl.entity.Tournament;
 import at.htl.logic.TournamentFacade;
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
+import at.htl.logic.TournamentSystems;
 import org.omnifaces.util.Messages;
 import org.primefaces.event.SlideEndEvent;
 import org.primefaces.event.TransferEvent;
@@ -18,6 +19,7 @@ import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,6 +32,8 @@ public class NewTournamentController implements Serializable {
     @Inject
     private TournamentFacade tournamentFacade;
 
+    @Inject
+    private TournamentSystems systems;
 
     private DualListModel<String> types;
     private List<String> selectedTypes = new ArrayList<>();
@@ -108,6 +112,33 @@ public class NewTournamentController implements Serializable {
         System.out.println(getSelectedTypes().size()+"-"+getTeamCount()+"-"+getGroupSize()+"-"+getPointsDraw());
         return teams;
     }*/
+
+    public void buttonAction(ActionEvent actionEvent) {
+        Tournament tournament = new Tournament("Schulcup", LocalDate.now(), true, teams);
+        systems.koSystemRound(systems.manageGroupPhase(tournament));
+        /*for (long j = 1; j<3;j++) {
+            teams = new ArrayList<Team>();
+            for (long i = 1; i < TEAM_COUNT + 1; i++) {
+                Team team = new Team("Team" + i, false, 0);
+                em.persist(team);
+                //team = teamFacade.save(team);
+                teams.add(team);
+            }
+            Tournament tournament = new Tournament("Schulcup"+j, LocalDate.now().minusDays(j), true, teams);
+            em.persist(tournament);
+            systems.koSystemRound(systems.manageGroupPhase(tournament));
+            //systems.koSystemRound(teams);
+            //systems.koSystemRound(systems.manageGroupPhase(teams));
+
+            //systems.getRankKoSystem();
+            tournament.setTeams(teams);
+            for(Team t : teams){
+                t.setTournament(tournament);
+                em.merge(t);
+            }
+        }*/
+    }
+
     public void onTeamCountSlideEnd(SlideEndEvent event) {
         //logger.info("************************ " + event.getValue());
         setTeamCount(event.getValue());

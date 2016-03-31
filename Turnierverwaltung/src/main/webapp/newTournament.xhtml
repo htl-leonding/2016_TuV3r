@@ -91,7 +91,12 @@
             </h:panelGrid>
         </h:form>
     </div>
-
+    <div style="display:#{(param.i==3)?'block':'none'};float: right">
+        <h:form>
+            <p:commandButton id="startTournamentBtn" value="Starte Tournier"
+            actionListener="#{newTournamentController.buttonAction}"/>
+        </h:form>
+    </div>
 
     <!-- ***********************************************************
                          SECTION (CENTER)

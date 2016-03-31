@@ -34,6 +34,13 @@ public class TournamentSystems {
      */
     public List<Team> manageGroupPhase(Tournament tournament) {
         List<Team> teams = (List<Team>) tournament.getTeams();
+        for (Team team : teams) {
+            em.persist(team);
+        }
+        em.persist(tournament);
+        for (Team team : teams) {
+            team.setTournament(tournament);
+        }
         mergeTeams(teams);
         List<Group> groups = new ArrayList<Group>();
         groups.add(new Group());
@@ -41,6 +48,7 @@ public class TournamentSystems {
         while (!((groups.size() & -groups.size()) == groups.size()) || teams.size() / groups.size() > MAX_GROUP_SIZE) {
             groups.add(new Group());
         }
+
         int countAssignedTeams = fillGroup(groups, teams);
         addRemainingTeamsInExistingGroups(countAssignedTeams, teams, groups);
         return getWinnerList(groups);
@@ -281,7 +289,10 @@ public class TournamentSystems {
     public void setMatchesForOneRound(List<Team> teams, List<Match> matches){
         for (int i = 0; i < teams.size(); i = i + 2) {
             //Es werden alle Matches in diesem Umlauf gesetzt
-            Match match = new Match(true, teams.get(i), teams.get(i + 1), new Result());
+            //Match match = new Match(true, teams.get(i), teams.get(i + 1), new Result());
+            Team t1 = em.find(Team.class, teams.get(i).getId());
+            Team t2 = em.find(Team.class, teams.get(i+1).getId());
+            Match match = new Match(true, t1, t2, new Result());
             em.persist(match);
             matches.add(match);
         }
