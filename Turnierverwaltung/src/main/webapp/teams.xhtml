@@ -8,21 +8,6 @@
 <h:body>
     <ui:include src="header.xhtml"></ui:include>
     <h:outputStylesheet library="css" name="style.css"  />
-    <!-- <p:dataTable id="team_table" var="team" value="#{teamsController.teams}">
-        <p:column headerText="Id">
-            <h:outputText value="#{team.id}"/>
-        </p:column>
-        <p:column headerText="Name">
-            <h:outputText value="#{team.name}"/>
-        </p:column>
-        <p:column headerText="Gruppe">
-            <h:outputText value="#{team.group}"/>
-        </p:column>
-        <p:column headerText="Rang">
-            <h:outputText value="#{team.rank}"/>
-        </p:column>
-    </p:dataTable>
-    -->
     <p:panelGrid style="margin-top:20px">
         <f:facet name="header">
             <p:row>
@@ -39,20 +24,35 @@
 
         <p:row >
             <p:column style="font-weight: bold;">#{teamsController.winner.name}</p:column>
-            <p:column style="font-weight: bold;">4</p:column>
+            <p:column style="font-weight: bold;">
+                #{teamsController.getScore(teamsController.winner,teamsController
+                        .findMatch(teamsController.winner,teamsController.quarterFinalMatches))}
+            </p:column>
 
             <p:column rowspan="2" style="font-weight: bold;">#{teamsController.winner.name}</p:column>
-            <p:column rowspan="2" style="font-weight: bold;">4</p:column>
+            <p:column rowspan="2" style="font-weight: bold;">
+                #{teamsController.getScore(teamsController.winner,teamsController
+                        .findMatch(teamsController.winner,teamsController.semiFinalMatches))}
+            </p:column>
 
-            <p:column rowspan="5">#{teamsController.winner.name}</p:column>
-            <p:column rowspan="5">2</p:column>
+            <p:column rowspan="5" style="font-weight: bold;">#{teamsController.winner.name}</p:column>
+            <p:column rowspan="5" style="font-weight: bold;">
+                #{teamsController.getScore(teamsController.winner,teamsController
+                        .finalMatch)}
+            </p:column>
 
             <p:column rowspan="11" style="font-weight: bold;">#{teamsController.winner.name}</p:column>
         </p:row>
 
         <p:row>
             <p:column>#{teamsController.getOpponent(teamsController.winner,teamsController.quarterFinalMatches).name}</p:column>
-            <p:column >0</p:column>
+            <p:column >
+                #{teamsController.getScore(teamsController
+                        .getOpponent(teamsController.winner,teamsController.quarterFinalMatches),teamsController
+                        .findMatch(teamsController
+                        .getOpponent(teamsController.winner,teamsController.quarterFinalMatches)
+                        ,teamsController.quarterFinalMatches))}
+            </p:column>
         </p:row>
 
         <p:row>
@@ -62,16 +62,41 @@
         </p:row>
 
         <p:row>
-            <p:column style="font-weight: bold;">#{teamsController.getOpponent(teamsController.winner,teamsController.semiFinalMatches).name}</p:column>
-            <p:column style="font-weight: bold;">4</p:column>
+            <p:column style="font-weight: bold;">
+                #{teamsController.getOpponent(teamsController.winner,teamsController.semiFinalMatches).name}
+            </p:column>
+            <p:column style="font-weight: bold;">
+                #{teamsController.getScore(teamsController
+                        .getOpponent(teamsController.winner,teamsController.semiFinalMatches),teamsController
+                        .findMatch(teamsController.getOpponent(teamsController.winner,teamsController.semiFinalMatches)
+                        ,teamsController.quarterFinalMatches))}
+            </p:column>
 
-            <p:column rowspan="2">#{teamsController.getOpponent(teamsController.winner,teamsController.semiFinalMatches).name}</p:column>
-            <p:column rowspan="2">3</p:column>
+            <p:column rowspan="2">
+                #{teamsController.getOpponent(teamsController.winner,teamsController.semiFinalMatches).name}
+            </p:column>
+            <p:column rowspan="2">
+                #{teamsController.getScore(teamsController
+                        .getOpponent(teamsController.winner,teamsController.semiFinalMatches),teamsController
+                        .findMatch(teamsController.getOpponent(teamsController.winner,teamsController.semiFinalMatches)
+                        ,teamsController.semiFinalMatches))}
+            </p:column>
         </p:row>
 
         <p:row>
-            <p:column>#{teamsController.getOpponent(teamsController.getOpponent(teamsController.winner,teamsController.semiFinalMatches),teamsController.quarterFinalMatches).name}</p:column>
-            <p:column >2</p:column>
+            <p:column>
+                #{teamsController.getOpponent(teamsController
+                        .getOpponent(teamsController.winner,teamsController.semiFinalMatches)
+                        ,teamsController.quarterFinalMatches).name}
+            </p:column>
+            <p:column>
+                #{teamsController.getScore(teamsController.getOpponent(teamsController
+                        .getOpponent(teamsController.winner,teamsController.semiFinalMatches)
+                        ,teamsController.quarterFinalMatches),teamsController
+                        .findMatch(teamsController.getOpponent(teamsController
+                        .getOpponent(teamsController.winner,teamsController.semiFinalMatches)
+                        ,teamsController.quarterFinalMatches),teamsController.quarterFinalMatches))}
+            </p:column>
         </p:row>
 
         <p:row>
@@ -82,18 +107,34 @@
 
         <p:row>
             <p:column style="font-weight: bold;">#{teamsController.runnerUp.name}</p:column>
-            <p:column style="font-weight: bold;">4</p:column>
+            <p:column style="font-weight: bold;">
+                #{teamsController.getScore(teamsController.runnerUp,teamsController
+                        .findMatch(teamsController.runnerUp,teamsController.quarterFinalMatches))}
+            </p:column>
 
             <p:column rowspan="2" style="font-weight: bold;">#{teamsController.runnerUp.name}</p:column>
-            <p:column rowspan="2" style="font-weight: bold;">4</p:column>
+            <p:column rowspan="2" style="font-weight: bold;">
+                #{teamsController.getScore(teamsController.runnerUp,teamsController
+                        .findMatch(teamsController.runnerUp,teamsController.semiFinalMatches))}
+            </p:column>
 
-            <p:column rowspan="5" style="font-weight: bold;">#{teamsController.runnerUp.name}</p:column>
-            <p:column rowspan="5" style="font-weight: bold;">4</p:column>
+            <p:column rowspan="5">#{teamsController.runnerUp.name}</p:column>
+            <p:column rowspan="5">
+                #{teamsController.getScore(teamsController.runnerUp,teamsController
+                        .finalMatch)}
+            </p:column>
         </p:row>
 
         <p:row>
-            <p:column>#{teamsController.getOpponent(teamsController.runnerUp,teamsController.quarterFinalMatches).name}</p:column>
-            <p:column >1</p:column>
+            <p:column>
+                #{teamsController.getOpponent(teamsController.runnerUp,teamsController.quarterFinalMatches).name}
+            </p:column>
+            <p:column >#{teamsController.getScore(teamsController
+                    .getOpponent(teamsController.runnerUp,teamsController.quarterFinalMatches),teamsController
+                    .findMatch(teamsController
+                    .getOpponent(teamsController.runnerUp,teamsController.quarterFinalMatches)
+                    ,teamsController.quarterFinalMatches))}
+            </p:column>
         </p:row>
 
         <p:row>
@@ -103,16 +144,42 @@
         </p:row>
 
         <p:row>
-            <p:column>#{teamsController.getOpponent(teamsController.runnerUp,teamsController.semiFinalMatches).name}</p:column>
-            <p:column >1</p:column>
+            <p:column style="font-weight: bold;">
+                #{teamsController.getOpponent(teamsController.runnerUp,teamsController.semiFinalMatches).name}
+            </p:column>
+            <p:column style="font-weight: bold;">
+                #{teamsController.getScore(teamsController
+                        .getOpponent(teamsController.runnerUp,teamsController.semiFinalMatches),teamsController
+                        .findMatch(teamsController.getOpponent(teamsController.runnerUp,teamsController.semiFinalMatches)
+                        ,teamsController.quarterFinalMatches))}
+            </p:column>
 
-            <p:column rowspan="2">#{teamsController.getOpponent(teamsController.runnerUp,teamsController.semiFinalMatches).name}</p:column>
-            <p:column rowspan="2">0</p:column>
+            <p:column rowspan="2">
+                #{teamsController.getOpponent(teamsController.runnerUp,teamsController.semiFinalMatches).name}
+            </p:column>
+            <p:column rowspan="2">
+                #{teamsController.getScore(teamsController
+                        .getOpponent(teamsController.runnerUp,teamsController.semiFinalMatches),teamsController
+                        .findMatch(teamsController.getOpponent(teamsController.runnerUp,teamsController.semiFinalMatches)
+                        ,teamsController.semiFinalMatches))}
+            </p:column>
         </p:row>
 
         <p:row>
-            <p:column style="font-weight: bold;">#{teamsController.getOpponent(teamsController.getOpponent(teamsController.runnerUp,teamsController.semiFinalMatches),teamsController.quarterFinalMatches).name}</p:column>
-            <p:column style="font-weight: bold;">4</p:column>
+            <p:column>
+                #{teamsController
+                        .getOpponent(teamsController
+                        .getOpponent(teamsController.runnerUp,teamsController.semiFinalMatches)
+                        ,teamsController.quarterFinalMatches).name}
+            </p:column>
+            <p:column>
+                #{teamsController.getScore(teamsController.getOpponent(teamsController
+                        .getOpponent(teamsController.runnerUp,teamsController.semiFinalMatches)
+                        ,teamsController.quarterFinalMatches),teamsController
+                        .findMatch(teamsController.getOpponent(teamsController
+                        .getOpponent(teamsController.runnerUp,teamsController.semiFinalMatches)
+                        ,teamsController.quarterFinalMatches),teamsController.quarterFinalMatches))}
+            </p:column>
         </p:row>
 
 
