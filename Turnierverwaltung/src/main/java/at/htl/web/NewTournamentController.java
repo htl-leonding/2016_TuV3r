@@ -116,12 +116,8 @@ public class NewTournamentController implements Serializable {
     public void buttonAction(ActionEvent actionEvent) {
         Tournament tournament = new Tournament("Schulcup", LocalDate.now(), true, teams);
 
-        systems.setOptions(getGroupSize(),getPointsDraw(),getPointsWin());
+        systems.launchTournament(getGroupSize(),getPointsDraw(),getPointsWin(),getSelectedTypes(),tournament);
 
-        if(getSelectedTypes().contains("Gruppenphase")){
-
-        }
-        //systems.koSystemRound(systems.manageGroupPhase(tournament));
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("window.open('http://localhost:8080/Turnierverwaltung/faces/index.xhtml','_self')");
         /*FacesContext facesContext = FacesContext.getCurrentInstance();

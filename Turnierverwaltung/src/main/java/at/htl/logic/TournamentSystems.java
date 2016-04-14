@@ -26,6 +26,20 @@ public class TournamentSystems {
             "T","U","V","W","X","Y","Z","AA","BB","CC","DD","EE","FF"};
     int groupSize = 5;
 
+
+    public void launchTournament(int groupSize, int pointsDraw, int pointsWon,List<String> selectedTypes,Tournament tournament){
+        this.groupSize=groupSize;
+        this.pointsWon=pointsWon;
+        this.pointsDraw=pointsDraw;
+
+        if(selectedTypes!=null && selectedTypes.contains("Gruppenphase")){
+            koSystemRound(manageGroupPhase(tournament),null);
+        }
+        else{
+            koSystemRound(null,tournament);
+        }
+    }
+
     /**
      * Erstellt die Gruppen, abhaengig von der Groeße der Teams, und gibt die Sieger
      * der Gruppenn zurueck
@@ -66,18 +80,22 @@ public class TournamentSystems {
         return getWinnerList(groups);
     }*/
 
-    public void setOptions(int groupSize, int pointsDraw, int pointsWon){
-        this.groupSize=groupSize;
-        this.pointsWon=pointsWon;
-        this.pointsDraw=pointsDraw;
-    }
-
     /**
      * Rekursive Methode, die eine Runde im KO-System darstellt
      * @param teams
      * @return
      */
-    public Team koSystemRound(List<Team> teams){
+    public Team koSystemRound(List<Team> teams, Tournament tournament){
+        if(tournament!=null){
+            em.persist(tournament);
+            teams=tournament.getTeams();
+            for (Team team : teams) {
+                em.persist(team);
+            }
+        }
+        while (!((teams.size() & -teams.size()) == teams.size())) {
+            teams.add(new Team("Fill-in",false));
+        }
         List<Team> newTeam = new ArrayList<Team>();
         List<Match> matches = new ArrayList<Match>();
         List<Team> loser;
@@ -94,7 +112,7 @@ public class TournamentSystems {
 
         if(newTeam.size()>1)
             //Falls noch mehr als ein Team verbleiben, eine neue Runde wird gestartet
-            winner = koSystemRound(newTeam);
+            winner = koSystemRound(newTeam,null);
         else {
             printWinnerAndRunnerUp(newTeam,loser);
             return newTeam.get(0);
