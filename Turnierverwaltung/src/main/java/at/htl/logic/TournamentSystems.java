@@ -19,12 +19,12 @@ import java.util.*;
 public class TournamentSystems {
     @PersistenceContext
     EntityManager em;
-    final int Points_WON = 3;
-    final int Points_DRAW = 1;
+    int pointsWon = 3;
+    int pointsDraw = 1;
     final int GROUP_ROUND_COUNT = 2;
     final String[] GROUP_NAMES = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S",
             "T","U","V","W","X","Y","Z","AA","BB","CC","DD","EE","FF"};
-    final int MAX_GROUP_SIZE = 5;
+    int groupSize = 5;
 
     /**
      * Erstellt die Gruppen, abhaengig von der Groeße der Teams, und gibt die Sieger
@@ -45,7 +45,7 @@ public class TournamentSystems {
         List<Group> groups = new ArrayList<Group>();
         groups.add(new Group());
         //Ueberpruefen ob groups.size eine 2er potenz ist
-        while (!((groups.size() & -groups.size()) == groups.size()) || teams.size() / groups.size() > MAX_GROUP_SIZE) {
+        while (!((groups.size() & -groups.size()) == groups.size()) || teams.size() / groups.size() > groupSize) {
             groups.add(new Group());
         }
 
@@ -58,13 +58,19 @@ public class TournamentSystems {
         List<Group> groups = new ArrayList<Group>();
         groups.add(new Group());
         //Ueberpruefen ob groups.size eine 2er potenz ist
-        while (!((groups.size() & -groups.size()) == groups.size()) || teams.size()/groups.size()> MAX_GROUP_SIZE){
+        while (!((groups.size() & -groups.size()) == groups.size()) || teams.size()/groups.size()> groupSize){
             groups.add(new Group());
         }
         int countAssignedTeams = fillGroup(groups,teams);
         addRemainingTeamsInExistingGroups(countAssignedTeams,teams,groups);
         return getWinnerList(groups);
     }*/
+
+    public void setOptions(int groupSize, int pointsDraw, int pointsWon){
+        this.groupSize=groupSize;
+        this.pointsWon=pointsWon;
+        this.pointsDraw=pointsDraw;
+    }
 
     /**
      * Rekursive Methode, die eine Runde im KO-System darstellt
@@ -150,14 +156,14 @@ public class TournamentSystems {
         int points=0;
         for (Match match : matches) {
             if(match.getResultObject().getPointsFirstTeam() > match.getResultObject().getPointsSecondTeam() && match.getTeam1().getId()==team.getId()){
-                points=points+Points_WON;
+                points=points+pointsWon;
             }
             else if(match.getResultObject().getPointsFirstTeam() == match.getResultObject().getPointsSecondTeam()){
-                points=points+Points_DRAW;
+                points=points+pointsDraw;
             }
             else if (match.getResultObject().getPointsFirstTeam() < match.getResultObject().getPointsSecondTeam() && match.getTeam2().getId()==team.getId())
             {
-                points=points+Points_WON;
+                points=points+pointsWon;
             }
         }
         return points;

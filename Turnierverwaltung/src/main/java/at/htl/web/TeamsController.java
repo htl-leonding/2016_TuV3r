@@ -26,7 +26,6 @@ public class TeamsController implements Serializable {
     @Inject
     MatchFacade matchFacade;
 
-
     public List<Team> getTeams(){
         return teamFacade.findTeamsFromLatestTournament();
     }
@@ -35,10 +34,18 @@ public class TeamsController implements Serializable {
                         .findLatestTournament());
     }
     public Team getWinner(){
-        return getFinalMatch().getTeam1();
+        if(getFinalMatch().getResultObject().getPointsFirstTeam()>
+                getFinalMatch().getResultObject().getPointsSecondTeam())
+            return getFinalMatch().getTeam1();
+        else
+            return getFinalMatch().getTeam2();
     }
     public Team getRunnerUp(){
-        return getFinalMatch().getTeam2();
+        if(getFinalMatch().getResultObject().getPointsFirstTeam()<
+                getFinalMatch().getResultObject().getPointsSecondTeam())
+            return getFinalMatch().getTeam1();
+        else
+            return getFinalMatch().getTeam2();
     }
     private Match getFinal(){
         List<Match> matches= matchFacade.findMatchesByTeam(getTeamsByRank().get(0));
@@ -84,9 +91,18 @@ public class TeamsController implements Serializable {
         return null;
     }
     public int getScore(Team team, Match match){
-        return 0;
+        if(match.getTeam1().getName().equals(team.getName()))
+            return match.getResultObject().getPointsFirstTeam();
+        else if(match.getTeam2().getName().equals(team.getName()))
+            return match.getResultObject().getPointsSecondTeam();
+        return -1;
     }
-
-
-
+    public Match findMatch(Team team,List<Match> matches){
+        for (Match match : matches) {
+            if(match.getTeam1().getName().equals(team.getName())||match.getTeam2().getName().equals(team.getName())){
+                return match;
+            }
+        }
+        return null;
+    }
 }

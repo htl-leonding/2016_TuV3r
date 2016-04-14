@@ -7,6 +7,7 @@ import at.htl.logic.TournamentFacade;
 //import org.apache.logging.log4j.Logger;
 import at.htl.logic.TournamentSystems;
 import org.omnifaces.util.Messages;
+import org.primefaces.context.RequestContext;
 import org.primefaces.event.SlideEndEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
@@ -22,6 +23,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import javax.faces.application.NavigationHandler;
 
 @Named
 @SessionScoped
@@ -44,6 +46,7 @@ public class NewTournamentController implements Serializable {
     private List<Team> teams;
     private String tournamentSystem;
     private String groupPhaseIcon;
+    String redirect="http://localhost:8080/Turnierverwaltung/faces/index.xhtml";
     List<String> typesSource = new ArrayList<String>();
     List<String> typesTarget = new ArrayList<String>();
 
@@ -75,7 +78,12 @@ public class NewTournamentController implements Serializable {
         types = new DualListModel<>(typesSource, typesTarget);
     }
 
-
+    //region Eventhandler
+    public void onTeamCountSlideEnd(SlideEndEvent event) {
+        //logger.info("************************ " + event.getValue());
+        setTeamCount(event.getValue());
+        getTeams();
+    }
     /**
      * Wird aufgerufen, wenn bei der Picklist ein Element auf die andere Seite geschoben
      * wird und fügt das Element zur Liste hinzu. Gibt dann eine Message zurück.
@@ -105,44 +113,21 @@ public class NewTournamentController implements Serializable {
 
     }
 
-    /*public List<Team> updateTeamList(){
-        for (int i = 1; i < teamCount+1; i++) {
-            teams.add(new Team("Team "+i,false));
-        }
-        System.out.println(getSelectedTypes().size()+"-"+getTeamCount()+"-"+getGroupSize()+"-"+getPointsDraw());
-        return teams;
-    }*/
-
     public void buttonAction(ActionEvent actionEvent) {
         Tournament tournament = new Tournament("Schulcup", LocalDate.now(), true, teams);
-        systems.koSystemRound(systems.manageGroupPhase(tournament));
-        /*for (long j = 1; j<3;j++) {
-            teams = new ArrayList<Team>();
-            for (long i = 1; i < TEAM_COUNT + 1; i++) {
-                Team team = new Team("Team" + i, false, 0);
-                em.persist(team);
-                //team = teamFacade.save(team);
-                teams.add(team);
-            }
-            Tournament tournament = new Tournament("Schulcup"+j, LocalDate.now().minusDays(j), true, teams);
-            em.persist(tournament);
-            systems.koSystemRound(systems.manageGroupPhase(tournament));
-            //systems.koSystemRound(teams);
-            //systems.koSystemRound(systems.manageGroupPhase(teams));
 
-            //systems.getRankKoSystem();
-            tournament.setTeams(teams);
-            for(Team t : teams){
-                t.setTournament(tournament);
-                em.merge(t);
-            }
-        }*/
-    }
+        systems.setOptions(getGroupSize(),getPointsDraw(),getPointsWin());
 
-    public void onTeamCountSlideEnd(SlideEndEvent event) {
-        //logger.info("************************ " + event.getValue());
-        setTeamCount(event.getValue());
-        getTeams();
+        if(getSelectedTypes().contains("Gruppenphase")){
+
+        }
+        //systems.koSystemRound(systems.manageGroupPhase(tournament));
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.execute("window.open('http://localhost:8080/Turnierverwaltung/faces/index.xhtml','_self')");
+        /*FacesContext facesContext = FacesContext.getCurrentInstance();
+        NavigationHandler myNav = facesContext.getApplication().getNavigationHandler();
+        myNav.handleNavigation(facesContext, null,redirect);*/
+
     }
     public void onGroupSizeSlideEnd(SlideEndEvent event) {
         //logger.info("************************ " + event.getValue());
@@ -156,6 +141,7 @@ public class NewTournamentController implements Serializable {
         //logger.info("************************ " + event.getValue());
         setPointsDraw(event.getValue());
     }
+    //endregion
 
     public String getGroupPhaseIcon() {
         if (selectedTypes.contains("Gruppenphase"))
