@@ -94,9 +94,11 @@
     <div style="display:#{(param.i==3)?'block':'none'};float: right">
         <h:form>
             <p:commandButton id="startTournamentBtn" value="Starte Tournier"
-            actionListener="#{newTournamentController.buttonAction}"/>
+            actionListener="#{newTournamentController.buttonAction}"  />
+
         </h:form>
     </div>
+
 
     <!-- ***********************************************************
                          SECTION (CENTER)
@@ -137,7 +139,9 @@
                     <h:outputLabel value="#{team.name}"/>
                 </p:column>
                 <p:column headerText="Name">
-                    <h:outputLabel value="#{team.name}"/>
+                    <h:form>
+                        <h:inputText value="#{team.name}"/>
+                    </h:form>
                 </p:column>
             </p:dataTable>
         </p:outputPanel>
