@@ -2,6 +2,7 @@ package at.htl.logic;
 
 import at.htl.entity.Match;
 import at.htl.entity.Team;
+import at.htl.entity.Tournament;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -29,5 +30,11 @@ public class MatchFacade {
 
     public Match findById(long id) {
         return em.find(Match.class,id);
+    }
+
+    public List<Match> findMatchesByTournament(Tournament tournament){
+        return em.createNamedQuery("match.findByTournamentId",Match.class)
+                .setParameter("id",tournament.getId())
+                .getResultList();
     }
 }

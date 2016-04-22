@@ -12,8 +12,10 @@ import java.time.LocalTime;
 @NamedQueries({
     @NamedQuery(name = "match.findAll",
         query = "select m from Match m"),
-        @NamedQuery(name = "match.findByTeamId",
-        query = "select m from Match m where m.team1.id = :id or m.team2.id = :id")
+    @NamedQuery(name = "match.findByTeamId",
+        query = "select m from Match m where m.team1.id = :id or m.team2.id = :id"),
+    @NamedQuery(name = "match.findByTournamentId",
+            query = "select m from Match m where m.tournament.id = :id")
 })
 @Table(name = "tv_match")
 public class Match {
