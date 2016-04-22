@@ -25,12 +25,14 @@ public class TournamentSystems {
     final String[] GROUP_NAMES = {"A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S",
             "T","U","V","W","X","Y","Z","AA","BB","CC","DD","EE","FF"};
     int groupSize = 5;
+    Tournament tournament;
 
 
     public void launchTournament(int groupSize, int pointsDraw, int pointsWon,List<String> selectedTypes,Tournament tournament){
         this.groupSize=groupSize;
         this.pointsWon=pointsWon;
         this.pointsDraw=pointsDraw;
+
 
         if(selectedTypes!=null && selectedTypes.contains("Gruppenphase")){
             koSystemRound(manageGroupPhase(tournament),null);
@@ -47,6 +49,7 @@ public class TournamentSystems {
      * @return
      */
     public List<Team> manageGroupPhase(Tournament tournament) {
+        setTournament(tournament);
         List<Team> teams = (List<Team>) tournament.getTeams();
         for (Team team : teams) {
             em.persist(team);
@@ -92,6 +95,7 @@ public class TournamentSystems {
             for (Team team : teams) {
                 em.persist(team);
             }
+            setTournament(tournament);
         }
         while (!((teams.size() & -teams.size()) == teams.size())) {
             teams.add(new Team("Fill-in",false));
@@ -317,6 +321,7 @@ public class TournamentSystems {
             Team t1 = em.find(Team.class, teams.get(i).getId());
             Team t2 = em.find(Team.class, teams.get(i+1).getId());
             Match match = new Match(true, t1, t2, new Result());
+            match.setTournament(getTournament());
             em.persist(match);
             matches.add(match);
         }
@@ -412,6 +417,7 @@ public class TournamentSystems {
                 team2.setGroup(group);
                 //um zu Ueberpruefen, ob das Team schon spielt werden matches erstellt
                 Match match = new Match(true, team1, team2, new Result());
+                match.setTournament(getTournament());
 
                 if (team1 != team2) {
                     for (Match match1 : matches) {
@@ -453,4 +459,11 @@ public class TournamentSystems {
         });
     }
 
+    public Tournament getTournament() {
+        return tournament;
+    }
+
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
+    }
 }

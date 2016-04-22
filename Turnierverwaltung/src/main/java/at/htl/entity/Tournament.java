@@ -35,6 +35,9 @@ public class Tournament {
     @OneToMany(mappedBy = "tournament")
     private Collection<Team> teams;
 
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},mappedBy = "tournament")
+    private List<Match> matches;
+
     public Tournament(String name, LocalDate date, Boolean isActive, Collection<Team> teams) {
         this.name = name;
         this.date = date;

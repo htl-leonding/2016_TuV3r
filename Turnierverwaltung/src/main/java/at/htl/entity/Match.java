@@ -104,4 +104,16 @@ public class Match {
     public void setRound(Round round) {
         this.round = round;
     }
+
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "to_id")
+    private Tournament tournament;
+
+    public Tournament getTournament() {
+        return tournament;
+    }
+
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
+    }
 }
