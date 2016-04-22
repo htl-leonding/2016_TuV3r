@@ -5,13 +5,18 @@
       xmlns:ui="http://java.sun.com/jsf/facelets">
 
 <h:head>
-    <title>Not Welcome</title>
+    <title>Welcome</title>
 </h:head>
 
 <h:body>
     <ui:include src="header.xhtml"></ui:include>
     <h:form>
-        
+        <h3>#{runningTournamentController.tournamentName}</h3>
+        <p:dataTable var="match" value="#{runningTournamentController.matches}" id="dataTable">
+            <p:column headerText="Matches">
+                <h:outputLabel value="#{match.result} - #{match.team1.name} : #{match.team2.name} "/>
+            </p:column>
+        </p:dataTable>
     </h:form>
 </h:body>
 
