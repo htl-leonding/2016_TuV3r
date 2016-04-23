@@ -11,6 +11,8 @@ import org.primefaces.model.DualListModel;
 
 import javax.annotation.ManagedBean;
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBAccessException;
+import javax.ejb.EJBException;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
@@ -29,14 +31,29 @@ public class IndexController implements Serializable {
     TournamentFacade tournamentFacade;
 
     public Tournament getLatestTournament(){
-        return tournamentFacade.findLatestTournament();
+        try {
+            return tournamentFacade.findLatestTournament();
+        }
+        catch (EJBException ex){
+            return null;
+        }
     }
 
     public List<Tournament> getTournaments(){
-        return tournamentFacade.findAllTournaments();
+        try {
+            return tournamentFacade.findAllTournaments();
+        }
+        catch (EJBException ex){
+            return null;
+        }
     }
     public List<Tournament> getClosedTournaments(){
-        return tournamentFacade.findAllClosedTournaments();
+        try {
+            return tournamentFacade.findAllClosedTournaments();
+        }
+        catch (EJBException ex){
+            return null;
+        }
     }
 }
 
