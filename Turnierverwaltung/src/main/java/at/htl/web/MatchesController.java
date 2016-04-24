@@ -17,7 +17,7 @@ import java.util.List;
 
 @Named
 @SessionScoped
-public class RunningTournamentController implements Serializable {
+public class MatchesController implements Serializable {
     @Inject
     TournamentFacade tournamentFacade;
     @Inject
