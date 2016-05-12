@@ -22,7 +22,9 @@ public class TournamentFacade {
 
     public Tournament findLatestTournament() {
         return em.createNamedQuery("tournament.findAllTournaments",Tournament.class)
-                .getResultList().get(0);
+                .getResultList().
+                        get(em.createNamedQuery("tournament.findAllTournaments",Tournament.class)
+                        .getResultList().size()-1);
     }
     public List<Tournament> findAllTournaments() {
         return em.createNamedQuery("tournament.findAllTournaments",Tournament.class)

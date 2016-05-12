@@ -65,28 +65,28 @@
             <h:panelGrid columns="1">
                 <p:inputText id="teamSliderText" value="#{newTournamentController.teamCount}"/>
                 <p:slider for="teamSliderText">
-                    <p:ajax event="slideEnd" listener="#{newTournamentController.onTeamCountSlideEnd}" update="dataTable msgs"/>
+                    <p:ajax event="slideEnd" listener="#{newTournamentController.onTeamCountSlideEnd}"/>
                 </p:slider>
             </h:panelGrid>
             <h3 class="ui-widget">Gewünschte Größe einer Gruppe:</h3>
             <h:panelGrid columns="1">
                 <p:inputText id="groupSizeSliderText" value="#{newTournamentController.groupSize}"/>
                 <p:slider for="groupSizeSliderText" minValue="3" maxValue="10">
-                    <p:ajax event="slideEnd" listener="#{newTournamentController.onGroupSizeSlideEnd}" update="dataTable msgs"/>
+                    <p:ajax event="slideEnd" listener="#{newTournamentController.onGroupSizeSlideEnd}"/>
                 </p:slider>
             </h:panelGrid>
             <h3 class="ui-widget">Punkte pro Win:</h3>
             <h:panelGrid columns="1">
                 <p:inputText id="pointsWonSliderText" value="#{newTournamentController.pointsWin}"/>
                 <p:slider for="pointsWonSliderText" minValue="#{newTournamentController.pointsDraw}" maxValue="100">
-                    <p:ajax event="slideEnd" listener="#{newTournamentController.onPointsWinSlideEnd}" update="dataTable msgs"/>
+                    <p:ajax event="slideEnd" listener="#{newTournamentController.onPointsWinSlideEnd}"/>
                 </p:slider>
             </h:panelGrid>
             <h3 class="ui-widget">Punkte pro Unentschieden:</h3>
             <h:panelGrid columns="1">
                 <p:inputText id="pointsDrawSliderText" value="#{newTournamentController.pointsDraw}"/>
                 <p:slider for="pointsDrawSliderText" minValue="0" maxValue="10">
-                    <p:ajax event="slideEnd" listener="#{newTournamentController.onPointsDrawSlideEnd}" update="dataTable msgs"/>
+                    <p:ajax event="slideEnd" listener="#{newTournamentController.onPointsDrawSlideEnd}"/>
                 </p:slider>
             </h:panelGrid>
         </h:form>
@@ -134,16 +134,35 @@
         __________________________________________________________ -->
 
         <p:outputPanel rendered="#{param.i==2}">
-            <p:dataTable var="team" value="#{newTournamentController.teams}" id="dataTable">
-                <p:column headerText="Team">
-                    <h:outputLabel value="#{team.name}"/>
-                </p:column>
-                <p:column headerText="Name">
-                    <h:form>
-                        <h:inputText value="#{team.name}"/>
-                    </h:form>
-                </p:column>
-            </p:dataTable>
+            <!--
+                        <h:panelGrid columns="2" styleClass="stickerGrid">
+                            <ui:repeat value="#{newTournamentController.teamCount}" var="teamPos">
+                                <p:column headerText="Team">
+                                    <h:outputLabel value="***"/>
+                                </p:column>
+                                <p:column headerText="Name">
+                                    <h:form>
+                                        <h:inputText value="yoooo"/>
+                                    </h:form>
+                                </p:column>
+                            </ui:repeat>
+                        </h:panelGrid>
+
+
+            -->
+
+
+                        <p:dataTable var="team" value="#{newTournamentController.teams}" id="dataTable">
+                            <p:column headerText="Team">
+                                <h:outputLabel value="#{team.name}"/>
+                            </p:column>
+                            <p:column headerText="Name">
+                                <h:form>
+                                    <h:inputText value="#{team.name}"/>
+                                </h:form>
+                            </p:column>
+                        </p:dataTable>
+
         </p:outputPanel>
 
 

@@ -93,6 +93,7 @@ public class TournamentSystems {
             em.persist(tournament);
             teams=tournament.getTeams();
             for (Team team : teams) {
+                team.setTournament(tournament);
                 em.persist(team);
             }
             setTournament(tournament);
@@ -161,7 +162,13 @@ public class TournamentSystems {
     private List<Match> randomMatchesResult(List<Match> matches){
         Random random = new Random();
         for (Match match : matches) {
-            match.setResult(random.nextInt(5)+":"+random.nextInt(5));
+            int rd1=random.nextInt(5);
+            int rd2=random.nextInt(5);
+
+            if(rd1==rd2){
+                rd1++;
+            }
+            match.setResult(rd1+":"+rd2);
         }
         return matches;
     }
@@ -197,6 +204,12 @@ public class TournamentSystems {
      * @return
      */
     public Team determineWinningTeam(Match match){
+        if(match.getTeam1()==null){
+            return match.getTeam2();
+        }
+        if(match.getTeam2()==null){
+            return match.getTeam1();
+        }
         if(match.getResultObject().getPointsFirstTeam() > match.getResultObject().getPointsSecondTeam()){
             return match.getTeam1();
         }
@@ -315,11 +328,11 @@ public class TournamentSystems {
      * @param matches
      */
     public void setMatchesForOneRound(List<Team> teams, List<Match> matches){
-        for (int i = 0; i < teams.size(); i = i + 2) {
+        for (int i = 0; i < teams.size()/2; i++) {
             //Es werden alle Matches in diesem Umlauf gesetzt
             //Match match = new Match(true, teams.get(i), teams.get(i + 1), new Result());
             Team t1 = em.find(Team.class, teams.get(i).getId());
-            Team t2 = em.find(Team.class, teams.get(i+1).getId());
+            Team t2 = em.find(Team.class, teams.get(teams.size()-1-i).getId());
             Match match = new Match(true, t1, t2, new Result());
             match.setTournament(getTournament());
             em.persist(match);
