@@ -17,6 +17,7 @@ import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
+import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -76,6 +77,11 @@ public class NewTournamentController implements Serializable {
         typesSource.add("KO-System");
 
         types = new DualListModel<>(typesSource, typesTarget);
+    }
+
+    public void changeTeamName(AjaxBehaviorEvent event){
+        System.out.println("****TODO****");
+
     }
 
     //region Eventhandler
