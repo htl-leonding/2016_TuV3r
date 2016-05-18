@@ -14,8 +14,6 @@
                          HEADER
     *********************************************************** -->
 
-    <ui:include src="header.xhtml"></ui:include>
-
     <div id="header">
         <h:form id="menu_steps">
             <div style="height: 120px">
@@ -27,10 +25,10 @@
                     <p:menuitem value="Generelle Turnierdaten eingeben">
                         <f:param name="i" value="1"></f:param>
                     </p:menuitem>
-                    <p:menuitem value="Teamnamen ändern">
+                    <p:menuitem value="Payment">
                         <f:param name="i" value="2"></f:param>
                     </p:menuitem>
-                    <p:menuitem value="Turnier starten">
+                    <p:menuitem value="Confirmation">
                         <f:param name="i" value="3"></f:param>
                     </p:menuitem>
                 </p:steps>
@@ -65,40 +63,26 @@
             <h:panelGrid columns="1">
                 <p:inputText id="teamSliderText" value="#{newTournamentController.teamCount}"/>
                 <p:slider for="teamSliderText">
-                    <p:ajax event="slideEnd" listener="#{newTournamentController.onTeamCountSlideEnd}" update="dataTable msgs"/>
+                    <p:ajax event="slideEnd" listener="#{newTournamentController.onSlideEnd}" update="dataTable msgs"/>
                 </p:slider>
             </h:panelGrid>
             <h3 class="ui-widget">Gewünschte Größe einer Gruppe:</h3>
             <h:panelGrid columns="1">
                 <p:inputText id="groupSizeSliderText" value="#{newTournamentController.groupSize}"/>
-                <p:slider for="groupSizeSliderText" minValue="3" maxValue="10">
-                    <p:ajax event="slideEnd" listener="#{newTournamentController.onGroupSizeSlideEnd}" update="dataTable msgs"/>
-                </p:slider>
+                <p:slider for="groupSizeSliderText" minValue="3" maxValue="10"/>
             </h:panelGrid>
             <h3 class="ui-widget">Punkte pro Win:</h3>
             <h:panelGrid columns="1">
                 <p:inputText id="pointsWonSliderText" value="#{newTournamentController.pointsWin}"/>
-                <p:slider for="pointsWonSliderText" minValue="#{newTournamentController.pointsDraw}" maxValue="100">
-                    <p:ajax event="slideEnd" listener="#{newTournamentController.onPointsWinSlideEnd}" update="dataTable msgs"/>
-                </p:slider>
+                <p:slider for="pointsWonSliderText" minValue="#{newTournamentController.pointsDraw}" maxValue="100"/>
             </h:panelGrid>
             <h3 class="ui-widget">Punkte pro Unentschieden:</h3>
             <h:panelGrid columns="1">
                 <p:inputText id="pointsDrawSliderText" value="#{newTournamentController.pointsDraw}"/>
-                <p:slider for="pointsDrawSliderText" minValue="0" maxValue="10">
-                    <p:ajax event="slideEnd" listener="#{newTournamentController.onPointsDrawSlideEnd}" update="dataTable msgs"/>
-                </p:slider>
+                <p:slider for="pointsDrawSliderText" minValue="0" maxValue="10"/>
             </h:panelGrid>
         </h:form>
     </div>
-    <div style="display:#{(param.i==3)?'block':'none'};float: right">
-        <h:form>
-            <p:commandButton id="startTournamentBtn" value="Starte Tournier"
-            actionListener="#{newTournamentController.buttonAction}"  />
-
-        </h:form>
-    </div>
-
 
     <!-- ***********************************************************
                          SECTION (CENTER)
@@ -126,32 +110,24 @@
             </h:form>
         </p:outputPanel>
 
-
-
         <!-- _____________________________________________________
 
-             3: Teamnamen ändern
+                     2: Allgemeine Turnierdaten eingeben
         __________________________________________________________ -->
+        <p:outputPanel rendered="#{param.i==1}">
 
-        <p:outputPanel rendered="#{param.i==2}">
-            <p:dataTable var="team" value="#{newTournamentController.teams}" id="dataTable">
-                <p:column headerText="Team">
-                    <h:outputLabel value="#{team.name}"/>
-                </p:column>
+            <p:dataTable var="team" value="#{newTournamentController.teams}" id="dataTable" style="margin-left: 30%">
                 <p:column headerText="Name">
-                    <h:form>
-                        <h:inputText value="#{team.name}"/>
-                    </h:form>
+                    <h:outputText value="#{team.name}"/>
                 </p:column>
             </p:dataTable>
         </p:outputPanel>
 
-
         <!-- _____________________________________________________
 
-            4: Turnier starten
+                                    3
         __________________________________________________________ -->
-        <p:outputPanel rendered="#{param.i==3}">
+        <p:outputPanel rendered="#{param.i==2}">
             <h:form>
                 <p:outputPanel styleClass="center" style="margin-top: 5%">
                     <p:dataTable var="ov" value="#{newTournamentController.tournamentSystem}">

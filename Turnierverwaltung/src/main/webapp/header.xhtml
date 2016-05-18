@@ -6,31 +6,33 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
-<h:form>
-    <h:outputStylesheet library="css" name="style.css"  />
-    <!--<p:menubar>
-        <p:menuitem value="Home" update="@all">
-            <f:param name="j" value="0"/>
-        </p:menuitem>
-        <p:menuitem value="Teams" update="@all">
-            <f:param name="j" value="1"/>
-        </p:menuitem>
-        <p:menuitem value="Neues Turnier" update="@all">
-            <f:param name="j" value="2"/>
-        </p:menuitem>
-        <f:facet name="options">
-            <p:inputText style="margin-right:10px" placeholder="Search"/>
-        </f:facet>
-    </p:menubar>
-    -->
-    <p:menubar>
-        <p:menuitem url="index.xhtml" value="Home"></p:menuitem>
-        <p:menuitem value="Teams" url="teams.xhtml"></p:menuitem>
-        <p:menuitem value="Neues Turnier" url="newTournament.xhtml"></p:menuitem>
-        <p:menuitem value="Zeige Matches" url="matches.xhtml"></p:menuitem>
-        <f:facet name="options">
-            <p:inputText style="margin-right:10px" placeholder="Search"/>
-        </f:facet>
-    </p:menubar>
-</h:form>
+<h:head></h:head>
+<h:body>
+    <h:form>
+        <h:outputStylesheet library="css" name="style.css"/>
+        <!--<p:menubar>
+            <p:menuitem value="Home" update="@all">
+                <f:param name="j" value="0"/>
+            </p:menuitem>
+            <p:menuitem value="Teams" update="@all">
+                <f:param name="j" value="1"/>
+            </p:menuitem>
+            <p:menuitem value="Neues Turnier" update="@all">
+                <f:param name="j" value="2"/>
+            </p:menuitem>
+            <f:facet name="options">
+                <p:inputText style="margin-right:10px" placeholder="Search"/>
+            </f:facet>
+        </p:menubar>
+        -->
+        <p:menubar>
+            <p:menuitem url="index.xhtml" value="Home"></p:menuitem>
+            <p:menuitem value="Teams" url="teams.xhtml"></p:menuitem>
+            <p:menuitem value="Neues Turnier" url="newTournament.xhtml"></p:menuitem>
+            <f:facet name="options">
+                <p:inputText style="margin-right:10px" placeholder="Search"/>
+            </f:facet>
+        </p:menubar>
+    </h:form>
+</h:body>
 </html>

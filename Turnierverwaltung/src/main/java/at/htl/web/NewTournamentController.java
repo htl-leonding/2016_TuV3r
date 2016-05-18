@@ -3,11 +3,9 @@ package at.htl.web;
 import at.htl.entity.Team;
 import at.htl.entity.Tournament;
 import at.htl.logic.TournamentFacade;
-//import org.apache.logging.log4j.LogManager;
-//import org.apache.logging.log4j.Logger;
-import at.htl.logic.TournamentSystems;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 import org.omnifaces.util.Messages;
-import org.primefaces.context.RequestContext;
 import org.primefaces.event.SlideEndEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
@@ -20,22 +18,18 @@ import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import javax.faces.application.NavigationHandler;
 
 @Named
 @SessionScoped
 public class NewTournamentController implements Serializable {
 
-    //private static final Logger logger = LogManager.getLogger(NewTournamentController.class);
+    private static final Logger logger = LogManager.getLogger(NewTournamentController.class);
 
     @Inject
     private TournamentFacade tournamentFacade;
 
-    @Inject
-    private TournamentSystems systems;
 
     private DualListModel<String> types;
     private List<String> selectedTypes = new ArrayList<>();
@@ -46,10 +40,6 @@ public class NewTournamentController implements Serializable {
     private List<Team> teams;
     private String tournamentSystem;
     private String groupPhaseIcon;
-    String redirect="http://localhost:8080/Turnierverwaltung/faces/index.xhtml";
-    List<String> typesSource = new ArrayList<String>();
-    List<String> typesTarget = new ArrayList<String>();
-
 
 
     public Tournament getLatestTournament() {
@@ -69,21 +59,17 @@ public class NewTournamentController implements Serializable {
      */
     @PostConstruct
     public void setupPickList() {
+        List<String> typesSource = new ArrayList<>();
+        List<String> typesTarget = new ArrayList<>();
+
         typesSource.add("Gruppenphase");
-        typesSource.add("Leitersystem");
-        typesSource.add("Schweizersystem");
-        typesSource.add("Doppel-KO-System");
+        typesSource.add("2 Gruppenphasen");
         typesSource.add("KO-System");
 
         types = new DualListModel<>(typesSource, typesTarget);
     }
 
-    //region Eventhandler
-    public void onTeamCountSlideEnd(SlideEndEvent event) {
-        //logger.info("************************ " + event.getValue());
-        setTeamCount(event.getValue());
-        getTeams();
-    }
+
     /**
      * Wird aufgerufen, wenn bei der Picklist ein Element auf die andere Seite geschoben
      * wird und fügt das Element zur Liste hinzu. Gibt dann eine Message zurück.
@@ -113,31 +99,51 @@ public class NewTournamentController implements Serializable {
 
     }
 
-    public void buttonAction(ActionEvent actionEvent) {
-        Tournament tournament = new Tournament("Schulcup", LocalDate.now(), true, teams);
+    /*public List<Team> updateTeamList(){
+        for (int i = 1; i < teamCount+1; i++) {
+            teams.add(new Team("Team "+i,false));
+        }
+        System.out.println(getSelectedTypes().size()+"-"+getTeamCount()+"-"+getGroupSize()+"-"+getPointsDraw());
+        return teams;
+    }*/
+    public void onSlideEnd(SlideEndEvent event) {
+        logger.info("************************ " + event.getValue());
 
-        systems.launchTournament(getGroupSize(),getPointsDraw(),getPointsWin(),getSelectedTypes(),tournament);
+        getTeams();
 
-        RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("window.open('http://localhost:8080/Turnierverwaltung/faces/index.xhtml','_self')");
-        /*FacesContext facesContext = FacesContext.getCurrentInstance();
-        NavigationHandler myNav = facesContext.getApplication().getNavigationHandler();
-        myNav.handleNavigation(facesContext, null,redirect);*/
+        Messages.add(null, new FacesMessage("onSlideend: " + event.getValue()));
+    }
 
+    /*
+    public void onSelect(SelectEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Selected", event.getObject().toString()));
     }
-    public void onGroupSizeSlideEnd(SlideEndEvent event) {
-        //logger.info("************************ " + event.getValue());
-        setGroupSize(event.getValue());
+
+    public void onUnselect(UnselectEvent event) {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Item Unselected", event.getObject().toString()));
     }
-    public void onPointsWinSlideEnd(SlideEndEvent event) {
-        //logger.info("************************ " + event.getValue());
-        setPointsWin(event.getValue());
+
+    public void onReorder() {
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "List Reordered", null));
     }
-    public void onPointsDrawSlideEnd(SlideEndEvent event) {
-        //logger.info("************************ " + event.getValue());
-        setPointsDraw(event.getValue());
-    }
-    //endregion
+
+    <p:commandButton id="typesSubmit" value="Submit"
+                                 update="displayTypes"
+                                 oncomplete="PF('typesDialog').show()"
+                                 style="margin-top:5px"/>
+                <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="typesDialog" styleClass="center">
+                    <h:panelGrid id="displayTypes" columns="2">
+                        <h:outputText value="Ausgewählte Turniersysteme: " style="font-weight:bold"/>
+                        <ui:repeat value="#{newTournamentController.selectedTypes}" var="item">
+                            <h:outputText value="#{item}" style="margin-right:5px"/>
+                        </ui:repeat>
+                    </h:panelGrid>
+                </p:dialog>
+*/
+
 
     public String getGroupPhaseIcon() {
         if (selectedTypes.contains("Gruppenphase"))
@@ -147,11 +153,8 @@ public class NewTournamentController implements Serializable {
 
     public String getTournamentSystem() {
         for (String s : selectedTypes) {
-            if (!s.equals("Gruppenphase")) {
-                for (String types : typesSource) {
-                    if (types.equals(s))
-                        return s;
-                }
+            if (s.equals("KO-System") || s.equals("Leitersystem") || s.equals("Schweizersystem")) {
+                return s;
             }
         }
         return "none";
@@ -210,14 +213,11 @@ public class NewTournamentController implements Serializable {
     }
 
     public List<Team> getTeams() {
-        if(teams==null || getTeamCount()!=teams.size()){
-            List<Team> teams = new ArrayList<Team>();
-            for (int i = 1; i < teamCount + 1; i++) {
-                teams.add(new Team("Team " + i, false));
-            }
-            setTeams(teams);
-            System.out.println(getSelectedTypes().size() + "-" + getTeamCount() + "-" + getGroupSize() + "-" + getPointsDraw());
+        teams = new ArrayList<Team>();
+        for (int i = 1; i < teamCount + 1; i++) {
+            teams.add(new Team("Team " + i, false));
         }
+        System.out.println(getSelectedTypes().size() + "-" + getTeamCount() + "-" + getGroupSize() + "-" + getPointsDraw());
         return teams;
     }
 

@@ -1,6 +1,7 @@
 package at.htl.web;
 
 import at.htl.entity.Match;
+import at.htl.entity.Result;
 import at.htl.entity.Team;
 import at.htl.entity.Tournament;
 import at.htl.logic.MatchFacade;
@@ -80,6 +81,9 @@ public class TeamsController implements Serializable {
     }
 
     public Team getOpponent(Team team, List<Match> matches){
+        if(team==null){
+            return new Team(";_;",true);
+        }
         for (Match match : matches) {
             if(match.getTeam1().getName().equals(team.getName())){
                 return match.getTeam2();
@@ -91,6 +95,9 @@ public class TeamsController implements Serializable {
         return null;
     }
     public int getScore(Team team, Match match){
+        if(match.getResultObject().getPointsFirstTeam()==100 || team==null){
+            return -1;
+        }
         if(match.getTeam1().getName().equals(team.getName()))
             return match.getResultObject().getPointsFirstTeam();
         else if(match.getTeam2().getName().equals(team.getName()))
@@ -98,11 +105,17 @@ public class TeamsController implements Serializable {
         return -1;
     }
     public Match findMatch(Team team,List<Match> matches){
+
         for (Match match : matches) {
+            if(team==null){
+                return new Match(true,null,null,new Result(100,100));
+            }
             if(match.getTeam1().getName().equals(team.getName())||match.getTeam2().getName().equals(team.getName())){
                 return match;
             }
         }
-        return null;
+        Match match = new Match();
+        match.setResult(new Result(100,2));
+        return match;
     }
 }
