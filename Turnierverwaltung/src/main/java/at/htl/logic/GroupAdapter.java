@@ -16,6 +16,7 @@ public class GroupAdapter extends XmlAdapter<String, Group> {
     @PersistenceContext
     EntityManager em;
 
+    //holt sich das Objekt mithilfe das Namen
     public Group unmarshal(final String xml) throws Exception {
         return em.find(Group.class, Long.parseLong(xml));
     }
