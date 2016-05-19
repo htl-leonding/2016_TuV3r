@@ -75,6 +75,7 @@ public class NewTournamentController implements Serializable {
         typesSource.add("Schweizersystem");
         typesSource.add("Doppel-KO-System");
         typesSource.add("KO-System");
+        typesSource.add("Leitersystem");
 
         types = new DualListModel<>(typesSource, typesTarget);
     }
