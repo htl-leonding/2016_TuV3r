@@ -346,7 +346,7 @@ public class TournamentSystems {
             Team t1 = em.find(Team.class, teams.get(i).getId());
             Team t2 = em.find(Team.class, teams.get(teams.size()-1-i).getId());
             Match match = new Match(true, t1, t2, new Result());
-            match.setTournament(getTournament());
+            match.setTournament(t1.getTournament());
             em.persist(match);
             matches.add(match);
         }

@@ -47,7 +47,7 @@ public class NewTournamentController implements Serializable {
     private List<Team> teams;
     private String tournamentSystem;
     private String groupPhaseIcon;
-    String redirect="http://localhost:8080/Turnierverwaltung/faces/matches.xhtml";
+    String redirect="http://localhost:8080/Turnierverwaltung/faces/currentTournament.xhtml";
     List<String> typesSource = new ArrayList<String>();
     List<String> typesTarget = new ArrayList<String>();
 
@@ -123,8 +123,8 @@ public class NewTournamentController implements Serializable {
 
         //systems.launchTournament(getGroupSize(),getPointsDraw(),getPointsWin(),getSelectedTypes(),tournament);
 
-        //RequestContext requestContext = RequestContext.getCurrentInstance();
-        //requestContext.execute("window.open('"+ redirect +"','_self')");
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.execute("window.open('"+ redirect +"','_self')");
 
     }
     private void persistInput(){
@@ -172,7 +172,7 @@ public class NewTournamentController implements Serializable {
                 }
             }
         }
-        return "none";
+        return "KO-System";
     }
 
     public void setTournamentSystem(String tournamentSystem) {

@@ -4,7 +4,7 @@
         <jta-data-source>java:jboss/datasources/MyDS</jta-data-source>
         <properties>
             <property name="hibernate.enable_lazy_load_no_trans" value="true"></property>
-            <!--<property name="javax.persistence.schema-generation.database.action" value="drop-and-create"></property>-->
+            <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"></property>
         </properties>
     </persistence-unit>
 </persistence>
