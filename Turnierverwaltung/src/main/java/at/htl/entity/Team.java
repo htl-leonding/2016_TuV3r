@@ -49,6 +49,11 @@ public class Team{
         this.name = name;
         this.hasLost = hasLost;
     }
+    public Team(String name, boolean hasLost,Tournament tournament) {
+        this.name = name;
+        this.hasLost = hasLost;
+        this.tournament= tournament;
+    }
 
     //endregion
     //region Getter & Setter

@@ -31,6 +31,17 @@ public class Tournament {
     private LocalDate date;
     @Column(name = "to_isactive")
     private Boolean isActive;
+    @Column(name = "to_pointswin")
+    private int pointsWin;
+    @Column(name = "to_pointsdraw")
+    private int pointsDraw;
+    @Column(name = "to_groupsize")
+    private int groupSize;
+    @Column(name = "to_groupphase")
+    private Boolean groupPhase;
+    @Column(name = "to_system")
+    private String system;
+
 
     @OneToMany(mappedBy = "tournament")
     private Collection<Team> teams;
@@ -42,6 +53,19 @@ public class Tournament {
         this.name = name;
         this.date = date;
         this.isActive = isActive;
+        this.teams = teams;
+    }
+
+    public Tournament(String name, LocalDate date, Boolean isActive, int pointsWin, int pointsDraw,
+                      int groupSize, Boolean groupPhase, String system, Collection<Team> teams) {
+        this.name = name;
+        this.date = date;
+        this.isActive = isActive;
+        this.pointsWin = pointsWin;
+        this.pointsDraw = pointsDraw;
+        this.groupSize = groupSize;
+        this.groupPhase = groupPhase;
+        this.system = system;
         this.teams = teams;
     }
 
@@ -82,5 +106,45 @@ public class Tournament {
 
     public void setTeams(List<Team> teams) {
         this.teams = teams;
+    }
+
+    public int getPointsWin() {
+        return pointsWin;
+    }
+
+    public void setPointsWin(int pointsWin) {
+        this.pointsWin = pointsWin;
+    }
+
+    public int getPointsDraw() {
+        return pointsDraw;
+    }
+
+    public void setPointsDraw(int pointsDraw) {
+        this.pointsDraw = pointsDraw;
+    }
+
+    public int getGroupSize() {
+        return groupSize;
+    }
+
+    public void setGroupSize(int groupSize) {
+        this.groupSize = groupSize;
+    }
+
+    public Boolean getGroupPhase() {
+        return groupPhase;
+    }
+
+    public void setGroupPhase(Boolean groupPhase) {
+        this.groupPhase = groupPhase;
+    }
+
+    public String getSystem() {
+        return system;
+    }
+
+    public void setSystem(String system) {
+        this.system = system;
     }
 }

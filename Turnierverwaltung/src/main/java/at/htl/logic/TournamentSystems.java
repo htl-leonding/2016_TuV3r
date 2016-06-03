@@ -51,10 +51,8 @@ public class TournamentSystems {
     public List<Team> manageGroupPhase(Tournament tournament) {
         setTournament(tournament);
         List<Team> teams = (List<Team>) tournament.getTeams();
-        for (Team team : teams) {
-            em.persist(team);
-        }
-        em.persist(tournament);
+        persistTeams(teams);
+        persistTournament(tournament);
         for (Team team : teams) {
             team.setTournament(tournament);
         }
@@ -269,6 +267,20 @@ public class TournamentSystems {
             team = em.merge(team);
         }
     }
+    public void persistTeams(List<Team> teams){
+        for (Team team : teams) {
+            em.persist(team);
+        }
+    }
+
+    public void mergeTournament(Tournament tournament){
+        tournament = em.merge(tournament);
+    }
+
+    public void persistTournament(Tournament tournament){
+        em.persist(tournament);
+    }
+
 
     /**
      *Speichert Matches von einer Liste in die Datenbank
@@ -478,5 +490,11 @@ public class TournamentSystems {
 
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
+    }
+
+    public void setTournamentValues(int groupSize, int pointsDraw, int pointsWon, List<String> selectedTypes, Tournament tournament) {
+        this.groupSize=groupSize;
+        this.pointsWon=pointsWon;
+        this.pointsDraw=pointsDraw;
     }
 }
