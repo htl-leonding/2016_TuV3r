@@ -127,6 +127,52 @@ public class TournamentSystems {
         return winner;
     }
 
+    public Team doublekoSystem(List<Team> winnerBracket){
+        List<Team> loserBracket=new ArrayList<Team>();
+        List<Match> matches = new ArrayList<Match>();
+        List<Match> matchesLoserBracket = new ArrayList<Match>();
+
+        while(!tournamentIsOver(winnerBracket)){
+
+            setMatchesForOneRound(winnerBracket,matches);
+            matches = randomMatchesResult(matches);
+
+            for (Match match : matches) {
+                if (match.getTeam1() != determineWinningTeam(match)) {
+                    loserBracket.add(match.getTeam1());
+                    winnerBracket.remove(match.getTeam1());
+                } else {
+                    loserBracket.add(match.getTeam2());
+                    winnerBracket.remove(match.getTeam2());
+                }
+            }
+
+            setMatchesForOneRound(loserBracket, matchesLoserBracket);
+            matchesLoserBracket = randomMatchesResult(matches);
+
+            for (Match match : matchesLoserBracket) {
+                if (match.getTeam1() != determineWinningTeam(match)) {
+                    loserBracket.remove(match.getTeam1());
+                } else {
+                    loserBracket.remove(match.getTeam2());
+                }
+            }
+        }
+
+        return winnerBracket.get(0);
+    }
+
+    public boolean tournamentIsOver(List<Team> winnerBracket){
+        int count=0;
+        for (Team team : winnerBracket) {
+            count++;
+        }
+        if(count==1){
+            return true;
+        }
+        return false;
+    }
+
     /**
      * Den Teams, in der Gruppe, werden Matches gegeneinander zugewiesen und die zwei Gewinner zurueckgegeben
      * @param group
