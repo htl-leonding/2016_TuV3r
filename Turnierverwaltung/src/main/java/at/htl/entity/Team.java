@@ -33,6 +33,8 @@ public class Team{
     private boolean hasLost;
     @Column(name ="t_rank")
     private int rank;
+    @Column(name ="t_occupied")
+    private boolean occupied;
 
 
     //region Constructor
@@ -89,6 +91,14 @@ public class Team{
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public boolean isOccupied() {
+        return occupied;
+    }
+
+    public void setOccupied(boolean occupied) {
+        this.occupied = occupied;
     }
     //endregion
 
