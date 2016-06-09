@@ -9,12 +9,14 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
- * Hindert das rekursive Aufrufenn des XML-Baumes
+ * Hindert das rekursive Aufrufen des XML-Baumes
+ * http://stackoverflow.com/questions/14569293/how-can-jaxb-xmladapter-be-used-to-marshall-lists
  */
 public class GroupAdapter extends XmlAdapter<String, Group> {
     @PersistenceContext
     EntityManager em;
 
+    //holt sich das Objekt mithilfe das Namen
     public Group unmarshal(final String xml) throws Exception {
         return em.find(Group.class, Long.parseLong(xml));
     }

@@ -47,7 +47,7 @@ public class NewTournamentController implements Serializable {
     private List<Team> teams;
     private String tournamentSystem;
     private String groupPhaseIcon;
-    String redirect="http://localhost:8080/Turnierverwaltung/faces/index.xhtml";
+    String redirect="http://localhost:8080/Turnierverwaltung/faces/currentTournament.xhtml";
     List<String> typesSource = new ArrayList<String>();
     List<String> typesTarget = new ArrayList<String>();
 
@@ -81,7 +81,6 @@ public class NewTournamentController implements Serializable {
 
     public void changeTeamName(AjaxBehaviorEvent event){
         System.out.println("****TODO****");
-
     }
 
     //region Eventhandler
@@ -120,16 +119,28 @@ public class NewTournamentController implements Serializable {
     }
 
     public void buttonAction(ActionEvent actionEvent) {
-        Tournament tournament = new Tournament("Schulcup", LocalDate.now(), true, teams);
+        persistInput();
 
-        systems.launchTournament(getGroupSize(),getPointsDraw(),getPointsWin(),getSelectedTypes(),tournament);
+        //systems.launchTournament(getGroupSize(),getPointsDraw(),getPointsWin(),getSelectedTypes(),tournament);
 
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("window.open('http://localhost:8080/Turnierverwaltung/faces/index.xhtml','_self')");
-        /*FacesContext facesContext = FacesContext.getCurrentInstance();
-        NavigationHandler myNav = facesContext.getApplication().getNavigationHandler();
-        myNav.handleNavigation(facesContext, null,redirect);*/
+        requestContext.execute("window.open('"+ redirect +"','_self')");
 
+    }
+    private void persistInput(){
+        Boolean groupphase=false;
+        if (selectedTypes.contains("Gruppenphase")){
+            groupphase=true;
+        }
+        Tournament tournament = new Tournament("Schulcup", LocalDate.now(), true,getPointsWin(),
+                getPointsDraw(),getGroupSize(),groupphase,getTournamentSystem(), teams);
+        List<Team> teams = tournament.getTeams();
+        systems.persistTeams(teams);
+        systems.persistTournament(tournament);
+        for (Team team : teams) {
+            team.setTournament(tournament);
+        }
+        systems.mergeTeams(tournament.getTeams());
     }
     public void onGroupSizeSlideEnd(SlideEndEvent event) {
         //logger.info("************************ " + event.getValue());
@@ -146,8 +157,9 @@ public class NewTournamentController implements Serializable {
     //endregion
 
     public String getGroupPhaseIcon() {
-        if (selectedTypes.contains("Gruppenphase"))
+        if (selectedTypes.contains("Gruppenphase")) {
             return "ui-icon-check";
+        }
         return "ui-icon-close";
     }
 
@@ -160,7 +172,7 @@ public class NewTournamentController implements Serializable {
                 }
             }
         }
-        return "none";
+        return "KO-System";
     }
 
     public void setTournamentSystem(String tournamentSystem) {
@@ -222,7 +234,6 @@ public class NewTournamentController implements Serializable {
                 teams.add(new Team("Team " + i, false));
             }
             setTeams(teams);
-            System.out.println(getSelectedTypes().size() + "-" + getTeamCount() + "-" + getGroupSize() + "-" + getPointsDraw());
         }
         return teams;
     }
