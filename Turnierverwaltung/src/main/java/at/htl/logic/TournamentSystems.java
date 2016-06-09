@@ -514,7 +514,7 @@ public class TournamentSystems {
      */
     public List<Team> schweizerSystem(List<Team> teams){
         sortTeamsByPoints(teams);
-        List<Match> matches = new ArrayList<>();
+        List<Match> matches = new ArrayList<Match>();
 
 
         for (int i = 0; i < teams.size(); i++) {
@@ -536,7 +536,78 @@ public class TournamentSystems {
             }
             sortTeamsByPoints(teams);
         }
-
         return teams;
+    }
+
+    public Team doublekoSystem(List<Team> winnerBracket) {
+        List<Team> loserBracket = new ArrayList<Team>();
+        List<Match> matches;
+        List<Match> matchesLoserBracket;
+        List<Team> finalmatch=new ArrayList<Team>();
+        List<Team> loser=new ArrayList<Team>();
+
+        //winnerbracket bis viertel finale
+        while (winnerBracket.size()>2) {
+
+            matches = new ArrayList<Match>();
+            setMatchesForOneRound(winnerBracket, matches);
+            matches = randomMatchesResult(matches);
+
+            for (Match match : matches) {
+                if (winnerBracket.size()>2) {
+                    if (match.getTeam1() != determineWinningTeam(match)) {
+                        loserBracket.add(match.getTeam1());
+                        winnerBracket.remove(match.getTeam1());
+                    } else {
+                        loserBracket.add(match.getTeam2());
+                        winnerBracket.remove(match.getTeam2());
+                    }
+                }
+            }
+
+        }
+
+        //loserbracket bis zum vietel final
+        while (loserBracket.size()>2) {
+
+            matchesLoserBracket = new ArrayList<Match>();
+            setMatchesForOneRound(loserBracket, matchesLoserBracket);
+            matchesLoserBracket = randomMatchesResult(matchesLoserBracket);
+
+            for (Match match : matchesLoserBracket) {
+                if(loserBracket.size()>2) {
+                    if (match.getTeam1() != determineWinningTeam(match)) {
+                        loserBracket.remove(match.getTeam1());
+                    } else {
+                        loserBracket.remove(match.getTeam2());
+                    }
+                }
+            }
+        }
+
+        //halbfinale winnerbracket
+        matches=new ArrayList<Match>();
+        setMatchesForOneRound(winnerBracket, matches);
+        matches = randomMatchesResult(matches);
+
+        for(Match match:matches) {
+            finalmatch.add(determineWinningTeam(match));
+        }
+
+        //halbfinale loserbracket
+        matchesLoserBracket=new ArrayList<Match>();
+        setMatchesForOneRound(winnerBracket, matchesLoserBracket);
+        matchesLoserBracket = randomMatchesResult(matchesLoserBracket);
+
+        for(Match match:matchesLoserBracket) {
+            finalmatch.add(determineWinningTeam(match));
+        }
+
+        //finale
+        matches=new ArrayList<Match>();
+        setMatchesForOneRound(finalmatch, matches);
+        matches = randomMatchesResult(matches);
+
+        return determineWinningTeam(matches.get(0));
     }
 }
