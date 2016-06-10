@@ -209,10 +209,15 @@ public class TournamentSystems {
             return match.getTeam1();
         }
         if(match.getResultObject().getPointsFirstTeam() > match.getResultObject().getPointsSecondTeam()){
+            match.getTeam2().setHasLost(true);
+            em.merge(match);
             return match.getTeam1();
         }
-        else
+        else {
+            match.getTeam2().setHasLost(true);
+            em.merge(match);
             return match.getTeam2();
+        }
     }
 
     /**
