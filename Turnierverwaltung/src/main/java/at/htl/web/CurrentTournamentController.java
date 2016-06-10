@@ -51,6 +51,7 @@ public class CurrentTournamentController implements Serializable {
     }
     public List<Match> getCurrentMatches(){
         if(getMatches().isEmpty()) {
+            setTournament(getLatestTournament());
             while (!((getWinnerList().size()
                     & -getWinnerList().size()) == getWinnerList().size())) {
                 getTournament().getTeams().add(new Team("Fill-in",false));
@@ -61,8 +62,6 @@ public class CurrentTournamentController implements Serializable {
         return matches;
     }
     public void buttonAction(ActionEvent actionEvent) throws IOException {
-
-
         winnerList = new ArrayList<>();
         for (Match match : matches) {
             tournamentSystems.determineWinningTeam(match);
@@ -76,17 +75,25 @@ public class CurrentTournamentController implements Serializable {
 
         RequestContext requestContext = RequestContext.getCurrentInstance();
         if(getWinnerList().size()>1){
-            clearData();
+            tournament=null;
             ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
             ec.redirect(((HttpServletRequest) ec.getRequest()).getRequestURI());
         }
         else{
+            clearData();
             requestContext.execute("window.open('"+ redirect +"','_self')");
         }
     }
+    public void buttonQuit(ActionEvent actionEvent) {
+        clearData();
+        System.out.println("**********");
+    }
 
     private void clearData() {
-        setTournament(null);
+        matches=null;
+        tournament=null;
+        winnerList=null;
+        previousMatches=new ArrayList<>();
     }
 
     public List<Match> getMatches() {
@@ -122,20 +129,6 @@ public class CurrentTournamentController implements Serializable {
 
     public void setWinnerList(List<Team> winnerList) {
         this.winnerList=winnerList;
-    }
-
-    public List<Team> getLoserList() {
-        loserList = new ArrayList<>();
-        for (Team team : getTournament().getTeams()) {
-            if(team.HasLost()){
-                loserList.add(team);
-            }
-        }
-        return loserList;
-    }
-
-    public void setLoserList(List<Team> loserList) {
-        this.loserList = loserList;
     }
 
     public List<Match> getPreviousMatches() {

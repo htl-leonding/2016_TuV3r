@@ -118,6 +118,14 @@ public class NewTournamentController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
     }
+    public void onClick(AjaxBehaviorEvent event) {
+        FacesMessage msg = new FacesMessage();
+        msg.setSeverity(FacesMessage.SEVERITY_INFO);
+        msg.setDetail("Name");
+        msg.setSummary("Hinzugefügt");
+        FacesContext.getCurrentInstance().addMessage(null,msg);
+
+    }
 
     public void buttonAction(ActionEvent actionEvent) {
         persistInput();
@@ -133,7 +141,7 @@ public class NewTournamentController implements Serializable {
         if (selectedTypes.contains("Gruppenphase")){
             groupphase=true;
         }
-        Tournament tournament = new Tournament("Schulcup", LocalDate.now(), true,getPointsWin(),
+        Tournament tournament = new Tournament(getTournamentName(), LocalDate.now(), true,getPointsWin(),
                 getPointsDraw(),getGroupSize(),groupphase,getTournamentSystem(), teams);
         List<Team> teams = tournament.getTeams();
         systems.persistTeams(teams);

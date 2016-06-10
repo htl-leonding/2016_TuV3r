@@ -38,6 +38,8 @@
             </p:dataTable>
             <p:commandButton id="btnNextRound" value="Nächste Runde" update="@all"
                              actionListener="#{currentTournamentController.buttonAction}"  />
+            <p:commandButton id="btnQuit" value="Turnier abbrechen" update="@all"
+                             actionListener="#{currentTournamentController.buttonQuit}"  />
         </div>
     </h:form>
 </h:body>
