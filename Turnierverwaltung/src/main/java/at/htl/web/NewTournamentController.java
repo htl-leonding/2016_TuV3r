@@ -44,10 +44,11 @@ public class NewTournamentController implements Serializable {
     private int groupSize = 3;
     private int pointsWin = 3;
     private int pointsDraw = 1;
+    private String tournamentName;
     private List<Team> teams;
     private String tournamentSystem;
     private String groupPhaseIcon;
-    String redirect="http://localhost:8080/Turnierverwaltung/faces/currentTournament.xhtml";
+    String redirect="http://localhost:8080/Turnierverwaltung/currentTournament.xhtml";
     List<String> typesSource = new ArrayList<String>();
     List<String> typesTarget = new ArrayList<String>();
 
@@ -236,6 +237,14 @@ public class NewTournamentController implements Serializable {
             setTeams(teams);
         }
         return teams;
+    }
+
+    public String getTournamentName() {
+        return tournamentName;
+    }
+
+    public void setTournamentName(String tournamentName) {
+        this.tournamentName = tournamentName;
     }
 
     public void setTeams(List<Team> teams) {

@@ -214,7 +214,7 @@ public class TournamentSystems {
             return match.getTeam1();
         }
         else {
-            match.getTeam2().setHasLost(true);
+            match.getTeam1().setHasLost(true);
             em.merge(match);
             return match.getTeam2();
         }
@@ -332,8 +332,9 @@ public class TournamentSystems {
                                                    List<Group> groups){
         int addToGroupId=0;
         for (int i=countAssignedTeams; i < teams.size(); i++) {
-            if(addToGroupId==groups.size())
-                addToGroupId=0;
+            if(addToGroupId==groups.size()) {
+                addToGroupId = 0;
+            }
             groups.get(addToGroupId).getTeams().add(teams.get(i));
             addToGroupId++;
         }

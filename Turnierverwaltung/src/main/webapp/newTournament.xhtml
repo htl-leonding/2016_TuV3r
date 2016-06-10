@@ -14,7 +14,7 @@
                          HEADER
     *********************************************************** -->
 
-    <ui:include src="header.xhtml"></ui:include>
+    <ui:include src="header.xhtml"/>
 
     <div id="header">
         <h:form id="menu_steps">
@@ -94,7 +94,7 @@
     <div style="display:#{(param.i==3)?'block':'none'};float: right">
         <h:form>
             <p:commandButton id="startTournamentBtn" value="Starte Turnier"
-            actionListener="#{newTournamentController.buttonAction}"  />
+                             actionListener="#{newTournamentController.buttonAction}"  />
 
         </h:form>
     </div>
@@ -110,10 +110,14 @@
 
                            1: Turnierart auswählen
         __________________________________________________________ -->
-        <p:outputPanel id="pickPanel" rendered="#{param.i==0||param.i==null}" styleClass="center">
+
+        <p:outputPanel id="pickPanel" rendered="#{param.i==0||param.i==null}"
+                       style="width: 650px;height: 200px;margin:-1% auto 0">
             <h:form>
+                <h:outputLabel>Turniername:</h:outputLabel>
+                <p:inputText style="margin-left: 5%;width: 57.5%" value="#{newTournamentController.tournamentName}" />
                 <p:pickList id="pickList" value="#{newTournamentController.types}" effect="bounce"
-                            showTargetFilter="true"
+                            showTargetFilter="true" style="margin-top: 1%"
                             var="types" itemLabel="#{types}" responsive="true" showSourceFilter="true"
                             itemValue="#{types}" filterMatchMode="contains">
                     <f:facet name="sourceCaption">Zur Auswahl stehende Turniersysteme</f:facet>
@@ -152,16 +156,16 @@
             -->
 
 
-                        <p:dataTable var="team" value="#{newTournamentController.teams}" id="dataTable">
-                            <p:column headerText="Team">
-                                <h:outputLabel value="#{team.name}"/>
-                            </p:column>
-                            <p:column headerText="Name">
-                                <h:form>
-                                    <h:inputText value="#{team.name}"/>
-                                </h:form>
-                            </p:column>
-                        </p:dataTable>
+            <p:dataTable var="team" value="#{newTournamentController.teams}" id="dataTable">
+                <p:column headerText="Team">
+                    <h:outputLabel value="#{team.name}"/>
+                </p:column>
+                <p:column headerText="Name">
+                    <h:form>
+                        <h:inputText value="#{team.name}"/>
+                    </h:form>
+                </p:column>
+            </p:dataTable>
 
         </p:outputPanel>
 
@@ -186,8 +190,7 @@
                                          oncomplete="PF('typesDialog').show()"
                                          style="margin-left: 54.335%"/>
                         <p:dialog modal="true" showEffect="fade" hideEffect="fade" widgetVar="typesDialog"
-                                  styleClass="center"
-                                  style="margin-top: -11.5%">
+                                  style="margin: -1% 0 auto" resizable="false">
                             <h:panelGrid id="displayTypes" columns="2">
                                 <h:outputText value="Ausgewählte Turniersysteme: " style="font-weight:bold"/>
                                 <ui:repeat value="#{newTournamentController.selectedTypes}" var="item">
@@ -201,6 +204,8 @@
                                 <h:outputText value="#{newTournamentController.pointsWin}" style="margin-right:5px"/>
                                 <h:outputText value="Punkte pro Unentschieden: " style="font-weight:bold"/>
                                 <h:outputText value="#{newTournamentController.pointsDraw}" style="margin-right:5px"/>
+                                <h:outputText value="Name: " style="font-weight:bold"/>
+                                <h:outputText value="#{newTournamentController.tournamentName}" style="margin-right:5px"/>
                             </h:panelGrid>
                         </p:dialog>
                     </p:outputLabel>
