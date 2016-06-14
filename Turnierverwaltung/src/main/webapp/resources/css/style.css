@@ -1,13 +1,3 @@
-.ui-steps .ui-steps-item {
-    width: 24%;
-    margin-top: 50px;
-}
-
-.ui-steps .ui-steps-title {
-    color: black;
-}
-
-/*
 .east {
     position: absolute;
     margin-top: 15%;
@@ -31,12 +21,23 @@
     left: 2%;
     margin-top: 12%;
 }
-*/
+
 .center {
-    margin: 0 auto;
-    margin-top: 0%;
-    width: 70%;
+    margin: 8% auto 0;
+    width: 650px;
     height: 200px;
+}
+
+.ui-steps .ui-steps-item {
+    width: 24%;
+}
+
+.ui-state-highlight {
+    text-shadow: none !important;
+}
+
+.ui-steps.custom {
+    margin-bottom: 30px;
 }
 
 .ui-steps.custom .ui-steps-item .ui-menuitem-link {
@@ -46,37 +47,13 @@
 
 .ui-steps.custom .ui-steps-item .ui-steps-number {
     background-color: #0081c2;
-    color: white;
+    color: #FFFFFF;
     display: inline-block;
     width: 30px;
     border-radius: 10px;
-    margin-top: -12px;
+    margin-top: -10px;
     margin-bottom: 10px;
 }
-
-#header {
-    background-color:#eeeeee;
-    color:darkblue;
-    text-align:center;
-    padding:5px;
-    height: 150px;
+.ui-steps-title {
+    color: #827dff;
 }
-#nav {
-    line-height:30px;
-    background-color:#eeeeee;
-    height:100%;
-    width:30%;
-    float:left;
-    padding:5px;
-}
-#section {
-    padding:10px;
-    height: 100%
-}
-#footer {
-    background-color:white;
-    color:black;
-    clear:both;
-    padding:5px;
-}
-
