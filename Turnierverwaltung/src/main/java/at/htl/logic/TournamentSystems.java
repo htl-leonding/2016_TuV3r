@@ -257,8 +257,9 @@ public class TournamentSystems {
         q.setParameter("id", team.getId());
         List<Match> matches = q.getResultList();
         for (Match match : matches) {
-            if(determineWinningTeam(match)==team)
+            if(determineWinningTeam(match)==team) {
                 wins++;
+            }
         }
         return wins;
     }
@@ -515,6 +516,7 @@ public class TournamentSystems {
 
     /**
      * Iterative Methode, die ein Schweizer System darstellt.
+     * von Adrian Isa
      * @param teams
      * @return
      */
@@ -545,6 +547,12 @@ public class TournamentSystems {
         return teams;
     }
 
+    /***
+     * Ausführung des DoppelKo-Systems, gibt den Sieger zurück
+     * von Felix Froschauer
+     * @param winnerBracket
+     * @return
+     */
     public Team doublekoSystem(List<Team> winnerBracket) {
         List<Team> loserBracket = new ArrayList<Team>();
         List<Match> matches;

@@ -118,6 +118,11 @@ public class NewTournamentController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null, msg);
 
     }
+
+    /***
+     * Benachrichtigt den Benutzer, dass der Turniername geändert wurde
+     * @param event
+     */
     public void onClick(AjaxBehaviorEvent event) {
         FacesMessage msg = new FacesMessage();
         msg.setSeverity(FacesMessage.SEVERITY_INFO);
@@ -127,6 +132,10 @@ public class NewTournamentController implements Serializable {
 
     }
 
+    /***
+     * Speichert die Daten und wechselt zur Turnierdurchführ-Seite
+     * @param actionEvent
+     */
     public void buttonAction(ActionEvent actionEvent) {
         persistInput();
 
@@ -136,6 +145,10 @@ public class NewTournamentController implements Serializable {
         requestContext.execute("window.open('"+ redirect +"','_self')");
 
     }
+
+    /***
+     * Speichert Informationen, die für ein Turnier essentiell sind
+     */
     private void persistInput(){
         Boolean groupphase=false;
         if (selectedTypes.contains("Gruppenphase")){
@@ -165,12 +178,17 @@ public class NewTournamentController implements Serializable {
     }
     //endregion
 
+    /***
+     * Das Icon des Buttons wird verändert, abhängig davon, ob eine Gruppenphase gewählt wurde
+     * @return
+     */
     public String getGroupPhaseIcon() {
         if (selectedTypes.contains("Gruppenphase")) {
             return "ui-icon-check";
         }
         return "ui-icon-close";
     }
+
 
     public String getTournamentSystem() {
         for (String s : selectedTypes) {

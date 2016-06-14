@@ -41,6 +41,10 @@ public class CurrentTournamentController implements Serializable {
     private List<Match> previousMatches = new ArrayList<>();
     String redirect="http://localhost:8080/Turnierverwaltung/teams.xhtml";
 
+    /***
+     * Holt das neueste Turnier von der DB
+     * @return
+     */
     public Tournament getLatestTournament(){
         try {
             return tournamentFacade.findLatestTournament();
@@ -49,6 +53,11 @@ public class CurrentTournamentController implements Serializable {
             throw new EJBException("Letztes Turnier nicht gefunden",ex);
         }
     }
+
+    /***
+     * Generiert alle Matches, die in der aktuellen Runde gespielt werden und persistiert diese
+     * @return
+     */
     public List<Match> getCurrentMatches(){
         if(getMatches().isEmpty()) {
             setTournament(getLatestTournament());
@@ -61,6 +70,13 @@ public class CurrentTournamentController implements Serializable {
         }
         return matches;
     }
+
+    /***
+     * Die Matches werden ausgewertet und die Sieger gespeichert.
+     * Dann wird die Seite aktualisiert, um eine neue Runde darzustellen
+     * @param actionEvent
+     * @throws IOException
+     */
     public void buttonAction(ActionEvent actionEvent) throws IOException {
         winnerList = new ArrayList<>();
         for (Match match : matches) {
@@ -86,7 +102,6 @@ public class CurrentTournamentController implements Serializable {
     }
     public void buttonQuit(ActionEvent actionEvent) {
         clearData();
-        System.out.println("**********");
     }
 
     private void clearData() {

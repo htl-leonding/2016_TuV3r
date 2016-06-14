@@ -4,6 +4,7 @@ import at.htl.entity.Match;
 import at.htl.entity.Tournament;
 import at.htl.logic.MatchFacade;
 import at.htl.logic.TournamentFacade;
+import at.htl.logic.TournamentSystems;
 
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -22,9 +23,12 @@ public class MatchesController implements Serializable {
     TournamentFacade tournamentFacade;
     @Inject
     MatchFacade matchFacade;
+    @Inject
+    TournamentSystems systems;
 
     private String tournamentName;
     private List<Match> matches;
+
 
     public String getTournamentName() {
         return tournamentFacade.findLatestTournament().getName();
@@ -32,6 +36,4 @@ public class MatchesController implements Serializable {
     public List<Match> getMatches(){
         return matchFacade.findMatchesByTournament(tournamentFacade.findLatestTournament());
     }
-
-
 }
