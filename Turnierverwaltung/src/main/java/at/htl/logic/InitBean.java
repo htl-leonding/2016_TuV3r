@@ -29,22 +29,19 @@ public class InitBean {
     final int TEAM_COUNT = 17;
 
     @PostConstruct
-    public void init(){/*
-        List<Team> teams = new ArrayList<Team>();
+    public void init(){
+        /*List<Team> teams = new ArrayList<Team>();
         for (long j = 1; j<3;j++) {
             teams = new ArrayList<Team>();
             for (long i = 1; i < TEAM_COUNT + 1; i++) {
                 Team team = new Team("Team" + i, false, 0);
-                //em.persist(team);
+                em.persist(team);
+                //team = teamFacade.save(team);
                 teams.add(team);
             }
             Tournament tournament = new Tournament("Schulcup"+j, LocalDate.now().minusDays(j), true, teams);
-            List<String> list = new ArrayList<String>();
-            list.add("KO-System");
-            list.add("Gruppenphase");
-            systems.launchTournament(5,1,3,list,tournament);
-            //em.persist(tournament);
-            //systems.koSystemRound(systems.manageGroupPhase(tournament),null);
+            em.persist(tournament);
+            systems.koSystemRound(systems.manageGroupPhase(tournament));
             //systems.koSystemRound(teams);
             //systems.koSystemRound(systems.manageGroupPhase(teams));
 
@@ -55,5 +52,6 @@ public class InitBean {
                 em.merge(t);
             }
         }*/
+
     }
 }

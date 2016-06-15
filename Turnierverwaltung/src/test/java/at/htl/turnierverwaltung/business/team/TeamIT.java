@@ -15,6 +15,8 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
+import java.util.List;
 
 @RunWith(Arquillian.class)
 public class TeamIT {
@@ -37,6 +39,29 @@ public class TeamIT {
         Assert.assertEquals(res,0);
         res = tournamentSystems.determineTotalPoints(team);
         Assert.assertEquals(res,3);
+    }
+
+    @Test
+    public void t02leiterSystemTest()
+    {
+        TournamentSystems ts = new TournamentSystems();
+
+        Team team1 = new Team("LASK Linz", false, 1);
+        Team team2 = new Team("Blau-Weiß Linz", false, 2);
+        Team team3 = new Team("Donau Linz", false, 3);
+        Team team4 = new Team("SK ADmira Linz", false, 4);
+
+        List<Team> teamList = new ArrayList<>();
+        teamList.add(team1);
+        teamList.add(team2);
+        teamList.add(team3);
+        teamList.add(team4);
+
+        Result result1 = new Result("3:1");
+
+        teamList = ts.getWinnerLeiterSystem(team2, team1, teamList, result1);
+
+        Assert.assertEquals(teamList.get(1), team1);
     }
 
     /*@Test
