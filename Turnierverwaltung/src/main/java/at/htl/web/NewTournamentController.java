@@ -44,10 +44,11 @@ public class NewTournamentController implements Serializable {
     private int groupSize = 3;
     private int pointsWin = 3;
     private int pointsDraw = 1;
+    private String tournamentName;
     private List<Team> teams;
     private String tournamentSystem;
     private String groupPhaseIcon;
-    String redirect="http://localhost:8080/Turnierverwaltung/faces/index.xhtml";
+    String redirect="http://localhost:8080/Turnierverwaltung/currentTournament.xhtml";
     List<String> typesSource = new ArrayList<String>();
     List<String> typesTarget = new ArrayList<String>();
 
@@ -82,7 +83,6 @@ public class NewTournamentController implements Serializable {
 
     public void changeTeamName(AjaxBehaviorEvent event){
         System.out.println("****TODO****");
-
     }
 
     //region Eventhandler
@@ -120,17 +120,50 @@ public class NewTournamentController implements Serializable {
 
     }
 
-    public void buttonAction(ActionEvent actionEvent) {
-        Tournament tournament = new Tournament("Schulcup", LocalDate.now(), true, teams);
+    /***
+     * Benachrichtigt den Benutzer, dass der Turniername geändert wurde
+     * @param event
+     */
+    public void onClick(AjaxBehaviorEvent event) {
+        FacesMessage msg = new FacesMessage();
+        msg.setSeverity(FacesMessage.SEVERITY_INFO);
+        msg.setDetail("Name");
+        msg.setSummary("Hinzugefügt");
+        FacesContext.getCurrentInstance().addMessage(null,msg);
 
-        systems.launchTournament(getGroupSize(),getPointsDraw(),getPointsWin(),getSelectedTypes(),tournament);
+    }
+
+    /***
+     * Speichert die Daten und wechselt zur Turnierdurchführ-Seite
+     * @param actionEvent
+     */
+    public void buttonAction(ActionEvent actionEvent) {
+        persistInput();
+
+        //systems.launchTournament(getGroupSize(),getPointsDraw(),getPointsWin(),getSelectedTypes(),tournament);
 
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("window.open('http://localhost:8080/Turnierverwaltung/faces/index.xhtml','_self')");
-        /*FacesContext facesContext = FacesContext.getCurrentInstance();
-        NavigationHandler myNav = facesContext.getApplication().getNavigationHandler();
-        myNav.handleNavigation(facesContext, null,redirect);*/
+        requestContext.execute("window.open('"+ redirect +"','_self')");
 
+    }
+
+    /***
+     * Speichert Informationen, die für ein Turnier essentiell sind
+     */
+    private void persistInput(){
+        Boolean groupphase=false;
+        if (selectedTypes.contains("Gruppenphase")){
+            groupphase=true;
+        }
+        Tournament tournament = new Tournament(getTournamentName(), LocalDate.now(), true,getPointsWin(),
+                getPointsDraw(),getGroupSize(),groupphase,getTournamentSystem(), teams);
+        List<Team> teams = tournament.getTeams();
+        systems.persistTeams(teams);
+        systems.persistTournament(tournament);
+        for (Team team : teams) {
+            team.setTournament(tournament);
+        }
+        systems.mergeTeams(tournament.getTeams());
     }
     public void onGroupSizeSlideEnd(SlideEndEvent event) {
         //logger.info("************************ " + event.getValue());
@@ -146,11 +179,17 @@ public class NewTournamentController implements Serializable {
     }
     //endregion
 
+    /***
+     * Das Icon des Buttons wird verändert, abhängig davon, ob eine Gruppenphase gewählt wurde
+     * @return
+     */
     public String getGroupPhaseIcon() {
-        if (selectedTypes.contains("Gruppenphase"))
+        if (selectedTypes.contains("Gruppenphase")) {
             return "ui-icon-check";
+        }
         return "ui-icon-close";
     }
+
 
     public String getTournamentSystem() {
         for (String s : selectedTypes) {
@@ -161,7 +200,7 @@ public class NewTournamentController implements Serializable {
                 }
             }
         }
-        return "none";
+        return "KO-System";
     }
 
     public void setTournamentSystem(String tournamentSystem) {
@@ -223,9 +262,16 @@ public class NewTournamentController implements Serializable {
                 teams.add(new Team("Team " + i, false));
             }
             setTeams(teams);
-            System.out.println(getSelectedTypes().size() + "-" + getTeamCount() + "-" + getGroupSize() + "-" + getPointsDraw());
         }
         return teams;
+    }
+
+    public String getTournamentName() {
+        return tournamentName;
+    }
+
+    public void setTournamentName(String tournamentName) {
+        this.tournamentName = tournamentName;
     }
 
     public void setTeams(List<Team> teams) {

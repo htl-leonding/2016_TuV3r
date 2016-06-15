@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:ui="http://java.sun.com/jsf/facelets">
+
+<h:head>
+    <title>Welcome</title>
+</h:head>
+
+<h:body>
+    <ui:include src="header.xhtml"></ui:include>
+    <h:form>
+        <p:panel id="info" header="Turnierinfos" style="margin-bottom:20px;width: 30%;float: left;">
+            <h:panelGrid rendered="#{currentTournamentController.latestTournament!=null and currentTournamentController.latestTournament.active}" columns="1" cellpadding="10">
+                <h:outputText value="Name: #{currentTournamentController.latestTournament.name}"/>
+                <h:outputText value="Datum: #{currentTournamentController.latestTournament.date}"/>
+                <h:outputText value="Punkte pro Sieg: #{currentTournamentController.latestTournament.pointsWin}"/>
+                <h:outputText value="Punkte pro Unentschieden: #{currentTournamentController.latestTournament.pointsDraw}"/>
+                <h:outputText value="Es gibt eine Gruppenphase" rendered="#{currentTournamentController.latestTournament.groupPhase}"/>
+                <h:outputText value="Es gibt keine Gruppenphase" rendered="#{!currentTournamentController.latestTournament.groupPhase}"/>
+                <h:outputText value="Größe einer Gruppe: #{currentTournamentController.latestTournament.groupSize}"
+                              rendered="#{currentTournamentController.latestTournament.groupPhase}"/>
+                <h:outputText value="Anzahl der Teams: #{currentTournamentController.latestTournament.teams.size()}"/>
+                <h:outputText value="Turniersystem: #{currentTournamentController.latestTournament.system}"/>
+            </h:panelGrid>
+        </p:panel>
+        <div>
+            <p:dataTable var="match" value="#{currentTournamentController.currentMatches}" id="dataTable">
+                <p:column headerText="Matches">
+                    <h:outputLabel value="#{match.team1.name} VS #{match.team2.name}"/>
+                </p:column>
+                <p:column headerText="Ergebnisse">
+                    <h:inputText id="#{match.id}ResultT1" value="#{match.resultObject.pointsFirstTeam}"/>
+                    <h:outputLabel value=" : "/>
+                    <h:inputText id="#{match.id}ResultT2" value="#{match.resultObject.pointsSecondTeam}"/>
+                </p:column>
+            </p:dataTable>
+            <p:commandButton id="btnNextRound" value="Nächste Runde" update="@all"
+                             actionListener="#{currentTournamentController.buttonAction}"  />
+            <p:commandButton id="btnQuit" value="Turnier abbrechen" update="@all"
+                             actionListener="#{currentTournamentController.buttonQuit}"  />
+        </div>
+    </h:form>
+</h:body>
+</html>

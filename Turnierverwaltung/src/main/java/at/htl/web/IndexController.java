@@ -35,7 +35,7 @@ public class IndexController implements Serializable {
             return tournamentFacade.findLatestTournament();
         }
         catch (EJBException ex){
-            return null;
+            throw new EJBException(ex);
         }
     }
 
@@ -44,7 +44,7 @@ public class IndexController implements Serializable {
             return tournamentFacade.findAllTournaments();
         }
         catch (EJBException ex){
-            return null;
+            throw new EJBException(ex);
         }
     }
     public List<Tournament> getClosedTournaments(){
@@ -52,7 +52,7 @@ public class IndexController implements Serializable {
             return tournamentFacade.findAllClosedTournaments();
         }
         catch (EJBException ex){
-            return null;
+            throw new EJBException(ex);
         }
     }
 }

@@ -34,6 +34,7 @@ public class TeamsController implements Serializable {
         return tournamentFacade.getTeamsOrderedByRank(tournamentFacade
                         .findLatestTournament());
     }
+
     public Team getWinner(){
         if(getFinalMatch().getResultObject().getPointsFirstTeam()>
                 getFinalMatch().getResultObject().getPointsSecondTeam())
@@ -80,6 +81,12 @@ public class TeamsController implements Serializable {
         return matchFacade.findMatchesByTeam(team);
     }
 
+    /***
+     * Gibt den Gegner des Teams in der jeweiligen Runde zurück
+     * @param team
+     * @param matches
+     * @return
+     */
     public Team getOpponent(Team team, List<Match> matches){
         if(team==null){
             return new Team(";_;",true);
@@ -94,6 +101,13 @@ public class TeamsController implements Serializable {
         }
         return null;
     }
+
+    /***
+     * Gibt die Anzahl der Punkte von einem Team in einem bestimmten Match zurück
+     * @param team
+     * @param match
+     * @return
+     */
     public int getScore(Team team, Match match){
         if(match.getResultObject().getPointsFirstTeam()==100 || team==null){
             return -1;
@@ -104,6 +118,13 @@ public class TeamsController implements Serializable {
             return match.getResultObject().getPointsSecondTeam();
         return -1;
     }
+
+    /***
+     * Sucht das Match des Teams in einer bestimmten Runde
+     * @param team
+     * @param matches
+     * @return
+     */
     public Match findMatch(Team team,List<Match> matches){
 
         for (Match match : matches) {
