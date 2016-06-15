@@ -15,8 +15,10 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 
 import javax.inject.Inject;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.SynchronousQueue;
 
 @RunWith(Arquillian.class)
 public class TeamIT {
@@ -59,10 +61,35 @@ public class TeamIT {
 
         Result result1 = new Result("3:1");
 
-        teamList = ts.getWinnerLeiterSystem(team2, team1, teamList, result1);
+        //teamList = ts.getWinnerLeiterSystem(team2, team1, teamList, result1);
 
         Assert.assertEquals(teamList.get(1), team1);
     }
+
+    @Test
+    public void t04schweizerSystemTest()
+    {
+        TournamentSystems tournamentSystems = new TournamentSystems();
+
+        List<Team> teams = new ArrayList<>();
+        teams.add(new Team("Bayern", false));
+        teams.add(new Team("BVB", false));
+        teams.add(new Team("Real", false));
+        teams.add(new Team("Barca", false));
+
+        Tournament tournament = new Tournament("Schulturnier", LocalDate.now(), true, teams);
+
+        for (Team team : teams) {
+            team.setTournament(tournament);
+        }
+
+        List<Team> teamsAfterTournament = tournamentSystems.schweizerSystem(teams);
+
+        for (Team team : teamsAfterTournament) {
+            System.out.println(team.getName());
+        }
+    }
+
 
     /*@Test
     public void t02vehicleExtinguishTest() {
