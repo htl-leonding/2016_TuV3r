@@ -516,11 +516,13 @@ public class TournamentSystems {
 
     /**
      * Iterative Methode, die ein Schweizer System darstellt.
+     * Gewinner Team wird zurückgegeben.
      * von Adrian Isa
      * @param teams
      * @return
      */
-    public List<Team> schweizerSystem(List<Team> teams){
+    public Team schweizerSystem(List<Team> teams){
+        boolean exists = false;
         sortTeamsByPoints(teams);
         List<Match> matches = new ArrayList<Match>();
 
@@ -531,12 +533,17 @@ public class TournamentSystems {
                     for (Team team2 : teams) {
                         if (!team2.isOccupied() && !team1.getName().equals(team2.getName())){
                             for (Match match : matches) {
-                                if ((!match.getTeam1().getName().equals(team1.getName())
-                                        && !match.getTeam2().getName().equals(team2.getName()))
-                                        || (!match.getTeam1().getName().equals(team2.getName())
-                                        && !match.getTeam2().getName().equals(team1.getName()))){
-                                    matches.add(new Match(false, team1, team2, generateResult()));
+                                if ((match.getTeam1().getName().equals(team1.getName())
+                                        && match.getTeam2().getName().equals(team2.getName()))
+                                        || (match.getTeam1().getName().equals(team2.getName())
+                                        && match.getTeam2().getName().equals(team1.getName()))){
+                                    exists = true;
                                 }
+                            }
+                            if (!exists){
+                                team1.setOccupied(true);
+                                team2.setOccupied(true);
+                                matches.add(new Match(false, team1, team2, generateResult()));
                             }
                         }
                     }
@@ -544,7 +551,7 @@ public class TournamentSystems {
             }
             sortTeamsByPoints(teams);
         }
-        return teams;
+        return teams.get(0);
     }
 
     /***
