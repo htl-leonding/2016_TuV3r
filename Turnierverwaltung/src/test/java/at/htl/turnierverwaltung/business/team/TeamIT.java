@@ -85,7 +85,6 @@ public class TeamIT {
         Collections.sort(teamList);
         Team teamChallenger = teamList.get(2);
         Team opponentTeam = teamList.get(1);
-
         teamList = ts.getWinnerLeiterSystem(teamChallenger, opponentTeam, teamList, null);
         Assert.assertEquals(teamList.size(), 4);
     }
