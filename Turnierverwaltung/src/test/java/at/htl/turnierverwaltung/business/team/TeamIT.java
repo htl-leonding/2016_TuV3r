@@ -17,6 +17,8 @@ import org.junit.runner.RunWith;
 import javax.inject.Inject;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.SynchronousQueue;
 
@@ -34,18 +36,17 @@ public class TeamIT {
 
     @Test
     public void t01vehicleBurnTest() {
-        Team team=new Team("Hartl4Life",false);
-        Team team1 = new Team("HartlLover",false);
+        Team team = new Team("Hartl4Life", false);
+        Team team1 = new Team("HartlLover", false);
         int res = tournamentSystems.determineTotalPoints(team);
-        Match match = new Match(false,team,team1,new Result(2,1));
-        Assert.assertEquals(res,0);
+        Match match = new Match(false, team, team1, new Result(2, 1));
+        Assert.assertEquals(res, 0);
         res = tournamentSystems.determineTotalPoints(team);
-        Assert.assertEquals(res,3);
+        Assert.assertEquals(res, 3);
     }
 
     @Test
-    public void t02leiterSystemTest()
-    {
+    public void t02leiterSystemTest() {
         TournamentSystems ts = new TournamentSystems();
 
         Team team1 = new Team("LASK Linz", false, 1);
@@ -67,8 +68,29 @@ public class TeamIT {
     }
 
     @Test
-    public void t04schweizerSystemTest()
-    {
+    public void t03leiterSystemRandomResultTest() {
+        TournamentSystems ts = new TournamentSystems();
+
+        Team team1 = new Team("LASK Linz", false);
+        Team team2 = new Team("Blau-Weiß Linz", false);
+        Team team3 = new Team("Donau Linz", false);
+        Team team4 = new Team("SK ADmira Linz", false);
+
+        List<Team> teamList = new ArrayList<>();
+        teamList.add(team1);
+        teamList.add(team2);
+        teamList.add(team3);
+        teamList.add(team4);
+
+        Collections.sort(teamList);
+        Team teamChallenger = teamList.get(2);
+        Team opponentTeam = teamList.get(1);
+        teamList = ts.getWinnerLeiterSystem(teamChallenger, opponentTeam, teamList, null);
+        Assert.assertEquals(teamList.size(), 4);
+    }
+
+    @Test
+    public void t04schweizerSystemTest() {
         TournamentSystems tournamentSystems = new TournamentSystems();
 
         List<Team> teams = new ArrayList<>();
@@ -83,11 +105,12 @@ public class TeamIT {
             team.setTournament(tournament);
         }
 
-        List<Team> teamsAfterTournament = tournamentSystems.schweizerSystem(teams);
+
+        /*List<Team> teamsAfterTournament = tournamentSystems.schweizerSystem(teams);
 
         for (Team team : teamsAfterTournament) {
             System.out.println(team.getName());
-        }
+        }*/
     }
 
 

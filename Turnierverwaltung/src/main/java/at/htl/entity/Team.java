@@ -22,7 +22,7 @@ import java.util.List;
 })
 
 @Table(name = "tv_team")
-public class Team{
+public class Team implements Comparable<Team> {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "t_id")
     private long id;
@@ -134,5 +134,10 @@ public class Team{
 
     public void setGroup(Group group) {
         this.group = group;
+    }
+
+    @Override
+    public int compareTo(Team o) {
+        return this.rank - o.rank;
     }
 }

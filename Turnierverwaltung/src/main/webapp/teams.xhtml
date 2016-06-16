@@ -3,7 +3,7 @@
       xmlns:h="http://java.sun.com/jsf/html" xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core"
       xmlns:ui="http://java.sun.com/jsf/facelets">
 <h:head>
-    <title>Teamliste</title>
+    <title>Ergebnisse</title>
 </h:head>
 <h:body>
     <ui:include src="header.xhtml"></ui:include>
@@ -181,29 +181,6 @@
                         ,teamsController.quarterFinalMatches),teamsController.quarterFinalMatches))}
             </p:column>
         </p:row>
-
-
-        <f:facet name="footer">
-            <p:row>
-                <p:column  colspan="4" style="text-align: right">
-                    Finals MVP
-                </p:column>
-                <p:column  colspan="3" rowspan="3">
-                    Max Mustermann
-                </p:column>
-            </p:row>
-
-            <p:row>
-                <p:column  colspan="4" style="text-align: right">
-                    Season MVP
-                </p:column>
-            </p:row>
-            <p:row>
-                <p:column  colspan="4" style="text-align: right">
-                    Top Scorer
-                </p:column>
-            </p:row>
-        </f:facet>
     </p:panelGrid>
 </h:body>
 </html>
