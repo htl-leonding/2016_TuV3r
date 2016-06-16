@@ -6,7 +6,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
 <h:head>
-
+    <title>Aktuelles Turnier</title>
 </h:head>
 <h:body>
     <h:outputStylesheet library="css" name="style.css"/>
@@ -64,14 +64,14 @@
             <div style="float: left;margin-left: 20%">
                 <h3 class="ui-widget">Anzahl der Teams eingeben:</h3>
                 <h:panelGrid columns="1">
-                    <p:inputText id="teamSliderText" value="#{newTournamentController.teamCount}"/>
+                    <p:inputText id="teamSliderText" value="#{newTournamentController.teamCount}" disabled="true"/>
                     <p:slider for="teamSliderText">
                         <p:ajax event="slideEnd" listener="#{newTournamentController.onTeamCountSlideEnd}"/>
                     </p:slider>
                 </h:panelGrid>
                 <h3 class="ui-widget">Gewünschte Größe einer Gruppe:</h3>
                 <h:panelGrid columns="1">
-                    <p:inputText id="groupSizeSliderText" value="#{newTournamentController.groupSize}"/>
+                    <p:inputText id="groupSizeSliderText" value="#{newTournamentController.groupSize}" disabled="true"/>
                     <p:slider for="groupSizeSliderText" minValue="3" maxValue="10">
                         <p:ajax event="slideEnd" listener="#{newTournamentController.onGroupSizeSlideEnd}"/>
                     </p:slider>
@@ -80,14 +80,14 @@
             <div style="margin-left: 55%">
                 <h3 class="ui-widget">Punkte pro Win:</h3>
                 <h:panelGrid columns="1">
-                    <p:inputText id="pointsWonSliderText" value="#{newTournamentController.pointsWin}"/>
+                    <p:inputText id="pointsWonSliderText" value="#{newTournamentController.pointsWin}" disabled="true"/>
                     <p:slider for="pointsWonSliderText" minValue="#{newTournamentController.pointsDraw}" maxValue="100">
                         <p:ajax event="slideEnd" listener="#{newTournamentController.onPointsWinSlideEnd}"/>
                     </p:slider>
                 </h:panelGrid>
                 <h3 class="ui-widget">Punkte pro Unentschieden:</h3>
                 <h:panelGrid columns="1">
-                    <p:inputText id="pointsDrawSliderText" value="#{newTournamentController.pointsDraw}"/>
+                    <p:inputText id="pointsDrawSliderText" value="#{newTournamentController.pointsDraw}" disabled="true"/>
                     <p:slider for="pointsDrawSliderText" minValue="0" maxValue="10">
                         <p:ajax event="slideEnd" listener="#{newTournamentController.onPointsDrawSlideEnd}"/>
                     </p:slider>
@@ -169,14 +169,14 @@
                 </p:column>
                 <p:column headerText="Name">
                     <h:form>
-                        <h:inputText value="#{team.name}"/>
-                        <p:commandButton value="Save">
-                            <p:ajax event="click" listener="#{newTournamentController.onClick}" update="msgs"/>
-                        </p:commandButton>
+                        <h:inputText value="#{team.name}" id="Name">
+                            <p:ajax update="msgName" listener="#{newTournamentController.onClick1}" event="keyup" />
+                        </h:inputText>
+                        <p:message for="Name" id="msgName" display="icon" />
                     </h:form>
                 </p:column>
-
             </p:dataTable>
+
 
         </p:outputPanel>
 

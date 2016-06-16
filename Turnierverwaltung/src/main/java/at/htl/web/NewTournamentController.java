@@ -79,6 +79,7 @@ public class NewTournamentController implements Serializable {
         typesSource.add("Leitersystem");
 
         types = new DualListModel<>(typesSource, typesTarget);
+
     }
 
     public void changeTeamName(AjaxBehaviorEvent event){
@@ -105,10 +106,10 @@ public class NewTournamentController implements Serializable {
             detail.append(s).append("<br />");
             if (!selectedTypes.contains(s)) {
                 selectedTypes.add(s);
-                msg.setSummary("Items Transferred");
+                msg.setSummary("Turnierart übertragen");
             } else {
                 selectedTypes.remove(s);
-                msg.setSummary("Items removed");
+                msg.setSummary("Turnierart entfernt");
             }
         }
 
@@ -127,10 +128,13 @@ public class NewTournamentController implements Serializable {
     public void onClick(AjaxBehaviorEvent event) {
         FacesMessage msg = new FacesMessage();
         msg.setSeverity(FacesMessage.SEVERITY_INFO);
-        msg.setDetail("Name");
-        msg.setSummary("Hinzugefügt");
+        msg.setSummary("Name");
+        msg.setDetail("Hinzugefügt");
         FacesContext.getCurrentInstance().addMessage(null,msg);
+    }
 
+    public void onClick1() {
+        System.out.println("**********");
     }
 
     /***
@@ -155,7 +159,7 @@ public class NewTournamentController implements Serializable {
         if (selectedTypes.contains("Gruppenphase")){
             groupphase=true;
         }
-        Tournament tournament = new Tournament(getTournamentName(), LocalDate.now(), true,getPointsWin(),
+        Tournament tournament = new Tournament(tournamentName, LocalDate.now(), true,getPointsWin(),
                 getPointsDraw(),getGroupSize(),groupphase,getTournamentSystem(), teams);
         List<Team> teams = tournament.getTeams();
         systems.persistTeams(teams);
@@ -267,6 +271,8 @@ public class NewTournamentController implements Serializable {
     }
 
     public String getTournamentName() {
+        teams=null;
+        getTeams();
         return tournamentName;
     }
 
