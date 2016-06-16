@@ -76,15 +76,110 @@ startButtonElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_
 startButtonElement.click()
 time.sleep(1)
 
+
+goalsId = "j_idt17:dataTable:6:ResultT1"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("2")
+time.sleep(1)
+goalsId = "j_idt17:dataTable:6:ResultT2"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("0")
+time.sleep(1)
+goalsId = "j_idt17:dataTable:7:ResultT1"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("5")
+time.sleep(1)
+goalsId = "j_idt17:dataTable:7:ResultT2"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("0")
+time.sleep(1)
 nextRoundButtonId = "j_idt17:btnNextRound"
 nextRoundButtonElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(nextRoundButtonId))
 nextRoundButtonElement.click()
 time.sleep(1)
-nextRoundButtonElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(nextRoundButtonId))
-nextRoundButtonElement.click()
+
+
+goalsId = "j_idt17:dataTable:0:ResultT1"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("1")
+time.sleep(1)
+goalsId = "j_idt17:dataTable:0:ResultT2"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("2")
+time.sleep(1)
+goalsId = "j_idt17:dataTable:1:ResultT1"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("3")
+time.sleep(1)
+goalsId = "j_idt17:dataTable:1:ResultT2"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("2")
+time.sleep(1)
+goalsId = "j_idt17:dataTable:2:ResultT1"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("2")
+time.sleep(1)
+goalsId = "j_idt17:dataTable:2:ResultT2"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("0")
+time.sleep(1)
+goalsId = "j_idt17:dataTable:3:ResultT1"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("1")
+time.sleep(1)
+goalsId = "j_idt17:dataTable:3:ResultT2"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("0")
 time.sleep(1)
 nextRoundButtonElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(nextRoundButtonId))
 nextRoundButtonElement.click()
+time.sleep(1)
+
+goalsId = "j_idt17:dataTable:0:ResultT1"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("2")
+time.sleep(1)
+goalsId = "j_idt17:dataTable:0:ResultT2"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("0")
+time.sleep(1)
+goalsId = "j_idt17:dataTable:1:ResultT1"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("1")
+time.sleep(1)
+goalsId = "j_idt17:dataTable:1:ResultT2"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("0")
+time.sleep(1)
+nextRoundButtonElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(nextRoundButtonId))
+nextRoundButtonElement.click()
+time.sleep(1)
+
+goalsId = "j_idt17:dataTable:0:ResultT1"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("1")
+time.sleep(1)
+goalsId = "j_idt17:dataTable:0:ResultT2"
+goalsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(goalsId))
+goalsElement.clear()
+goalsElement.send_keys("0")
 time.sleep(1)
 nextRoundButtonElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(nextRoundButtonId))
 nextRoundButtonElement.click()
