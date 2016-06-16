@@ -27,6 +27,10 @@ public class TeamsController implements Serializable {
     @Inject
     MatchFacade matchFacade;
 
+    public String getTournamentName(){
+        return tournamentFacade.findLatestTournament().getName();
+    }
+
     public List<Team> getTeams(){
         return teamFacade.findTeamsFromLatestTournament();
     }
