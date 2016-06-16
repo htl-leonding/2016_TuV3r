@@ -62,10 +62,12 @@ public class TeamIT {
 
         Result result1 = new Result("3:1");
 
-        teamList = ts.getWinnerLeiterSystem(team2, team1, teamList, result1);
+        //teamList = ts.getWinnerLeiterSystem(team2, team1, teamList, result1);
 
         Assert.assertEquals(teamList.get(1), team1);
     }
+
+
 
     @Test
     public void t03leiterSystemRandomResultTest() {
@@ -111,6 +113,17 @@ public class TeamIT {
         for (Team team : teamsAfterTournament) {
             System.out.println(team.getName());
         }*/
+    }
+
+    @Test
+    public void t05TeamTest() {
+        Team team = new Team("Bayern",false);
+        Team team1 = new Team("BVB",false);
+        int res = tournamentSystems.determineTotalPoints(team);
+        Match match = new Match(false,team,team1,new Result(2,1));
+        Assert.assertEquals(res,0);
+        res = tournamentSystems.determineTotalPoints(team);
+        Assert.assertEquals(res,3);
     }
 
 

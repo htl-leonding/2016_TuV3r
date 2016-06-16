@@ -284,3 +284,4 @@ public class NewTournamentController implements Serializable {
         this.teams = teams;
     }
 }
+

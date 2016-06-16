@@ -529,13 +529,12 @@ public class TournamentSystems {
 
     /**
      * Iterative Methode, die ein Schweizer System darstellt.
-     * Gewinner Team wird zurückgegeben.
      * von Adrian Isa
      *
      * @param teams
      * @return
      */
-    public Team schweizerSystem(List<Team> teams) {
+    public List<Team> schweizerSystem(List<Team> teams) {
         boolean exists = false;
         sortTeamsByPoints(teams);
         List<Match> matches = new ArrayList<Match>();
@@ -565,7 +564,7 @@ public class TournamentSystems {
             }
             sortTeamsByPoints(teams);
         }
-        return teams.get(0);
+        return teams;
     }
 
     /***

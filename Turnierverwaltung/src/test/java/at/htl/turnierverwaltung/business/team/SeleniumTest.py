@@ -37,7 +37,7 @@ time.sleep(1)
 anzahlTeamsId = "teams_select:teamSliderText"
 anzahlTeamsElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(anzahlTeamsId))
 anzahlTeamsElement.clear()
-anzahlTeamsElement.send_keys("16")
+anzahlTeamsElement.send_keys("10")
 time.sleep(1)
 groupSizeId = "teams_select:groupSizeSliderText"
 groupSizeElement = WebDriverWait(driver, 10).until(lambda driver: driver.find_element_by_id(groupSizeId))
