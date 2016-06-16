@@ -702,6 +702,12 @@ public class TournamentSystems {
         int challengerRank = challenger.getRank();
         int opponentRank = decidedOpponent.getRank();
 
+        if (challengerRank == 0 || opponentRank == 0) {
+            teams = sortTeamsRandomIfNecessary(teams);
+            challengerRank = challenger.getRank();
+            opponentRank = decidedOpponent.getRank();
+        }
+
         if (challengerRank - opponentRank < 2) {
             Result result = randomResult();
             Match match = setResultForOneMatch(new Match(true, challenger, decidedOpponent, result), result);
