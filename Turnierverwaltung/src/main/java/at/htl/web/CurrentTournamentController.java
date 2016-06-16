@@ -40,6 +40,7 @@ public class CurrentTournamentController implements Serializable {
     private List<Team> loserList;
     private List<Match> previousMatches = new ArrayList<>();
     String redirect="http://localhost:8080/Turnierverwaltung/teams.xhtml";
+    String redirectNew="http://localhost:8080/Turnierverwaltung/newTournament.xhtml";
 
     /***
      * Holt das neueste Turnier von der DB
@@ -50,7 +51,8 @@ public class CurrentTournamentController implements Serializable {
             return tournamentFacade.findLatestTournament();
         }
         catch (EJBException ex){
-            throw new EJBException("Letztes Turnier nicht gefunden",ex);
+            ex.printStackTrace();
+            return null;
         }
     }
 
@@ -102,6 +104,8 @@ public class CurrentTournamentController implements Serializable {
     }
     public void buttonQuit(ActionEvent actionEvent) {
         clearData();
+        RequestContext requestContext = RequestContext.getCurrentInstance();
+        requestContext.execute("window.open('"+ redirectNew +"','_self')");
     }
 
     private void clearData() {
