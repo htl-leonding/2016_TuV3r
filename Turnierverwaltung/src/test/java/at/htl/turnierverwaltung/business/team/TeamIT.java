@@ -61,7 +61,7 @@ public class TeamIT {
 
         Result result1 = new Result("3:1");
 
-        //teamList = ts.getWinnerLeiterSystem(team2, team1, teamList, result1);
+        teamList = ts.getWinnerLeiterSystem(team2, team1, teamList, result1);
 
         Assert.assertEquals(teamList.get(1), team1);
     }
