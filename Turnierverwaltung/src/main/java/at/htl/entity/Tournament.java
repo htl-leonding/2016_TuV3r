@@ -72,6 +72,10 @@ public class Tournament {
     public Tournament() {
     }
 
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public Boolean getActive() {
         return isActive;
     }
