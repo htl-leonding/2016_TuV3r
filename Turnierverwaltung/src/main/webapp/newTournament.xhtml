@@ -27,16 +27,13 @@
                     <p:menuitem value="Generelle Turnierdaten eingeben">
                         <f:param name="i" value="1"></f:param>
                     </p:menuitem>
-                    <p:menuitem value="Teamnamen ändern">
-                        <f:param name="i" value="2"></f:param>
-                    </p:menuitem>
                     <p:menuitem value="Turnier starten">
-                        <f:param name="i" value="3"></f:param>
+                        <f:param name="i" value="2"></f:param>
                     </p:menuitem>
                 </p:steps>
             </div>
             <div style="float: right">
-                <p:outputPanel rendered="#{param.i>2==false}">
+                <p:outputPanel rendered="#{param.i>1==false}">
                     <p:commandButton update="@all" value="Next">
                         <f:param name="i" value="#{param.i+1}"/>
                     </p:commandButton>
@@ -102,7 +99,7 @@
                              update="teams_select"/>
         </h:form>
     </div>
-    <div style="display:#{(param.i==3)?'block':'none'};float: right">
+    <div style="display:#{(param.i==2)?'block':'none'};float: right">
         <h:form>
             <p:commandButton id="startTournamentBtn" value="Starte Turnier"
                              actionListener="#{newTournamentController.buttonAction}"  />
@@ -150,16 +147,14 @@
              3: Teamnamen ändern
         __________________________________________________________ -->
 
-        <p:outputPanel rendered="#{param.i==2}">
-            <!--To be removed-->
-        </p:outputPanel>
+
 
 
         <!-- _____________________________________________________
 
             4: Turnier starten
         __________________________________________________________ -->
-        <p:outputPanel rendered="#{param.i==3}">
+        <p:outputPanel rendered="#{param.i==2}">
             <h:form>
                 <p:outputPanel styleClass="center" style="margin-top: 5%">
                     <p:dataTable var="ov" value="#{newTournamentController.tournamentSystem}">
