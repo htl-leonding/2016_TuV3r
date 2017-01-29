@@ -22,13 +22,13 @@
                 <p:steps activeIndex="#{param.i}" styleClass="custom" readonly="false"
                          rendered="#{param.i>3==false}">
                     <p:menuitem value="Turnierart auswählen">
-                        <f:param name="i" value="0"></f:param>
+                        <f:param name="i" value="0"/>
                     </p:menuitem>
                     <p:menuitem value="Generelle Turnierdaten eingeben">
-                        <f:param name="i" value="1"></f:param>
+                        <f:param name="i" value="1"/>
                     </p:menuitem>
                     <p:menuitem value="Turnier starten">
-                        <f:param name="i" value="2"></f:param>
+                        <f:param name="i" value="2"/>
                     </p:menuitem>
                 </p:steps>
             </div>
@@ -58,7 +58,6 @@
     __________________________________________________________ -->
     <div id="nav" style="display:#{(param.i==1)?'block':'none'}">
         <h:form id="teams_select">
-
             <div style="float: left;margin-left: 5%">
                 <h3 class="ui-widget">Punkte pro Sieg:</h3>
                 <h:panelGrid columns="1">
@@ -74,13 +73,15 @@
                         <p:ajax event="slideEnd" listener="#{newTournamentController.onPointsDrawSlideEnd}"/>
                     </p:slider>
                 </h:panelGrid>
-                <h3 class="ui-widget">Gewünschte Größe einer Gruppe:</h3>
-                <h:panelGrid columns="1">
-                    <p:inputText id="groupSizeSliderText" value="#{newTournamentController.groupSize}" disabled="true"/>
-                    <p:slider for="groupSizeSliderText" minValue="3" maxValue="10">
-                        <p:ajax event="slideEnd" listener="#{newTournamentController.onGroupSizeSlideEnd}"/>
-                    </p:slider>
-                </h:panelGrid>
+                <p:outputPanel rendered="#{newTournamentController.selectedTypes.contains('Gruppenphase')}">
+                    <h3 class="ui-widget">Gewünschte Größe einer Gruppe:</h3>
+                    <h:panelGrid columns="1">
+                        <p:inputText id="groupSizeSliderText" value="#{newTournamentController.groupSize}" disabled="true"/>
+                        <p:slider for="groupSizeSliderText" minValue="3" maxValue="10">
+                            <p:ajax event="slideEnd" listener="#{newTournamentController.onGroupSizeSlideEnd}"/>
+                        </p:slider>
+                    </h:panelGrid>
+                </p:outputPanel>
             </div>
             <p:dataTable var="team" value="#{newTournamentController.teams}" style="width: 90%">
                 <p:column width="20">
@@ -103,11 +104,8 @@
         <h:form>
             <p:commandButton id="startTournamentBtn" value="Starte Turnier"
                              actionListener="#{newTournamentController.buttonAction}"  />
-
         </h:form>
     </div>
-
-
     <!-- ***********************************************************
                          SECTION (CENTER)
     *********************************************************** -->
@@ -141,18 +139,9 @@
                 </h:form>
             </p:outputPanel>
 
-
         <!-- _____________________________________________________
 
-             3: Teamnamen ändern
-        __________________________________________________________ -->
-
-
-
-
-        <!-- _____________________________________________________
-
-            4: Turnier starten
+            3: Turnier starten
         __________________________________________________________ -->
         <p:outputPanel rendered="#{param.i==2}">
             <h:form>
@@ -163,7 +152,7 @@
                         </p:column>
                     </p:dataTable>
                     <p:outputLabel>
-                        <p:button id="groupPhaseButton" value="Gruppenphase"
+                        <p:button id="groupPhaseButton" value="Gruppenphase" disabled="true"
                                   icon="#{newTournamentController.groupPhaseIcon}"/>
                         <p:commandButton id="typesSubmit" value="Mehr Infos"
                                          update="displayTypes"
@@ -197,8 +186,6 @@
                         </p:column>
                     </p:dataTable>
                 </p:outputPanel>
-
-
             </h:form>
         </p:outputPanel>
     </div>

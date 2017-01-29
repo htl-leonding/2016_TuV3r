@@ -46,7 +46,6 @@ public class NewTournamentController implements Serializable {
 
     private DualListModel<String> types;
     private List<String> selectedTypes = new ArrayList<>();
-    private int teamCount = 10;
     private int groupSize = 3;
     private int pointsWin = 3;
     private int pointsDraw = 1;
@@ -56,9 +55,7 @@ public class NewTournamentController implements Serializable {
     private String groupPhaseIcon;
     private String newName;
     private List<Team> deleteTeams = new ArrayList<>();
-    String redirect="http://localhost:8080/Turnierverwaltung/currentTournament.xhtml";
-    List<String> typesSource = new ArrayList<String>();
-    List<String> typesTarget = new ArrayList<String>();
+    private String redirect="http://localhost:8080/Turnierverwaltung/currentTournament.xhtml";
 
     public String getNewName() {
         return newName;
@@ -93,25 +90,15 @@ public class NewTournamentController implements Serializable {
      */
     @PostConstruct
     public void setupPickList() {
+        List<String> typesSource = new ArrayList<String>();
+        List<String> typesTarget = new ArrayList<String>();
+
         typesSource.add("Gruppenphase");
-        typesSource.add("Leitersystem");
-        typesSource.add("Schweizersystem");
-        typesSource.add("Doppel-KO-System");
         typesSource.add("KO-System");
 
         types = new DualListModel<>(typesSource, typesTarget);
     }
 
-    public void changeTeamName(AjaxBehaviorEvent event){
-        System.out.println("****TODO****");
-    }
-
-    //region Eventhandler
-    public void onTeamCountSlideEnd(SlideEndEvent event) {
-        //logger.info("************************ " + event.getValue());
-        setTeamCount(event.getValue());
-        getTeams();
-    }
     /**
      * Wird aufgerufen, wenn bei der Picklist ein Element auf die andere Seite geschoben
      * wird und fügt das Element zur Liste hinzu. Gibt dann eine Message zurück.
@@ -134,9 +121,7 @@ public class NewTournamentController implements Serializable {
         }
 
         msg.setSeverity(FacesMessage.SEVERITY_INFO);
-
         msg.setDetail(detail.toString());
-
         FacesContext.getCurrentInstance().addMessage(null, msg);
     }
 
@@ -152,24 +137,14 @@ public class NewTournamentController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null,msg);
     }
 
-    public void editText(AjaxBehaviorEvent ev) {
-        Team t = (Team)ev.getComponent().getAttributes().get("team");
-
-        System.out.println(t.toString());
-    }
-
     /***
      * Speichert die Daten und wechselt zur Turnierdurchführ-Seite
      * @param actionEvent
      */
     public void buttonAction(ActionEvent actionEvent) {
         persistInput();
-
-        //systems.launchTournament(getGroupSize(),getPointsDraw(),getPointsWin(),getSelectedTypes(),tournament);
-
         RequestContext requestContext = RequestContext.getCurrentInstance();
         requestContext.execute("window.open('"+ redirect +"','_self')");
-
     }
 
     /***
@@ -183,17 +158,16 @@ public class NewTournamentController implements Serializable {
             team.setTournament(tournament);
             teamFacade.save(team);
         }
+        teams = new ArrayList<>();
+        tournamentName="";
     }
     public void onGroupSizeSlideEnd(SlideEndEvent event) {
-        //logger.info("************************ " + event.getValue());
         setGroupSize(event.getValue());
     }
     public void onPointsWinSlideEnd(SlideEndEvent event) {
-        //logger.info("************************ " + event.getValue());
         setPointsWin(event.getValue());
     }
     public void onPointsDrawSlideEnd(SlideEndEvent event) {
-        //logger.info("************************ " + event.getValue());
         setPointsDraw(event.getValue());
     }
     //endregion
@@ -213,7 +187,7 @@ public class NewTournamentController implements Serializable {
     public String getTournamentSystem() {
         for (String s : selectedTypes) {
             if (!s.equals("Gruppenphase")) {
-                for (String types : typesSource) {
+                for (String types : types.getSource()) {
                     if (types.equals(s))
                         return s;
                 }
@@ -242,14 +216,6 @@ public class NewTournamentController implements Serializable {
         this.types = types;
     }
 
-    public int getTeamCount() {
-        return teamCount;
-    }
-
-    public void setTeamCount(int teamCount) {
-        this.teamCount = teamCount;
-    }
-
     public int getGroupSize() {
         return groupSize;
     }
@@ -275,13 +241,6 @@ public class NewTournamentController implements Serializable {
     }
 
     public List<Team> getTeams() {
-        /*if(teams==null || getTeamCount()!=teams.size()){
-            List<Team> teams = new ArrayList<Team>();
-            for (int i = 1; i < teamCount + 1; i++) {
-                teams.add(new Team("Team " + i, false));
-            }
-            setTeams(teams);
-        }*/
         return teams;
     }
 
@@ -313,7 +272,6 @@ public class NewTournamentController implements Serializable {
     }
     public void newColumn(ActionEvent ev){
         teams.add(new Team(getNewName(),false));
-        //teams.add(teamFacade.save(t));
     }
 }
 
