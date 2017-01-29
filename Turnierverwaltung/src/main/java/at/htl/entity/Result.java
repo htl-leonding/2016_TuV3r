@@ -4,6 +4,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.xml.ws.Endpoint;
 
 /**
  * Created by Laurenz on 10.12.2015.
@@ -39,6 +40,7 @@ public class Result {
     }
 
     public void setPointsSecondTeam(int pointsSecondTeam) {
+
         this.pointsSecondTeam = pointsSecondTeam;
     }
 

@@ -2,6 +2,7 @@ package at.htl.web;
 
 import at.htl.entity.Team;
 import at.htl.entity.Tournament;
+import at.htl.logic.TeamFacade;
 import at.htl.logic.TournamentFacade;
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
@@ -11,6 +12,7 @@ import org.primefaces.context.RequestContext;
 import org.primefaces.event.SlideEndEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
+import org.primefaces.model.StreamedContent;
 
 import javax.annotation.PostConstruct;
 import javax.enterprise.context.SessionScoped;
@@ -24,6 +26,7 @@ import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.BlockingDeque;
 import javax.faces.application.NavigationHandler;
 
 @Named
@@ -38,6 +41,9 @@ public class NewTournamentController implements Serializable {
     @Inject
     private TournamentSystems systems;
 
+    @Inject
+    private TeamFacade teamFacade;
+
     private DualListModel<String> types;
     private List<String> selectedTypes = new ArrayList<>();
     private int teamCount = 10;
@@ -45,14 +51,30 @@ public class NewTournamentController implements Serializable {
     private int pointsWin = 3;
     private int pointsDraw = 1;
     private String tournamentName;
-    private List<Team> teams;
+    private List<Team> teams = new ArrayList<>();
     private String tournamentSystem;
     private String groupPhaseIcon;
+    private String newName;
+    private List<Team> deleteTeams = new ArrayList<>();
     String redirect="http://localhost:8080/Turnierverwaltung/currentTournament.xhtml";
     List<String> typesSource = new ArrayList<String>();
     List<String> typesTarget = new ArrayList<String>();
 
+    public String getNewName() {
+        return newName;
+    }
 
+    public void setNewName(String newName) {
+        this.newName = newName;
+    }
+
+    public List<Team> getDeleteTeams() {
+        return deleteTeams;
+    }
+
+    public void setDeleteTeams(List<Team> deleteTeams) {
+        this.deleteTeams = deleteTeams;
+    }
 
     public Tournament getLatestTournament() {
         return tournamentFacade.findLatestTournament();
@@ -78,7 +100,6 @@ public class NewTournamentController implements Serializable {
         typesSource.add("KO-System");
 
         types = new DualListModel<>(typesSource, typesTarget);
-
     }
 
     public void changeTeamName(AjaxBehaviorEvent event){
@@ -117,7 +138,6 @@ public class NewTournamentController implements Serializable {
         msg.setDetail(detail.toString());
 
         FacesContext.getCurrentInstance().addMessage(null, msg);
-
     }
 
     /***
@@ -132,8 +152,10 @@ public class NewTournamentController implements Serializable {
         FacesContext.getCurrentInstance().addMessage(null,msg);
     }
 
-    public void onClick1() {
-        System.out.println("**********");
+    public void editText(AjaxBehaviorEvent ev) {
+        Team t = (Team)ev.getComponent().getAttributes().get("team");
+
+        System.out.println(t.toString());
     }
 
     /***
@@ -154,19 +176,13 @@ public class NewTournamentController implements Serializable {
      * Speichert Informationen, die für ein Turnier essentiell sind
      */
     private void persistInput(){
-        Boolean groupphase=false;
-        if (selectedTypes.contains("Gruppenphase")){
-            groupphase=true;
-        }
         Tournament tournament = new Tournament(tournamentName, LocalDate.now(), true,getPointsWin(),
-                getPointsDraw(),getGroupSize(),groupphase,getTournamentSystem(), teams);
-        List<Team> teams = tournament.getTeams();
-        systems.persistTeams(teams);
-        systems.persistTournament(tournament);
+                getPointsDraw(),getGroupSize(),selectedTypes.contains("Gruppenphase"),getTournamentSystem(), teams);
+        tournament= tournamentFacade.save(tournament);
         for (Team team : teams) {
             team.setTournament(tournament);
+            teamFacade.save(team);
         }
-        systems.mergeTeams(tournament.getTeams());
     }
     public void onGroupSizeSlideEnd(SlideEndEvent event) {
         //logger.info("************************ " + event.getValue());
@@ -259,19 +275,17 @@ public class NewTournamentController implements Serializable {
     }
 
     public List<Team> getTeams() {
-        if(teams==null || getTeamCount()!=teams.size()){
+        /*if(teams==null || getTeamCount()!=teams.size()){
             List<Team> teams = new ArrayList<Team>();
             for (int i = 1; i < teamCount + 1; i++) {
                 teams.add(new Team("Team " + i, false));
             }
             setTeams(teams);
-        }
+        }*/
         return teams;
     }
 
     public String getTournamentName() {
-        teams=null;
-        getTeams();
         return tournamentName;
     }
 
@@ -281,5 +295,24 @@ public class NewTournamentController implements Serializable {
 
     public void setTeams(List<Team> teams) {
         this.teams = teams;
+    }
+
+    public void checkboxTicked(Team team){
+        if(deleteTeams.contains(team)){
+            deleteTeams.remove(team);
+        }
+        else{
+            deleteTeams.add(team);
+        }
+    }
+    public void deleteRows(ActionEvent ev){
+        for (Team deleteTeam : deleteTeams) {
+            teams.remove(deleteTeam);
+        }
+        deleteTeams = new ArrayList<>();
+    }
+    public void newColumn(ActionEvent ev){
+        teams.add(new Team(getNewName(),false));
+        //teams.add(teamFacade.save(t));
     }
 }

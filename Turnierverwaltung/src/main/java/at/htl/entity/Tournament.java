@@ -147,4 +147,8 @@ public class Tournament {
     public void setSystem(String system) {
         this.system = system;
     }
+
+    public void setId(long id) {
+        this.id = id;
+    }
 }

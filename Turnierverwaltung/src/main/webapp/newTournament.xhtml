@@ -6,7 +6,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:f="http://xmlns.jcp.org/jsf/core" xmlns:p="http://primefaces.org/ui">
 <h:head>
-    <title>Aktuelles Turnier</title>
+    <title>Neues Turnier</title>
 </h:head>
 <h:body>
     <h:outputStylesheet library="css" name="style.css"/>
@@ -61,24 +61,9 @@
     __________________________________________________________ -->
     <div id="nav" style="display:#{(param.i==1)?'block':'none'}">
         <h:form id="teams_select">
-            <div style="float: left;margin-left: 20%">
-                <h3 class="ui-widget">Anzahl der Teams eingeben:</h3>
-                <h:panelGrid columns="1">
-                    <p:inputText id="teamSliderText" value="#{newTournamentController.teamCount}" disabled="true"/>
-                    <p:slider for="teamSliderText">
-                        <p:ajax event="slideEnd" listener="#{newTournamentController.onTeamCountSlideEnd}"/>
-                    </p:slider>
-                </h:panelGrid>
-                <h3 class="ui-widget">Gewünschte Größe einer Gruppe:</h3>
-                <h:panelGrid columns="1">
-                    <p:inputText id="groupSizeSliderText" value="#{newTournamentController.groupSize}" disabled="true"/>
-                    <p:slider for="groupSizeSliderText" minValue="3" maxValue="10">
-                        <p:ajax event="slideEnd" listener="#{newTournamentController.onGroupSizeSlideEnd}"/>
-                    </p:slider>
-                </h:panelGrid>
-            </div>
-            <div style="margin-left: 55%">
-                <h3 class="ui-widget">Punkte pro Win:</h3>
+
+            <div style="float: left;margin-left: 5%">
+                <h3 class="ui-widget">Punkte pro Sieg:</h3>
                 <h:panelGrid columns="1">
                     <p:inputText id="pointsWonSliderText" value="#{newTournamentController.pointsWin}" disabled="true"/>
                     <p:slider for="pointsWonSliderText" minValue="#{newTournamentController.pointsDraw}" maxValue="100">
@@ -92,7 +77,29 @@
                         <p:ajax event="slideEnd" listener="#{newTournamentController.onPointsDrawSlideEnd}"/>
                     </p:slider>
                 </h:panelGrid>
+                <h3 class="ui-widget">Gewünschte Größe einer Gruppe:</h3>
+                <h:panelGrid columns="1">
+                    <p:inputText id="groupSizeSliderText" value="#{newTournamentController.groupSize}" disabled="true"/>
+                    <p:slider for="groupSizeSliderText" minValue="3" maxValue="10">
+                        <p:ajax event="slideEnd" listener="#{newTournamentController.onGroupSizeSlideEnd}"/>
+                    </p:slider>
+                </h:panelGrid>
             </div>
+            <p:dataTable var="team" value="#{newTournamentController.teams}">
+                <!--<p:column width="20">
+                    <p:selectBooleanCheckbox value="false" >
+                        <p:ajax listener="#{newTournamentController.checkboxTicked(team)}"/>
+                    </p:selectBooleanCheckbox>
+                </p:column>-->
+                <p:column headerText="Name">
+                    <p:outputLabel value="#{team.name}"/>
+                </p:column>
+            </p:dataTable>
+            <p:inputText id="nameInput" placeholder="Name" value="#{newTournamentController.newName}"/>
+            <p:commandButton value="Add" actionListener="#{newTournamentController.newColumn}"
+                             update="teams_select"/>
+            <p:commandButton value="Delete" actionListener="#{newTournamentController.deleteRows}"
+                             update="teams_select"/>
         </h:form>
     </div>
     <div style="display:#{(param.i==3)?'block':'none'};float: right">
@@ -115,28 +122,27 @@
                            1: Turnierart auswählen
         __________________________________________________________ -->
 
-        <p:outputPanel id="pickPanel" rendered="#{param.i==0||param.i==null}"
-                       style="width: 650px;height: 200px;margin:-1% auto 0">
-            <h:form>
-                <h:outputLabel>Turniername:</h:outputLabel>
-                <p:inputText style="margin-left: 5%;width: 47.5%" value="#{newTournamentController.tournamentName}" />
-                <p:commandButton value="Save">
-                    <p:ajax event="click" listener="#{newTournamentController.onClick}" update="msgs"/>
-                </p:commandButton>
-                <p:pickList id="pickList" value="#{newTournamentController.types}" effect="bounce"
-                            showTargetFilter="true" style="margin-top: 1%"
-                            var="types" itemLabel="#{types}" responsive="true" showSourceFilter="true"
-                            itemValue="#{types}" filterMatchMode="contains">
-                    <f:facet name="sourceCaption">Zur Auswahl stehende Turniersysteme</f:facet>
-                    <f:facet name="targetCaption">Ausgewählte Turniersysteme</f:facet>
-                    <p:ajax event="transfer" listener="#{newTournamentController.onTransfer}" update="msgs"/>
-                    <p:column style="width:90%;">
-                        <h:outputText value="#{types}"/>
-                    </p:column>
-                </p:pickList>
-            </h:form>
-        </p:outputPanel>
-
+            <p:outputPanel id="pickPanel" rendered="#{param.i==0||param.i==null}"
+                           style="width: 650px;height: 200px;margin:-1% auto 0">
+                <h:form>
+                    <h:outputLabel>Turniername:</h:outputLabel>
+                    <p:inputText style="margin-left: 5%;width: 47.5%" value="#{newTournamentController.tournamentName}" />
+                    <p:commandButton value="Save">
+                        <p:ajax event="click" listener="#{newTournamentController.onClick}" update="msgs"/>
+                    </p:commandButton>
+                    <p:pickList id="pickList" value="#{newTournamentController.types}" effect="bounce"
+                                showTargetFilter="true" style="margin-top: 1%"
+                                var="types" itemLabel="#{types}" responsive="true" showSourceFilter="true"
+                                itemValue="#{types}" filterMatchMode="contains">
+                        <f:facet name="sourceCaption">Zur Auswahl stehende Turniersysteme</f:facet>
+                        <f:facet name="targetCaption">Ausgewählte Turniersysteme</f:facet>
+                        <p:ajax event="transfer" listener="#{newTournamentController.onTransfer}" update="msgs"/>
+                        <p:column style="width:90%;">
+                            <h:outputText value="#{types}"/>
+                        </p:column>
+                    </p:pickList>
+                </h:form>
+            </p:outputPanel>
 
 
         <!-- _____________________________________________________
@@ -145,39 +151,7 @@
         __________________________________________________________ -->
 
         <p:outputPanel rendered="#{param.i==2}">
-            <!--
-                        <h:panelGrid columns="2" styleClass="stickerGrid">
-                            <ui:repeat value="#{newTournamentController.teamCount}" var="teamPos">
-                                <p:column headerText="Team">
-                                    <h:outputLabel value="***"/>
-                                </p:column>
-                                <p:column headerText="Name">
-                                    <h:form>
-                                        <h:inputText value="yoooo"/>
-                                    </h:form>
-                                </p:column>
-                            </ui:repeat>
-                        </h:panelGrid>
-
-
-            -->
-
-
-            <p:dataTable var="team" value="#{newTournamentController.teams}" id="dataTable">
-                <p:column headerText="Team">
-                    <h:outputLabel value="#{team.name}"/>
-                </p:column>
-                <p:column headerText="Name">
-                    <h:form>
-                        <h:inputText value="#{team.name}" id="Name">
-                            <p:ajax update="msgName" listener="#{newTournamentController.onClick1}" event="keyup" />
-                        </h:inputText>
-                        <p:message for="Name" id="msgName" display="icon" />
-                    </h:form>
-                </p:column>
-            </p:dataTable>
-
-
+            <!--To be removed-->
         </p:outputPanel>
 
 

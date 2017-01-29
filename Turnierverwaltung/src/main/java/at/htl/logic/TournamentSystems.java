@@ -696,9 +696,10 @@ public class TournamentSystems {
      * @param challenger
      * @param decidedOpponent
      * @param teams
+     * @param result1
      * @return die bereits veränderte und sortierte Liste der Teams mit den neuen Rängen
      */
-    public List<Team> getWinnerLeiterSystem(Team challenger, Team decidedOpponent, List<Team> teams) {
+    public List<Team> getWinnerLeiterSystem(Team challenger, Team decidedOpponent, List<Team> teams, Result result1) {
         int challengerRank = challenger.getRank();
         int opponentRank = decidedOpponent.getRank();
 

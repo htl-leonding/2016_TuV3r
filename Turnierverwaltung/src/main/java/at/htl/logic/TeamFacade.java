@@ -37,4 +37,7 @@ public class TeamFacade {
         return em.createNamedQuery("tournament.findAllTournaments",Tournament.class)
                 .getResultList().get(0).getTeams();
     }
+    public void remove(Team t){
+        em.remove(t);
+    }
 }

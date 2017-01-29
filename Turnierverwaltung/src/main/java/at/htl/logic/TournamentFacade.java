@@ -20,6 +20,12 @@ public class TournamentFacade {
     @PersistenceContext
     EntityManager em;
 
+    public Tournament findById(long id) {
+        return (Tournament) em.createQuery("Select t from Tournament t where t.id=:id")
+                .setParameter("id",id)
+                .getResultList().get(0);
+    }
+
     public Tournament findLatestTournament() {
         return em.createNamedQuery("tournament.findAllTournaments",Tournament.class)
                 .getResultList().
@@ -50,5 +56,8 @@ public class TournamentFacade {
             }
         });
         return teams;
+    }
+    public Tournament save(Tournament t){
+        return em.merge(t);
     }
 }
