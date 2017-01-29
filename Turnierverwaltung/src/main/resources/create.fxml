@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.Pane?>
+
+
+<?import javafx.scene.control.CheckBox?>
+<Pane fx:controller="at.htl.gui.JavaFXCreateController" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+      minWidth="-Infinity" prefHeight="115.0" prefWidth="420.0" xmlns="http://javafx.com/javafx/8.0.60"
+      xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <Label layoutX="28.0" layoutY="25.0" text="Name:"/>
+        <Label layoutX="28.0" layoutY="50.0" text="Has Lost:"/>
+        <Label layoutX="28.0" layoutY="75.0" text="Rank:"/>
+        <TextField fx:id="tf_name" layoutX="99.0" layoutY="21.0"/>
+        <CheckBox fx:id="cb_haslost" layoutX="99.0" layoutY="46.0"/>
+        <TextField fx:id="tf_rank" layoutX="99.0" layoutY="71.0"/>
+        <Button fx:id="bt_create" layoutX="300.0" layoutY="71.0" mnemonicParsing="false" text="Create new"/>
+    </children>
+</Pane>

@@ -30,7 +30,7 @@ public class InitBean {
 
     @PostConstruct
     public void init(){
-        /*List<Team> teams = new ArrayList<Team>();
+        List<Team> teams = new ArrayList<Team>();
         for (long j = 1; j<3;j++) {
             teams = new ArrayList<Team>();
             for (long i = 1; i < TEAM_COUNT + 1; i++) {
@@ -41,7 +41,7 @@ public class InitBean {
             }
             Tournament tournament = new Tournament("Schulcup"+j, LocalDate.now().minusDays(j), true, teams);
             em.persist(tournament);
-            systems.koSystemRound(systems.manageGroupPhase(tournament));
+            systems.koSystemRound(systems.manageGroupPhase(tournament), tournament);
             //systems.koSystemRound(teams);
             //systems.koSystemRound(systems.manageGroupPhase(teams));
 
@@ -51,7 +51,7 @@ public class InitBean {
                 t.setTournament(tournament);
                 em.merge(t);
             }
-        }*/
+        }
 
     }
 }

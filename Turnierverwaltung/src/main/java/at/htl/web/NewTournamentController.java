@@ -316,3 +316,4 @@ public class NewTournamentController implements Serializable {
         //teams.add(teamFacade.save(t));
     }
 }
+

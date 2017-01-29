@@ -72,6 +72,12 @@ public class Tournament {
     public Tournament() {
     }
 
+
+    // needed for REST Client
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public Boolean getActive() {
         return isActive;
     }
