@@ -15,6 +15,7 @@ import org.primefaces.model.DualListModel;
 import org.primefaces.model.StreamedContent;
 
 import javax.annotation.PostConstruct;
+import javax.el.MethodExpression;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
@@ -49,7 +50,7 @@ public class NewTournamentController implements Serializable {
     private int groupSize = 3;
     private int pointsWin = 3;
     private int pointsDraw = 1;
-    private String tournamentName;
+    private String tournamentName ="";
     private List<Team> teams = new ArrayList<>();
     private String tournamentSystem;
     private String groupPhaseIcon;
@@ -127,13 +128,12 @@ public class NewTournamentController implements Serializable {
 
     /***
      * Benachrichtigt den Benutzer, dass der Turniername geändert wurde
-     * @param event
      */
-    public void onClick(AjaxBehaviorEvent event) {
+    public void notify(String summary, String detail) {
         FacesMessage msg = new FacesMessage();
         msg.setSeverity(FacesMessage.SEVERITY_INFO);
-        msg.setSummary("Name");
-        msg.setDetail("Hinzugefügt");
+        msg.setSummary(summary);
+        msg.setDetail(detail);
         FacesContext.getCurrentInstance().addMessage(null,msg);
     }
 
@@ -151,6 +151,7 @@ public class NewTournamentController implements Serializable {
      * Speichert Informationen, die für ein Turnier essentiell sind
      */
     private void persistInput(){
+        if(tournamentName.isEmpty()) setTournamentName("Turnier");
         Tournament tournament = new Tournament(tournamentName, LocalDate.now(), true,getPointsWin(),
                 getPointsDraw(),getGroupSize(),selectedTypes.contains("Gruppenphase"),getTournamentSystem(), teams);
         tournament= tournamentFacade.save(tournament);
@@ -177,10 +178,7 @@ public class NewTournamentController implements Serializable {
      * @return
      */
     public String getGroupPhaseIcon() {
-        if (selectedTypes.contains("Gruppenphase")) {
-            return "ui-icon-check";
-        }
-        return "ui-icon-close";
+        return selectedTypes.contains("Gruppenphase") ? "ui-icon-check" : "ui-icon-close";
     }
 
 
@@ -265,6 +263,7 @@ public class NewTournamentController implements Serializable {
         }
     }
     public void deleteRows(ActionEvent ev){
+        notify(deleteTeams.size()+" Teams","Entfernt");
         for (Team deleteTeam : deleteTeams) {
             teams.remove(deleteTeam);
         }
@@ -272,6 +271,10 @@ public class NewTournamentController implements Serializable {
     }
     public void newColumn(ActionEvent ev){
         teams.add(new Team(getNewName(),false));
+        notify("Team "+getNewName(),"Hinzugefügt");
+    }
+    public void handleKeyEvent() {
+        //update key inputs
     }
 }
 
