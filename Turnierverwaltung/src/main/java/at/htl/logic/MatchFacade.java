@@ -37,4 +37,14 @@ public class MatchFacade {
                 .setParameter("id",tournament.getId())
                 .getResultList();
     }
+    public List<Match> findMatchesByTournamentId(long tournamentId){
+        return em.createQuery("select m from Match m where m.tournament.id=:tournamentId")
+                .setParameter("tournamentId",tournamentId)
+                .getResultList();
+    }
+
+    public Match save(long id, Match m) {
+        m.setId(id);
+        return em.merge(m);
+    }
 }

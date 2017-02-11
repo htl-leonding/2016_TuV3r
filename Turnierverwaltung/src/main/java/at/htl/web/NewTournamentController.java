@@ -7,28 +7,22 @@ import at.htl.logic.TournamentFacade;
 //import org.apache.logging.log4j.LogManager;
 //import org.apache.logging.log4j.Logger;
 import at.htl.logic.TournamentSystems;
-import org.omnifaces.util.Messages;
 import org.primefaces.context.RequestContext;
 import org.primefaces.event.SlideEndEvent;
 import org.primefaces.event.TransferEvent;
 import org.primefaces.model.DualListModel;
-import org.primefaces.model.StreamedContent;
 
 import javax.annotation.PostConstruct;
-import javax.el.MethodExpression;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
-import javax.faces.event.AjaxBehaviorEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.BlockingDeque;
-import javax.faces.application.NavigationHandler;
 
 @Named
 @SessionScoped
@@ -154,10 +148,10 @@ public class NewTournamentController implements Serializable {
         if(tournamentName.isEmpty()) setTournamentName("Turnier");
         Tournament tournament = new Tournament(tournamentName, LocalDate.now(), true,getPointsWin(),
                 getPointsDraw(),getGroupSize(),selectedTypes.contains("Gruppenphase"),getTournamentSystem(), teams);
-        tournament= tournamentFacade.save(tournament);
+        tournament= tournamentFacade.merge(tournament);
         for (Team team : teams) {
             team.setTournament(tournament);
-            teamFacade.save(team);
+            teamFacade.merge(team);
         }
         teams = new ArrayList<>();
         tournamentName="";
@@ -263,7 +257,7 @@ public class NewTournamentController implements Serializable {
         }
     }
     public void deleteRows(ActionEvent ev){
-        notify(deleteTeams.size()+" Teams","Entfernt");
+        notify(deleteTeams.size()+" Team"+(deleteTeams.size()>1?"s":""),"Entfernt");
         for (Team deleteTeam : deleteTeams) {
             teams.remove(deleteTeam);
         }

@@ -33,7 +33,6 @@ public class Match {
     //@Column(name = "m_StartTime")
     //private LocalTime localTime;
     @Column(name = "m_result")
-    @Basic
     private Result result;
 
 
@@ -58,6 +57,15 @@ public class Match {
         this.result = result;
 
     }
+
+    public long getId() {
+        return id;
+    }
+
+    public void setId(long id) {
+        this.id = id;
+    }
+
     public Result getResultObject(){
         return result;
     }

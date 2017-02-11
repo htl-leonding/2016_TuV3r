@@ -83,21 +83,25 @@
                     </h:panelGrid>
                 </p:outputPanel>
             </div>
-            <p:dataTable var="team" value="#{newTournamentController.teams}" style="width: 90%">
-                <p:column width="20">
-                    <p:selectBooleanCheckbox value="false" >
-                        <p:ajax listener="#{newTournamentController.checkboxTicked(team)}"/>
-                    </p:selectBooleanCheckbox>
-                </p:column>
-                <p:column headerText="Name">
-                    <p:outputLabel value="#{team.name}"/>
-                </p:column>
-            </p:dataTable>
-            <p:inputText id="nameInput" placeholder="Name" value="#{newTournamentController.newName}"/>
-            <p:commandButton value="Add" actionListener="#{newTournamentController.newColumn}"
-                             update="teams_select,msgs"/>
-            <p:commandButton value="Delete" actionListener="#{newTournamentController.deleteRows}"
-                             update="teams_select,msgs"/>
+            <div style="margin-left: 30%">
+                <p:dataTable id="tt" var="team" value="#{newTournamentController.teams}"
+                             style="width: 80%">
+                    <p:column width="20">
+                        <p:selectBooleanCheckbox value="false" >
+                            <p:ajax listener="#{newTournamentController.checkboxTicked(team)}"/>
+                        </p:selectBooleanCheckbox>
+                    </p:column>
+                    <p:column headerText="Name">
+                        <p:outputLabel value="#{team.name}"/>
+                    </p:column>
+                </p:dataTable>
+                <p:inputText id="nameInput" placeholder="Name" value="#{newTournamentController.newName}"/>
+                <p:commandButton value="Add" actionListener="#{newTournamentController.newColumn}"
+                                 update="teams_select,msgs"/>
+                <p:commandButton value="Delete" actionListener="#{newTournamentController.deleteRows}"
+                                 update="teams_select,msgs,tt"/>
+            </div>
+
         </h:form>
     </div>
     <div style="display:#{(param.i==2)?'block':'none'};float: right">
@@ -122,7 +126,7 @@
                 <h:form>
                     <h:outputLabel>Turniername:</h:outputLabel>
                     <p:inputText style="margin-left: 5%;width: 47.5%" value="#{newTournamentController.tournamentName}"
-                                 placeholder="Tournament">
+                                 placeholder="Turnier">
                         <p:ajax event="keyup" listener="#{newTournamentController.handleKeyEvent}" />
                     </p:inputText>
                     <p:pickList id="pickList" value="#{newTournamentController.types}" effect="bounce"

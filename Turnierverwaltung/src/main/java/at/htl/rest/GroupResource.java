@@ -4,6 +4,7 @@ import at.htl.entity.Group;
 import at.htl.entity.Match;
 import at.htl.logic.GroupFacade;
 import at.htl.logic.MatchFacade;
+import com.wordnik.swagger.annotations.*;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;
@@ -19,18 +20,23 @@ import java.util.List;
  */
 @Stateless
 @Path("group")
+@Api(value = "/group",description = "Groups")
 public class GroupResource {
     @Inject
     GroupFacade groupFacade;
 
     @GET
     @Path("{id}")
+    @ApiOperation(value = "get a group by id")
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    public Group findById(@PathParam("id") long id){
+    public Group findById(
+            @ApiParam(value = "id of the wanted group", required = true)
+            @PathParam("id") long id){
         return groupFacade.findById(id);
     }
     @GET
-    @Produces({"application/xml","application/json"})
+    @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+    @ApiOperation(value = "Get all groups")
     public List<Group> findAll(){
         return groupFacade.findAll();
     }

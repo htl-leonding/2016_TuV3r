@@ -20,8 +20,9 @@ public class TeamFacade {
     /*public void update(Team team) {
     }*/
 
-    public Team save(Team team) {
-        return em.merge(team);
+    public Team save(long id, Team t){
+        t.setId(id);
+        return em.merge(t);
     }
 
     public List<Team> findAll() {
@@ -39,5 +40,9 @@ public class TeamFacade {
     }
     public void remove(Team t){
         em.remove(t);
+    }
+
+    public void merge(Team team) {
+        em.merge(team);
     }
 }

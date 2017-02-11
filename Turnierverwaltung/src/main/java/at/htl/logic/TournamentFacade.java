@@ -1,6 +1,5 @@
 package at.htl.logic;
 
-import at.htl.entity.Match;
 import at.htl.entity.Team;
 import at.htl.entity.Tournament;
 
@@ -57,7 +56,12 @@ public class TournamentFacade {
         });
         return teams;
     }
-    public Tournament save(Tournament t){
+    public Tournament save(long id, Tournament t){
+        t.setId(id);
         return em.merge(t);
+    }
+
+    public Tournament merge(Tournament tournament) {
+        return em.merge(tournament);
     }
 }
