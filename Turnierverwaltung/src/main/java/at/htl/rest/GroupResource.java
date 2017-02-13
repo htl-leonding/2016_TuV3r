@@ -4,7 +4,10 @@ import at.htl.entity.Group;
 import at.htl.entity.Match;
 import at.htl.logic.GroupFacade;
 import at.htl.logic.MatchFacade;
-import com.wordnik.swagger.annotations.*;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
+import io.swagger.annotations.ApiParam;
+//import com.wordnik.swagger.annotations.*;
 
 import javax.ejb.Stateless;
 import javax.inject.Inject;

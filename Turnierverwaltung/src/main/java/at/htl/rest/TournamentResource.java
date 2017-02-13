@@ -2,7 +2,8 @@ package at.htl.rest;
 
 import at.htl.entity.Tournament;
 import at.htl.logic.TournamentFacade;
-import com.wordnik.swagger.annotations.*;
+import io.swagger.annotations.*;
+//import com.wordnik.swagger.annotations.*;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
