@@ -3,7 +3,6 @@ package at.htl.web;
 import at.htl.entity.Match;
 import at.htl.entity.Result;
 import at.htl.entity.Team;
-import at.htl.entity.Tournament;
 import at.htl.logic.MatchFacade;
 import at.htl.logic.TeamFacade;
 import at.htl.logic.TournamentFacade;
@@ -140,7 +139,7 @@ public class TeamsController implements Serializable {
             }
         }
         Match match = new Match();
-        match.setResult(new Result(100,2));
+        match.setResultObject(new Result(100,2));
         return match;
     }
 }
