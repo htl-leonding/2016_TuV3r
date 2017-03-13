@@ -7,10 +7,7 @@ import io.swagger.annotations.*;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.MediaType;
-import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
+import javax.ws.rs.core.*;
 import java.net.URI;
 import java.util.List;
 
@@ -30,10 +27,12 @@ public class TournamentResource
     //Date is only shown in the json format, when using xml, the date field is empty
     @ApiOperation(value = "Get tournament by id")
     @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
-    public Tournament findById(
+    public Response findById(
             @ApiParam(value = "id of the wanted tournament", required = true)
             @PathParam("id") long id){
-        return tournamentFacade.findById(id);
+
+        GenericEntity<Tournament> entity = new GenericEntity<Tournament>(tournamentFacade.findById(id), Tournament.class);
+        return Response.ok(entity).build();
     }
 
     @PUT

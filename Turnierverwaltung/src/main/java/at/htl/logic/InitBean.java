@@ -41,7 +41,8 @@ public class InitBean {
             }
             Tournament tournament = new Tournament("Schulcup"+j, LocalDate.now().minusDays(j), true, teams);
             em.persist(tournament);
-            systems.koSystemRound(systems.manageGroupPhase(tournament), tournament);
+
+            systems.koSystemRound(systems.manageGroupPhase(tournament),tournament);
             //systems.koSystemRound(teams);
             //systems.koSystemRound(systems.manageGroupPhase(teams));
 

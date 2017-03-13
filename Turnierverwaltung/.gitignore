@@ -49,3 +49,12 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+!/src/main/webapp/dist/
+!/src/main/webapp/dist/css/
+!/src/main/webapp/dist/images/
+!/src/main/webapp/dist/o2c.html
+!/src/main/webapp/dist/lib/
+!/src/main/webapp/dist/index.html
+!/src/main/webapp/dist/fonts/
+!/src/main/webapp/dist/swagger-ui.js
+!/src/main/webapp/dist/lang/

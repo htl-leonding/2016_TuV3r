@@ -53,9 +53,8 @@ public class Match {
         this.result = new Result(res);
     }
 
-    public void setResult(Result result) {
+    public void setResultObject(Result result) {
         this.result = result;
-
     }
 
     public long getId() {

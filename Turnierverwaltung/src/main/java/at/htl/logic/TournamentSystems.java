@@ -376,7 +376,7 @@ public class TournamentSystems {
      * @return
      */
     public Match setResultForOneMatch(Match match, Result result) {
-        match.setResult(result);
+        match.setResultObject(result);
         return match;
     }
 
