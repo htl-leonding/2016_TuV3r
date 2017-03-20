@@ -39,7 +39,7 @@ public class TournamentResource
     @Path("{id}")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Accepted"),
-            @ApiResponse(code = 500, message = "Something wrong in Server")})
+            @ApiResponse(code = 500, message = "Something went wrong in Server")})
     @ApiOperation(value = "Update a tournament")
     public Response update(
             @ApiParam(value = "Updated tournament object in json", required = true)
@@ -53,7 +53,7 @@ public class TournamentResource
     @ApiOperation(value = "Save a tournament")
     @ApiResponses(value = {
             @ApiResponse(code = 202, message = "Created"),
-            @ApiResponse(code = 500, message = "Something wrong in Server")})
+            @ApiResponse(code = 500, message = "Something went wrong in Server")})
     public Response save(
             @ApiParam(value = "new tournament in json",required = true)
             Tournament t,

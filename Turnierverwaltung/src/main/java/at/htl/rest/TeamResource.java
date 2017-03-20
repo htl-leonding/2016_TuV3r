@@ -50,7 +50,7 @@ public class TeamResource {
     @ApiOperation(value = "Save a team")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Created"),
-            @ApiResponse(code = 500, message = "Something wrong in Server")})
+            @ApiResponse(code = 500, message = "Something went wrong in Server")})
     public Response save(
             @ApiParam(value = "the new team in json", required = true)
             Team team, @Context UriInfo info){

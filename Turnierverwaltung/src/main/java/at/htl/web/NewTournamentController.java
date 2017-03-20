@@ -19,6 +19,8 @@ import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 import javax.inject.Inject;
 import javax.inject.Named;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.jsp.PageContext;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -50,7 +52,7 @@ public class NewTournamentController implements Serializable {
     private String groupPhaseIcon;
     private String newName;
     private List<Team> deleteTeams = new ArrayList<>();
-    private String redirect="http://localhost:8080/Turnierverwaltung/currentTournament.xhtml";
+    private String redirect="/currentTournament.xhtml";
 
     public String getNewName() {
         return newName;
@@ -138,7 +140,9 @@ public class NewTournamentController implements Serializable {
     public void buttonAction(ActionEvent actionEvent) {
         persistInput();
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("window.open('"+ redirect +"','_self')");
+        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String url = req.getRequestURL().toString();
+        requestContext.execute("window.open('"+url.substring(0,url.lastIndexOf('/'))+ redirect +"','_self')");
     }
 
     /***

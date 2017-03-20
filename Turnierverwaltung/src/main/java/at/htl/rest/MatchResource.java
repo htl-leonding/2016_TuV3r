@@ -52,7 +52,7 @@ public class MatchResource {
     @Path("{id}")
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Accepted"),
-            @ApiResponse(code = 500, message = "Something wrong in Server")})
+            @ApiResponse(code = 500, message = "Something went wrong in Server")})
     @ApiOperation(value = "Update a match")
     public Response update(
             @ApiParam(value = "Updated match object in json", required = true)
@@ -66,7 +66,7 @@ public class MatchResource {
     @ApiOperation(value = "Save a match")
     @ApiResponses(value = {
             @ApiResponse(code = 202, message = "Created"),
-            @ApiResponse(code = 500, message = "Something wrong in Server")})
+            @ApiResponse(code = 500, message = "Something went wrong in Server")})
     public Response save(
             @ApiParam(value = "new match in json",required = true)
                     Match m,

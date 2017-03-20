@@ -39,8 +39,8 @@ public class CurrentTournamentController implements Serializable {
     private List<Team> winnerList;
     private List<Team> loserList;
     private List<Match> previousMatches = new ArrayList<>();
-    String redirect="http://localhost:8080/Turnierverwaltung/teams.xhtml";
-    String redirectNew="http://localhost:8080/Turnierverwaltung/newTournament.xhtml";
+    String redirect="/teams.xhtml";
+    String redirectNew="/newTournament.xhtml";
 
     /***
      * Holt das neueste Turnier von der DB
@@ -99,13 +99,18 @@ public class CurrentTournamentController implements Serializable {
         }
         else{
             clearData();
-            requestContext.execute("window.open('"+ redirect +"','_self')");
+            HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+            String url = req.getRequestURL().toString();
+            requestContext.execute("window.open('"+url.substring(0,url.lastIndexOf('/'))+ redirect +"','_self')");
         }
     }
     public void buttonQuit(ActionEvent actionEvent) {
         clearData();
         RequestContext requestContext = RequestContext.getCurrentInstance();
-        requestContext.execute("window.open('"+ redirectNew +"','_self')");
+        HttpServletRequest req = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        String url = req.getRequestURL().toString();
+        requestContext.execute("window.open('"+url.substring(0,url.lastIndexOf('/'))+ redirectNew +"','_self')");
+
     }
 
     private void clearData() {
