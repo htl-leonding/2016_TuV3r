@@ -25,7 +25,7 @@ public class RestConfig extends Application {
         BeanConfig beanConfig = new BeanConfig();
         beanConfig.setVersion("1.0.2");
         beanConfig.setSchemes(new String[]{"http"});
-        beanConfig.setHost("localhost:8080");
+        beanConfig.setHost("vm15.htl-leonding.ac.at:8090");
         beanConfig.setBasePath("/Turnierverwaltung/rs");
         beanConfig.setResourcePackage("at.htl.rest");
         beanConfig.setScan(true);
