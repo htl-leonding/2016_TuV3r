@@ -40,13 +40,20 @@ public class MatchResource {
         return matchFacade.findAll();
     }
     @GET
-    @Path("t{id}")
+    @Path("by")
     @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
-    @ApiOperation(value = "Get matches by tournament id")
+    @ApiOperation(value = "Get matches by tournament or team id, only one queryparam can be set at once")
     public List<Match> findByTournamentId(
-            @ApiParam(value = "id of the tournament the wanted matches are in", required = true)
-            @PathParam("id") long tournamentId){
-        return matchFacade.findMatchesByTournamentId(tournamentId);
+            @ApiParam(value = "id of the tournament the wanted matches are in")
+            @QueryParam("toid") long tournamentId,
+            @ApiParam(value = "id of the team you want the matches of")
+            @QueryParam("teid") long teamId){
+        if(tournamentId>0) {
+            return matchFacade.findMatchesByTournamentId(tournamentId);
+        } else if(teamId>0){
+            return matchFacade.findMatchesByTeamId(teamId);
+        }
+        return null;
     }
     @PUT
     @Path("{id}")

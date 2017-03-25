@@ -22,9 +22,9 @@ public class MatchFacade {
                 .getResultList();
     }
 
-    public List<Match> findMatchesByTeam(Team team) {
+    public List<Match> findMatchesByTeamId(long teamId) {
         return em.createNamedQuery("match.findByTeamId",Match.class)
-                .setParameter("id",team.getId())
+                .setParameter("id",teamId)
                 .getResultList();
     }
 

@@ -1,7 +1,10 @@
 package at.htl.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.time.LocalTime;
 
 /**
@@ -113,11 +116,11 @@ public class Match {
     public void setRound(Round round) {
         this.round = round;
     }
-
+    @XmlTransient
     @ManyToOne(optional = true)
     @JoinColumn(name = "to_id")
     private Tournament tournament;
-
+    @XmlTransient
     public Tournament getTournament() {
         return tournament;
     }

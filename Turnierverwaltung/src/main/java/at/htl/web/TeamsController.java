@@ -53,7 +53,7 @@ public class TeamsController implements Serializable {
             return getFinalMatch().getTeam2();
     }
     private Match getFinal(){
-        List<Match> matches= matchFacade.findMatchesByTeam(getTeamsByRank().get(0));
+        List<Match> matches= matchFacade.findMatchesByTeamId(getTeamsByRank().get(0).getId());
         return matches.get(matches.size());
     }
     public List<Team> getQuarterFinalists(){
@@ -81,7 +81,7 @@ public class TeamsController implements Serializable {
     }
 
     public List<Match> getRecentMatches(Team team){
-        return matchFacade.findMatchesByTeam(team);
+        return matchFacade.findMatchesByTeamId(team.getId());
     }
 
     /***
