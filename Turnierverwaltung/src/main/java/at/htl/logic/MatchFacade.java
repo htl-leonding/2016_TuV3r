@@ -1,6 +1,7 @@
 package at.htl.logic;
 
 import at.htl.entity.Match;
+import at.htl.entity.Result;
 import at.htl.entity.Team;
 import at.htl.entity.Tournament;
 
@@ -46,5 +47,12 @@ public class MatchFacade {
     public Match save(long id, Match m) {
         m.setId(id);
         return em.merge(m);
+    }
+
+    public void saveByIds(Result result, long team1Id, long team2Id) {
+        Match m = new Match(true,em.find(Team.class,team1Id),em.find(Team.class,team2Id),result);
+        m.setTournament(m.getTeam1().getTournament());
+        m.setResult(m.getResult());
+        em.persist(m);
     }
 }

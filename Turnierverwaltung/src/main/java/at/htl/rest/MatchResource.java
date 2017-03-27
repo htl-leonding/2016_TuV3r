@@ -1,6 +1,8 @@
 package at.htl.rest;
 
+import at.htl.entity.Dto;
 import at.htl.entity.Match;
+import at.htl.entity.Result;
 import at.htl.entity.Tournament;
 import at.htl.logic.MatchFacade;
 import io.swagger.annotations.*;
@@ -71,15 +73,17 @@ public class MatchResource {
     }
     @POST
     @ApiOperation(value = "Save a match")
+    @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+    @Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     @ApiResponses(value = {
-            @ApiResponse(code = 202, message = "Created"),
+            @ApiResponse(code = 200, message = "Ok"),
             @ApiResponse(code = 500, message = "Something went wrong in Server")})
     public Response save(
-            @ApiParam(value = "new match in json",required = true)
-                    Match m,
-            @Context UriInfo info){
-        Match saved = matchFacade.save(0,m);
-        URI uri = info.getAbsolutePathBuilder().path("/"+saved.getId()).build();
-        return Response.created(uri).build();
+            @ApiParam(value = "new MatchDto in json, consisting of a resultobject, and the two team-ids"
+                    ,required = true)
+            Dto dto){
+        matchFacade.saveByIds(dto.getResult(),dto.getTeam1Id(),dto.getTeam2Id());
+        return Response.ok().build();
+        //matchFacade.save(0,m);
     }
 }
