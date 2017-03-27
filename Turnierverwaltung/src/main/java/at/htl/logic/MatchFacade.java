@@ -4,6 +4,7 @@ import at.htl.entity.Match;
 import at.htl.entity.Result;
 import at.htl.entity.Team;
 import at.htl.entity.Tournament;
+import at.htl.entity.dto.PutMatchDto;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -54,5 +55,16 @@ public class MatchFacade {
         m.setTournament(m.getTeam1().getTournament());
         m.setResult(m.getResult());
         em.persist(m);
+    }
+
+    public void update(long id, PutMatchDto m) {
+        Match match = findById(id);
+        if(m.getResult()==null){
+            m.setResult(match.getResultObject());
+        }
+        match.setResultObject(m.getResult());
+        match.setResult(m.getResult().toString());
+        match.setActive(m.isActive());
+        em.merge(match);
     }
 }

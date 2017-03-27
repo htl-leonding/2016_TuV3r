@@ -1,9 +1,11 @@
-package at.htl.entity;
+package at.htl.entity.dto;
+
+import at.htl.entity.Result;
 
 /**
  * Created by Lokal on 27.03.2017.
  */
-public class Dto {
+public class PostMatchDto {
     private Result result;
     private long team1Id;
     private long team2Id;

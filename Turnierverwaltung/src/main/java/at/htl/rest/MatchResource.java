@@ -1,20 +1,17 @@
 package at.htl.rest;
 
-import at.htl.entity.Dto;
-import at.htl.entity.Match;
 import at.htl.entity.Result;
-import at.htl.entity.Tournament;
+import at.htl.entity.dto.PostMatchDto;
+import at.htl.entity.Match;
+import at.htl.entity.dto.PutMatchDto;
 import at.htl.logic.MatchFacade;
 import io.swagger.annotations.*;
 //import com.wordnik.swagger.annotations.*;
 
 import javax.inject.Inject;
 import javax.ws.rs.*;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
-import javax.ws.rs.core.UriInfo;
-import java.net.URI;
 import java.util.List;
 
 /**
@@ -64,11 +61,12 @@ public class MatchResource {
             @ApiResponse(code = 500, message = "Something went wrong in Server")})
     @ApiOperation(value = "Update a match")
     public Response update(
-            @ApiParam(value = "Updated match object in json", required = true)
-                    Match m,
+            @ApiParam(value = "Updated PutMatchDto object in json, consisting of a result object and the inactive field",
+                    required = true)
+                    PutMatchDto m,
             @ApiParam(value = "id of the match that needs to be updated", required = true)
             @PathParam(value = "id") long id){
-        matchFacade.save(id,m);
+        matchFacade.update(id,m);
         return Response.accepted().build();
     }
     @POST
@@ -79,10 +77,10 @@ public class MatchResource {
             @ApiResponse(code = 200, message = "Ok"),
             @ApiResponse(code = 500, message = "Something went wrong in Server")})
     public Response save(
-            @ApiParam(value = "new MatchDto in json, consisting of a resultobject, and the two team-ids"
+            @ApiParam(value = "new PostMatchDto in json, consisting of a resultobject, and the two team-ids"
                     ,required = true)
-            Dto dto){
-        matchFacade.saveByIds(dto.getResult(),dto.getTeam1Id(),dto.getTeam2Id());
+                    PostMatchDto postMatchDto){
+        matchFacade.saveByIds(postMatchDto.getResult(), postMatchDto.getTeam1Id(), postMatchDto.getTeam2Id());
         return Response.ok().build();
         //matchFacade.save(0,m);
     }
