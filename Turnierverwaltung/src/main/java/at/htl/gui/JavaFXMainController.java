@@ -71,7 +71,7 @@ public class JavaFXMainController implements Initializable {
                     arrayTournaments[i] = " KEINE TURNIERE VORHANDEN ";
                     break;
                 }
-                arrayTournaments[i] = "Turnier: " + tournamentList.get(i).getName() + " am " + tournamentList.get(i).getDate().toString() + " mit " + tournamentList.get(i).getTeams().size() + " Teilnehmern";
+                arrayTournaments[i] = "Turnier: " + tournamentList.get(i).getName() + " am " + tournamentList.get(i).getDate() + " mit " + tournamentList.get(i).getTeams().size() + " Teilnehmern";
 
             }
 

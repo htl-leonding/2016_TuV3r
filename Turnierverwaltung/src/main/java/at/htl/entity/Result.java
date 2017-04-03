@@ -40,7 +40,6 @@ public class Result {
     }
 
     public void setPointsSecondTeam(int pointsSecondTeam) {
-
         this.pointsSecondTeam = pointsSecondTeam;
     }
 

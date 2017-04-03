@@ -14,7 +14,7 @@
                          HEADER
     *********************************************************** -->
 
-    <ui:include src="header.xhtml"/>
+    <!--<ui:include src="header.xhtml"/>-->
 
     <div id="header">
         <h:form id="menu_steps">
@@ -71,6 +71,13 @@
                     <p:inputText id="pointsDrawSliderText" value="#{newTournamentController.pointsDraw}" disabled="true"/>
                     <p:slider for="pointsDrawSliderText" minValue="0" maxValue="10">
                         <p:ajax event="slideEnd" listener="#{newTournamentController.onPointsDrawSlideEnd}"/>
+                    </p:slider>
+                </h:panelGrid>
+                <h3 class="ui-widget">Anzahl von Plätzen:</h3>
+                <h:panelGrid columns="1">
+                    <p:inputText id="placesCountSliderText" value="#{newTournamentController.placesCount}" disabled="true"/>
+                    <p:slider for="placesCountSliderText" minValue="1" maxValue="10">
+                        <p:ajax event="slideEnd" listener="#{newTournamentController.onPlacesCountSlideEnd}"/>
                     </p:slider>
                 </h:panelGrid>
                 <p:outputPanel rendered="#{newTournamentController.selectedTypes.contains('Gruppenphase')}">

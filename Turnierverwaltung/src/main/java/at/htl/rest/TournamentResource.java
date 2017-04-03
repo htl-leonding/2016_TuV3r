@@ -31,7 +31,7 @@ public class TournamentResource
             @ApiParam(value = "id of the wanted tournament", required = true)
             @PathParam("id") long id){
 
-        GenericEntity<Tournament> entity = new GenericEntity<Tournament>(tournamentFacade.findById(id), Tournament.class);
+        GenericEntity<Tournament> entity = new GenericEntity(tournamentFacade.findById(id), Tournament.class);
         return Response.ok(entity).build();
     }
 
@@ -42,11 +42,11 @@ public class TournamentResource
             @ApiResponse(code = 500, message = "Something went wrong in Server")})
     @ApiOperation(value = "Update a tournament")
     public Response update(
-            @ApiParam(value = "Updated tournament object in json", required = true)
-            Tournament t,
+            @ApiParam(value = "Updated active value", required = true)
+            boolean isActive,
             @ApiParam(value = "id of the tournament that needs to be updated", required = true)
             @PathParam(value = "id") long id){
-        tournamentFacade.save(id,t);
+        tournamentFacade.changeActive(id,isActive);
         return Response.accepted().build();
     }
     @POST

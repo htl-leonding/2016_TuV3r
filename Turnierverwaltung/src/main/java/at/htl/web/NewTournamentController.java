@@ -52,7 +52,8 @@ public class NewTournamentController implements Serializable {
     private String groupPhaseIcon;
     private String newName;
     private List<Team> deleteTeams = new ArrayList<>();
-    private String redirect="/currentTournament.xhtml";
+    private String redirect="/nga/index.html";
+    private int placesCount = 1;
 
     public String getNewName() {
         return newName;
@@ -152,6 +153,7 @@ public class NewTournamentController implements Serializable {
         if(tournamentName.isEmpty()) setTournamentName("Turnier");
         Tournament tournament = new Tournament(tournamentName, LocalDate.now(), true,getPointsWin(),
                 getPointsDraw(),getGroupSize(),selectedTypes.contains("Gruppenphase"),getTournamentSystem(), teams);
+        tournament.setPlacesCount(getPlacesCount());
         tournament= tournamentFacade.merge(tournament);
         for (Team team : teams) {
             team.setTournament(tournament);
@@ -168,6 +170,9 @@ public class NewTournamentController implements Serializable {
     }
     public void onPointsDrawSlideEnd(SlideEndEvent event) {
         setPointsDraw(event.getValue());
+    }
+    public void onPlacesCountSlideEnd(SlideEndEvent event) {
+        setPlacesCount(event.getValue());
     }
     //endregion
 
@@ -222,6 +227,14 @@ public class NewTournamentController implements Serializable {
 
     public int getPointsDraw() {
         return pointsDraw;
+    }
+
+    public int getPlacesCount() {
+        return placesCount;
+    }
+
+    public void setPlacesCount(int placesCount) {
+        this.placesCount = placesCount;
     }
 
     public void setPointsDraw(int pointsDraw) {

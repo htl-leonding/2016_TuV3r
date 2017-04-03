@@ -64,4 +64,10 @@ public class TournamentFacade {
     public Tournament merge(Tournament tournament) {
         return em.merge(tournament);
     }
+
+    public void changeActive(long id, boolean isActive) {
+        Tournament t = em.find(Tournament.class,id);
+        t.setActive(isActive);
+        em.merge(t);
+    }
 }

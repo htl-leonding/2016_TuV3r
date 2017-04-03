@@ -1,11 +1,8 @@
 package at.htl.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
-import java.time.LocalTime;
 
 /**
  * Created by Laurenz on 15.10.2015 .
@@ -37,6 +34,8 @@ public class Match {
     //private LocalTime localTime;
     @Column(name = "m_result")
     private Result result;
+    @Column(name = "court")
+    private String court;
 
 
     public Match() {
@@ -97,6 +96,13 @@ public class Match {
         isActive = active;
     }
 
+    public String getCourt() {
+        return court;
+    }
+
+    public void setCourt(String place) {
+        this.court = place;
+    }
 
     public boolean matchAlreadySet(Match match){
         if((this.getTeam1().getId() == match.getTeam1().getId() && this.getTeam2().getId() == match.getTeam2().getId()) || (this.getTeam1().getId() == match.getTeam2().getId() && this.getTeam2().getId() == match.getTeam1().getId()) ){

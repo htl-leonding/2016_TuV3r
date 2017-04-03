@@ -1,9 +1,7 @@
 package at.htl.logic;
 
-import at.htl.entity.Match;
-import at.htl.entity.Result;
-import at.htl.entity.Team;
-import at.htl.entity.Tournament;
+import at.htl.entity.*;
+import at.htl.entity.dto.PostMatchDto;
 import at.htl.entity.dto.PutMatchDto;
 
 import javax.ejb.Stateless;
@@ -50,11 +48,20 @@ public class MatchFacade {
         return em.merge(m);
     }
 
-    public void saveByIds(Result result, long team1Id, long team2Id) {
-        Match m = new Match(true,em.find(Team.class,team1Id),em.find(Team.class,team2Id),result);
+    public long saveByDto(PostMatchDto matchDto) {
+        Match m = new Match(true,em.find(Team.class,matchDto.getTeam1Id())
+                ,em.find(Team.class,matchDto.getTeam2Id())
+                ,matchDto.getResult());
+        m.setCourt(matchDto.getCourt());
         m.setTournament(m.getTeam1().getTournament());
-        m.setResult(m.getResult());
-        em.persist(m);
+        m=em.merge(m);
+        try {
+            m.setRound(em.find(Round.class, matchDto.getRoundId()));
+            em.merge(m);
+        }   catch (Exception e){
+            System.out.println(e.getMessage());
+        }
+        return m.getId();
     }
 
     public void update(long id, PutMatchDto m) {

@@ -2,6 +2,7 @@ package at.htl.entity;
 
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
 import java.util.List;
 
 /**
@@ -14,27 +15,37 @@ public class Round {
     @Id @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "r_id")
     private long id;
-    @ManyToOne(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
-    private Group group;
+    @Column(name = "r_count")
+    private String count;
+    @XmlTransient
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},mappedBy = "round")
     private List<Match> matches;
 
-    public Round(Group group, List<Match> matches) {
-        this.group = group;
+    public Round(String count, List<Match> matches) {
+        this.count = count;
         this.matches = matches;
     }
 
     public Round() {
     }
 
-    public Group getGroup() {
-        return group;
+    public void setId(long id) {
+        this.id = id;
     }
 
-    public void setGroup(Group group) {
-        this.group = group;
+    public long getId() {
+        return id;
     }
 
+    public String getCount() {
+        return count;
+    }
+
+    public void setCount(String roundCount) {
+        this.count = roundCount;
+    }
+
+    @XmlTransient
     public List<Match> getMatches() {
         return matches;
     }

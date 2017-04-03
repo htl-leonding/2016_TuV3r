@@ -9,6 +9,24 @@ public class PostMatchDto {
     private Result result;
     private long team1Id;
     private long team2Id;
+    private String court;
+    private long roundId;
+
+    public String getCourt() {
+        return court;
+    }
+
+    public void setCourt(String court) {
+        this.court = court;
+    }
+
+    public long getRoundId() {
+        return roundId;
+    }
+
+    public void setRoundId(long roundId) {
+        this.roundId = roundId;
+    }
 
     public Result getResult() {
         return result;

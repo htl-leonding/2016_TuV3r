@@ -1,7 +1,6 @@
 package at.htl.logic;
 
-import at.htl.entity.Team;
-import at.htl.entity.Tournament;
+import at.htl.entity.*;
 
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
@@ -30,7 +29,7 @@ public class InitBean {
 
     @PostConstruct
     public void init(){
-        List<Team> teams = new ArrayList<Team>();
+        /*List<Team> teams = new ArrayList<Team>();
         for (long j = 1; j<3;j++) {
             teams = new ArrayList<Team>();
             for (long i = 1; i < TEAM_COUNT + 1; i++) {
@@ -52,7 +51,7 @@ public class InitBean {
                 t.setTournament(tournament);
                 em.merge(t);
             }
-        }
+        }*/
 
     }
 }

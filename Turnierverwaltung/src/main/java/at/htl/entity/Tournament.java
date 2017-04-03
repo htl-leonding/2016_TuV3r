@@ -1,8 +1,12 @@
 package at.htl.entity;
 
+import at.htl.logic.DateAdapter;
+import at.htl.logic.GroupAdapter;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
 import java.util.Collection;
 import java.util.Date;
@@ -41,6 +45,8 @@ public class Tournament {
     private Boolean groupPhase;
     @Column(name = "to_system")
     private String system;
+    @Column(name = "to_placescount")
+    private int placesCount;
 
 
     @OneToMany(mappedBy = "tournament")
@@ -69,6 +75,14 @@ public class Tournament {
         this.teams = teams;
     }
 
+    public int getPlacesCount() {
+        return placesCount;
+    }
+
+    public void setPlacesCount(int placesCount) {
+        this.placesCount = placesCount;
+    }
+
     public Tournament() {
     }
 
@@ -80,9 +94,13 @@ public class Tournament {
         isActive = active;
     }
 
+    @XmlJavaTypeAdapter(DateAdapter.class)
     public LocalDate getDate() {
         return date;
     }
+
+
+
 
     public void setDate(LocalDate date) {
         this.date = date;

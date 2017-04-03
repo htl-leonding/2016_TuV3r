@@ -170,6 +170,7 @@ public class TournamentSystems {
                 rd1++;
             }
             match.setResult(rd1 + ":" + rd2);
+            match.setCourt("1");
         }
         return matches;
     }

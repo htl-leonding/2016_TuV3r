@@ -1,6 +1,5 @@
 package at.htl.rest;
 
-import at.htl.entity.Result;
 import at.htl.entity.dto.PostMatchDto;
 import at.htl.entity.Match;
 import at.htl.entity.dto.PutMatchDto;
@@ -80,8 +79,8 @@ public class MatchResource {
             @ApiParam(value = "new PostMatchDto in json, consisting of a resultobject, and the two team-ids"
                     ,required = true)
                     PostMatchDto postMatchDto){
-        matchFacade.saveByIds(postMatchDto.getResult(), postMatchDto.getTeam1Id(), postMatchDto.getTeam2Id());
-        return Response.ok().build();
+        long mId = matchFacade.saveByDto(postMatchDto);
+        return Response.ok().entity(Long.toString(mId)).build();
         //matchFacade.save(0,m);
     }
 }

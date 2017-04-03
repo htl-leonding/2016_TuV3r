@@ -49,6 +49,7 @@ public class RestConfig extends Application {
         resources.add(at.htl.rest.GroupResource.class);
         resources.add(at.htl.rest.MatchResource.class);
         resources.add(at.htl.rest.TeamResource.class);
+        resources.add(at.htl.rest.RoundResource.class);
     }
 
 }
