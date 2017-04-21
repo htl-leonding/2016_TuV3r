@@ -29,6 +29,7 @@ public class InitBean {
 
     @PostConstruct
     public void init(){
+        em.persist(new Team("Wildcard",false));
         /*List<Team> teams = new ArrayList<Team>();
         for (long j = 1; j<3;j++) {
             teams = new ArrayList<Team>();

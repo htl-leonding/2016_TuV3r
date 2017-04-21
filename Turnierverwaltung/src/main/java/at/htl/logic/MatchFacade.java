@@ -48,7 +48,7 @@ public class MatchFacade {
         return em.merge(m);
     }
 
-    public long saveByDto(PostMatchDto matchDto) {
+    public Match saveByDto(PostMatchDto matchDto) {
         Match m = new Match(true,em.find(Team.class,matchDto.getTeam1Id())
                 ,em.find(Team.class,matchDto.getTeam2Id())
                 ,matchDto.getResult());
@@ -61,7 +61,7 @@ public class MatchFacade {
         }   catch (Exception e){
             System.out.println(e.getMessage());
         }
-        return m.getId();
+        return m;
     }
 
     public void update(long id, PutMatchDto m) {

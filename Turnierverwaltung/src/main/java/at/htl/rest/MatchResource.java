@@ -79,8 +79,8 @@ public class MatchResource {
             @ApiParam(value = "new PostMatchDto in json, consisting of a resultobject, and the two team-ids"
                     ,required = true)
                     PostMatchDto postMatchDto){
-        long mId = matchFacade.saveByDto(postMatchDto);
-        return Response.ok().entity(Long.toString(mId)).build();
+        Match m = matchFacade.saveByDto(postMatchDto);
+        return Response.ok().entity(m).build();
         //matchFacade.save(0,m);
     }
 }

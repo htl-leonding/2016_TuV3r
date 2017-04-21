@@ -37,6 +37,8 @@ public class TournamentResource
 
     @PUT
     @Path("{id}")
+    @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+    @Consumes({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
     @ApiResponses(value = {
             @ApiResponse(code = 201, message = "Accepted"),
             @ApiResponse(code = 500, message = "Something went wrong in Server")})
@@ -46,6 +48,7 @@ public class TournamentResource
             boolean isActive,
             @ApiParam(value = "id of the tournament that needs to be updated", required = true)
             @PathParam(value = "id") long id){
+        System.out.println(isActive);
         tournamentFacade.changeActive(id,isActive);
         return Response.accepted().build();
     }

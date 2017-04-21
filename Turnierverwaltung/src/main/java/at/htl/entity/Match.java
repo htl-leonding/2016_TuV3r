@@ -66,7 +66,7 @@ public class Match {
     public void setId(long id) {
         this.id = id;
     }
-
+    @XmlTransient
     public Result getResultObject(){
         return result;
     }
