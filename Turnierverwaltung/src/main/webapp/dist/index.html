@@ -50,7 +50,7 @@
         window.SwaggerTranslator.translate();
       }
       window.swaggerUi = new SwaggerUi({
-        url: "http://vm15.htl-leonding.ac.at:8090/Turnierverwaltung/rs/swagger.json",
+        url: "http://"+location.host+"/Turnierverwaltung/rs/swagger.json",
         dom_id: "swagger-ui-container",
         supportedSubmitMethods: ['get', 'post', 'put', 'delete', 'patch'],
         onComplete: function(swaggerApi, swaggerUi){

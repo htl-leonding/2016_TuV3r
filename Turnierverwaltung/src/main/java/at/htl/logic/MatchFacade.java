@@ -75,8 +75,10 @@ public class MatchFacade {
         match.setResultObject(m.getResult());
         match.setResult(m.getResult().toString());
         match.setActive(m.isActive());
-        match.setStartTime(LocalTime.parse(m.getStartTime(),
-                DateTimeFormatter.ofPattern("HH:mm")));
+        if(!m.getStartTime().isEmpty()) {
+            match.setStartTime(LocalTime.parse(m.getStartTime(),
+                    DateTimeFormatter.ofPattern("HH:mm")));
+        }
         em.merge(match);
     }
 
