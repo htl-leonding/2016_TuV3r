@@ -81,7 +81,9 @@ public class MatchResource {
             @ApiResponse(code = 200, message = "Ok"),
             @ApiResponse(code = 500, message = "Something went wrong in Server")})
     public Response save(
-            @ApiParam(value = "new PostMatchDto in json, consisting of a resultobject, and the two team-ids"
+            @ApiParam(value = "new PostMatchDto in json, consisting of a resultobject, " +
+                    "the startTime in the format HH:mm (e.g. 20:15)" +
+                    "and the two team-ids"
                     ,required = true)
                     PostMatchDto postMatchDto){
         Match m = matchFacade.saveByDto(postMatchDto);
