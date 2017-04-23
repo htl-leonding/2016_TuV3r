@@ -7,6 +7,9 @@ import at.htl.entity.dto.PutMatchDto;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 /**
@@ -54,6 +57,8 @@ public class MatchFacade {
                 ,matchDto.getResult());
         m.setCourt(matchDto.getCourt());
         m.setTournament(m.getTeam1().getTournament());
+        m.setStartTime(LocalTime.parse(matchDto.getStartTime(),
+                DateTimeFormatter.ofPattern("HH:mm")));
         m=em.merge(m);
         try {
             m.setRound(em.find(Round.class, matchDto.getRoundId()));

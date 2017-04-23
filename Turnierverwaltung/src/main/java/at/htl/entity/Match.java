@@ -1,8 +1,14 @@
 package at.htl.entity;
 
+import at.htl.logic.DateAdapter;
+import at.htl.logic.TimeAdapter;
+
 import javax.persistence.*;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 
 /**
  * Created by Laurenz on 15.10.2015 .
@@ -34,9 +40,10 @@ public class Match {
     //private LocalTime localTime;
     @Column(name = "m_result")
     private Result result;
-    @Column(name = "court")
+    @Column(name = "m_court")
     private String court;
-
+    @Column(name = "m_startTime")
+    private LocalTime startTime;
 
     public Match() {
     }
@@ -133,5 +140,13 @@ public class Match {
 
     public void setTournament(Tournament tournament) {
         this.tournament = tournament;
+    }
+    @XmlJavaTypeAdapter(TimeAdapter.class)
+    public LocalTime getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(LocalTime startTime) {
+        this.startTime = startTime;
     }
 }
