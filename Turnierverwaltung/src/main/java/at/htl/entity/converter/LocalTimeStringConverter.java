@@ -16,11 +16,13 @@ import java.time.format.DateTimeFormatter;
 public class LocalTimeStringConverter implements AttributeConverter<LocalTime,String> {
     @Override
     public String convertToDatabaseColumn(LocalTime localTime) {
+        if(localTime==null) return "";
         return localTime.format(DateTimeFormatter.ofPattern("HH:mm"));
     }
 
     @Override
     public LocalTime convertToEntityAttribute(String s) {
+        if(s.isEmpty()) return null;
         return LocalTime.parse(s,DateTimeFormatter.ofPattern("HH:mm"));
     }
 }

@@ -11,7 +11,6 @@ public class PostMatchDto {
     private long team2Id;
     private String court;
     private long roundId;
-    private String startTime;
 
     public String getCourt() {
         return court;
@@ -51,13 +50,5 @@ public class PostMatchDto {
 
     public void setTeam2Id(int team2Id) {
         this.team2Id = team2Id;
-    }
-
-    public String getStartTime() {
-        return startTime;
-    }
-
-    public void setStartTime(String startTime) {
-        this.startTime = startTime;
     }
 }

@@ -8,7 +8,16 @@ import at.htl.entity.Result;
 public class PutMatchDto {
     private Result result;
     private boolean isActive;
+    private String startTime;
 
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+    }
 
     public Result getResult() {
         return result;

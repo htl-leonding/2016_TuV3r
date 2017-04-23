@@ -65,7 +65,9 @@ public class MatchResource {
             @ApiResponse(code = 500, message = "Something went wrong in Server")})
     @ApiOperation(value = "Update a match")
     public Response update(
-            @ApiParam(value = "Updated PutMatchDto object in json, consisting of a result object and the inactive field",
+            @ApiParam(value = "Updated PutMatchDto object in json, consisting of a result object, " +
+                    "the startTime in the format HH:mm (e.g. 20:15)" +
+                    "and the inactive field",
                     required = true)
                     PutMatchDto m,
             @ApiParam(value = "id of the match that needs to be updated", required = true)
@@ -81,8 +83,7 @@ public class MatchResource {
             @ApiResponse(code = 200, message = "Ok"),
             @ApiResponse(code = 500, message = "Something went wrong in Server")})
     public Response save(
-            @ApiParam(value = "new PostMatchDto in json, consisting of a resultobject, " +
-                    "the startTime in the format HH:mm (e.g. 20:15)" +
+            @ApiParam(value = "new PostMatchDto in json, consisting of a resultobject " +
                     "and the two team-ids"
                     ,required = true)
                     PostMatchDto postMatchDto){

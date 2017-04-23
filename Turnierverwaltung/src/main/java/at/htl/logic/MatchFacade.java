@@ -57,8 +57,6 @@ public class MatchFacade {
                 ,matchDto.getResult());
         m.setCourt(matchDto.getCourt());
         m.setTournament(m.getTeam1().getTournament());
-        m.setStartTime(LocalTime.parse(matchDto.getStartTime(),
-                DateTimeFormatter.ofPattern("HH:mm")));
         m=em.merge(m);
         try {
             m.setRound(em.find(Round.class, matchDto.getRoundId()));
@@ -77,6 +75,8 @@ public class MatchFacade {
         match.setResultObject(m.getResult());
         match.setResult(m.getResult().toString());
         match.setActive(m.isActive());
+        match.setStartTime(LocalTime.parse(m.getStartTime(),
+                DateTimeFormatter.ofPattern("HH:mm")));
         em.merge(match);
     }
 
