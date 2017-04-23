@@ -2,10 +2,15 @@ package at.htl.rest;
 
 import at.htl.entity.Round;
 import at.htl.entity.Team;
+import at.htl.entity.Tournament;
+import at.htl.entity.dto.PostRoundDto;
 import at.htl.logic.RoundFacade;
 import io.swagger.annotations.*;
 
 import javax.inject.Inject;
+import javax.persistence.Entity;
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
 import javax.ws.rs.*;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
@@ -22,6 +27,8 @@ import java.util.List;
 public class RoundResource {
     @Inject
     RoundFacade roundFacade;
+    @PersistenceContext
+    EntityManager em;
 
     @GET
     @Path("{id}")
@@ -33,6 +40,16 @@ public class RoundResource {
         return roundFacade.findById(id);
     }
 
+    @GET
+    @Path("by")
+    @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
+    @ApiOperation(value = "Get rounds by tournament")
+    public List<Round> findByTournamentId(
+            @ApiParam(value = "id of the tournament the wanted matches are in")
+            @QueryParam("toid") long tournamentId
+    ){
+        return roundFacade.findByTournamentId(tournamentId);
+    }
 
     @PUT
     @Path("{id}")
@@ -52,9 +69,11 @@ public class RoundResource {
             @ApiResponse(code = 201, message = "Created"),
             @ApiResponse(code = 500, message = "Something went wrong in Server")})
     public Response save(
-            @ApiParam(value = "the round as string (e.g. 1)", required = true)
-                    String r, @Context UriInfo info){
-        Round round = new Round(r,null);
+            @ApiParam(value = "new PostMatchDto in json, consisting of the " +
+                    "name as string (e.g. 1) and the tournament id", required = true)
+                    PostRoundDto r, @Context UriInfo info){
+        Round round = new Round(r.getName(),null);
+        round.setTournament(em.find(Tournament.class,r.getToId()));
         Round saved = roundFacade.save(0,round);
         URI uri = info.getAbsolutePathBuilder().path("/"+saved.getId()).build();
         return Response.created(uri).entity(Long.toString(saved.getId())).build();

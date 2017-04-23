@@ -21,6 +21,7 @@ public class Round {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},mappedBy = "round")
     private List<Match> matches;
 
+
     public Round(String count, List<Match> matches) {
         this.count = count;
         this.matches = matches;
@@ -52,5 +53,18 @@ public class Round {
 
     public void setMatches(List<Match> matches) {
         this.matches = matches;
+    }
+
+    @XmlTransient
+    @ManyToOne(optional = true)
+    @JoinColumn(name = "to_id")
+    private Tournament tournament;
+    @XmlTransient
+    public Tournament getTournament() {
+        return tournament;
+    }
+
+    public void setTournament(Tournament tournament) {
+        this.tournament = tournament;
     }
 }

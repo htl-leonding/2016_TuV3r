@@ -1,6 +1,7 @@
 package at.htl.logic;
 
 import at.htl.entity.Round;
+import at.htl.entity.Tournament;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -37,5 +38,9 @@ public class RoundFacade {
 
     public void merge(Round r) {
         em.merge(r);
+    }
+
+    public List<Round> findByTournamentId(long tournamentId) {
+        return em.find(Tournament.class,tournamentId).getRounds();
     }
 }

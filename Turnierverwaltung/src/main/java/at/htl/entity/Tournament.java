@@ -55,6 +55,9 @@ public class Tournament {
     @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},mappedBy = "tournament")
     private List<Match> matches;
 
+    @OneToMany(cascade = {CascadeType.MERGE, CascadeType.PERSIST},mappedBy = "tournament")
+    private List<Round> rounds;
+
     public Tournament(String name, LocalDate date, Boolean isActive, Collection<Team> teams) {
         this.name = name;
         this.date = date;
@@ -168,5 +171,13 @@ public class Tournament {
 
     public void setId(long id) {
         this.id = id;
+    }
+
+    public List<Round> getRounds() {
+        return rounds;
+    }
+
+    public void setRounds(List<Round> rounds) {
+        this.rounds = rounds;
     }
 }

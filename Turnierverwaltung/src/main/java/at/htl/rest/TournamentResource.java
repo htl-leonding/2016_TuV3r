@@ -1,5 +1,6 @@
 package at.htl.rest;
 
+import at.htl.entity.Round;
 import at.htl.entity.Tournament;
 import at.htl.logic.TournamentFacade;
 import io.swagger.annotations.*;
@@ -65,6 +66,7 @@ public class TournamentResource
         URI uri = info.getAbsolutePathBuilder().path("/"+saved.getId()).build();
         return Response.created(uri).build();
     }
+
     @GET
     @ApiOperation(value = "Get all tournaments")
     @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
