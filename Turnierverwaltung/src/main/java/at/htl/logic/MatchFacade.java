@@ -55,7 +55,7 @@ public class MatchFacade {
         Match m = new Match(true,em.find(Team.class,matchDto.getTeam1Id())
                 ,em.find(Team.class,matchDto.getTeam2Id())
                 ,matchDto.getResult());
-        if(!matchDto.getStartTime().isEmpty()) {
+        if(matchDto.getStartTime()!=null) {
             m.setStartTime(LocalTime.parse(matchDto.getStartTime(),
                     DateTimeFormatter.ofPattern("HH:mm")));
         }
@@ -79,7 +79,7 @@ public class MatchFacade {
         match.setResultObject(m.getResult());
         match.setResult(m.getResult().toString());
         match.setActive(m.isActive());
-        if(!m.getStartTime().isEmpty()) {
+        if(m.getStartTime()!=null) {
             match.setStartTime(LocalTime.parse(m.getStartTime(),
                     DateTimeFormatter.ofPattern("HH:mm")));
         }
