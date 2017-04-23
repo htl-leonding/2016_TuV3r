@@ -55,6 +55,10 @@ public class MatchFacade {
         Match m = new Match(true,em.find(Team.class,matchDto.getTeam1Id())
                 ,em.find(Team.class,matchDto.getTeam2Id())
                 ,matchDto.getResult());
+        if(!matchDto.getStartTime().isEmpty()) {
+            m.setStartTime(LocalTime.parse(matchDto.getStartTime(),
+                    DateTimeFormatter.ofPattern("HH:mm")));
+        }
         m.setCourt(matchDto.getCourt());
         m.setTournament(m.getTeam1().getTournament());
         m=em.merge(m);
