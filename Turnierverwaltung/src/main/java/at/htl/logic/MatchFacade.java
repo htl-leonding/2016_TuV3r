@@ -74,4 +74,9 @@ public class MatchFacade {
         match.setActive(m.isActive());
         em.merge(match);
     }
+
+    public List<Match> findMatchesByRoundId(long roundId) {
+        Round r = em.find(Round.class,roundId);
+        return r.getMatches();
+    }
 }

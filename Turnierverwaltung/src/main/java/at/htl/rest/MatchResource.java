@@ -37,6 +37,7 @@ public class MatchResource {
     public List<Match> findAll(){
         return matchFacade.findAll();
     }
+
     @GET
     @Path("by")
     @Produces({MediaType.APPLICATION_JSON,MediaType.APPLICATION_XML})
@@ -45,11 +46,15 @@ public class MatchResource {
             @ApiParam(value = "id of the tournament the wanted matches are in")
             @QueryParam("toid") long tournamentId,
             @ApiParam(value = "id of the team you want the matches of")
-            @QueryParam("teid") long teamId){
+            @QueryParam("teid") long teamId,
+            @ApiParam(value = "id of the round you want the matches of")
+            @QueryParam("roid") long roundId){
         if(tournamentId>0) {
             return matchFacade.findMatchesByTournamentId(tournamentId);
         } else if(teamId>0){
             return matchFacade.findMatchesByTeamId(teamId);
+        } else if(roundId>0){
+            return matchFacade.findMatchesByRoundId(roundId);
         }
         return null;
     }
