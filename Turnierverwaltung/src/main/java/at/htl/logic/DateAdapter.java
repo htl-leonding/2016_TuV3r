@@ -7,6 +7,7 @@ import javax.persistence.PersistenceContext;
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 /**
  * Hindert das rekursive Aufrufen des XML-Baumes
@@ -17,11 +18,11 @@ public class DateAdapter extends XmlAdapter<String, LocalDate> {
     EntityManager em;
 
     public LocalDate unmarshal(final String xml) throws Exception {
-        return LocalDate.parse(xml);
+        return LocalDate.parse(xml, DateTimeFormatter.ofPattern("dd.MM.YYYY"));
     }
 
     @Override
     public String marshal(LocalDate v) throws Exception {
-        return v.toString();
+        return v.format(DateTimeFormatter.ofPattern("dd.MM.YYYY"));
     }
 }

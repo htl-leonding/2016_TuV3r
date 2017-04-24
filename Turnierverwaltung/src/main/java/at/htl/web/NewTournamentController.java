@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.jsp.PageContext;
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -52,7 +53,7 @@ public class NewTournamentController implements Serializable {
     private String groupPhaseIcon;
     private String newName;
     private List<Team> deleteTeams = new ArrayList<>();
-    private String redirect="/nga/index.html";
+    private String redirect="/index.xhtml";
     private int placesCount = 1;
 
     public String getNewName() {

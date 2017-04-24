@@ -15,7 +15,9 @@
                 <p:panel id="current" header="Aktuelles Turnier" footer="Turnierinfos" style="margin-bottom:20px">
                     <h:panelGrid columns="2" cellpadding="10">
                         <h:outputText rendered="#{indexController.latestTournament!=null and indexController.latestTournament.active}"
-                                      value="#{indexController.latestTournament.name}, Datum:#{indexController.latestTournament.date}, Anzahl der Teams:#{indexController.latestTournament.teams.size()}"/>
+                                      value="#{indexController.latestTournament.name},
+                                      Datum: #{indexController.latestTournament.dateAsString},
+                                      Anzahl der Teams: #{indexController.latestTournament.teams.size()}"/>
                         <h:outputText rendered="#{indexController.latestTournament==null or indexController.latestTournament.active==false}"
                                       value="Es wird momentan kein Turnier ausgetragen."/>
                     </h:panelGrid>
@@ -30,7 +32,7 @@
                                 <h:outputText value="#{tournament.name}"/>
                             </p:column>
                             <p:column headerText="Date">
-                                <h:outputText value="#{tournament.date}"/>
+                                <h:outputText value="#{tournament.dateAsString}"/>
                             </p:column>
                             <p:column headerText="Anzahl der Teams">
                                 <h:outputText value="#{tournament.teams.size()}"/>

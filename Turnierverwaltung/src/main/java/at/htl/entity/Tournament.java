@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.Collection;
 import java.util.Date;
 import java.util.List;
@@ -100,6 +101,9 @@ public class Tournament {
     @XmlJavaTypeAdapter(DateAdapter.class)
     public LocalDate getDate() {
         return date;
+    }
+    public String getDateAsString() {
+        return date.format(DateTimeFormatter.ofPattern("dd.MM.yyyy"));
     }
 
 
